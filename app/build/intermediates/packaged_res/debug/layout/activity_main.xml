@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/container_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/MA_gambarRestoran"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="20dp"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher_background"
+                android:scaleType="centerInside"/>
+
+            <TextView
+                android:id="@+id/MA_txtViewWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@id/MA_gambarRestoran"
+                app:layout_constraintTop_toTopOf="@id/MA_gambarRestoran"
+                app:layout_constraintBottom_toBottomOf="@id/MA_gambarRestoran"
+                app:layout_constraintEnd_toStartOf="@id/MA_buttonLogout"
+                android:text="Welcome, Mr. PEPEGA\nCashier" />
+
+                <Button
+                    android:id="@+id/MA_buttonLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Logout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/MA_txtViewWelcome"
+                    app:layout_constraintTop_toTopOf="@id/MA_gambarRestoran"
+                    app:layout_constraintBottom_toBottomOf="@id/MA_gambarRestoran"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/left_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#FFFFFF"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
+
+<!--<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".Activity.MainActivity">-->
+
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:id="@+id/toolbarLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <androidx.appcompat.widget.Toolbar-->
+<!--                android:id="@+id/toolbar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="?attr/colorPrimary"-->
+<!--                android:minHeight="?attr/actionBarSize"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:titleTextColor="#ffffff"-->
+<!--                app:logo="@drawable/ic_baseline_menu_24"-->
+<!--                android:theme="@style/ToolbarTheme"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="50dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                android:text="POS"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="24sp"/>-->
+<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/MA_txtViewProfilePicture"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:padding="5dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:background="#23395d"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="Profile Picture"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textColor="#ffffff"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="18sp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textStyle="bold"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textAlignment="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:layout_constraintTop_toTopOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:layout_constraintStart_toStartOf="parent"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/MA_txtViewMainPage"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_marginTop="30dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:background="#23395d"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="Home"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textColor="#ffffff"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="18sp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textStyle="bold"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textAlignment="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:layout_constraintTop_toBottomOf="@id/MA_txtViewProfilePicture"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:layout_constraintStart_toStartOf="parent"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/MA_txtViewActiveOrder"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_marginTop="30dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:background="#23395d"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="Orders"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textColor="#ffffff"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="18sp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textStyle="bold"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textAlignment="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:layout_constraintTop_toBottomOf="@id/MA_txtViewMainPage"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:layout_constraintStart_toStartOf="parent"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/MA_txtViewHistory"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_marginTop="30dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:background="#23395d"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="History"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textColor="#ffffff"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="18sp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textStyle="bold"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textAlignment="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:layout_constraintTop_toBottomOf="@id/MA_txtViewActiveOrder"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:layout_constraintStart_toStartOf="parent"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/MA_txtViewReportOrder"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_marginTop="30dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:background="#23395d"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="Report Order"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textColor="#ffffff"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="18sp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textStyle="bold"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textAlignment="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:layout_constraintTop_toBottomOf="@id/MA_txtViewHistory"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:layout_constraintStart_toStartOf="parent"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/MA_txtViewSettings"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_marginTop="30dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:background="#23395d"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="Settings"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textColor="#ffffff"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="18sp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textStyle="bold"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textAlignment="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:layout_constraintTop_toBottomOf="@id/MA_txtViewReportOrder"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:layout_constraintStart_toStartOf="parent"/>&ndash;&gt;-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    </com.google.android.material.appbar.AppBarLayout-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/MA_gambarRestoran"-->
+<!--        app:layout_constraintStart_toStartOf="@id/toolbarLayout"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/MA_txtViewWelcome"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"-->
+<!--        android:layout_width="80dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/ic_launcher_background"-->
+<!--        android:scaleType="centerInside"/>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/MA_txtViewWelcome"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textAlignment="center"-->
+<!--        app:layout_constraintStart_toEndOf="@id/MA_gambarRestoran"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/MA_buttonLogout"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/MA_gambarRestoran"-->
+<!--        android:text="Welcome, Mr. PEPEGA\nCashier"-->
+<!--        />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/MA_buttonLogout"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Logout"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/MA_txtViewWelcome"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/MA_gambarRestoran"/>-->
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/MA_fragmentsMenu"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginTop="200dp"-->
+<!--        android:padding="10dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/MA_gambarRestoran"-->
+<!--        app:layout_constraintStart_toStartOf="parent"/>-->
+
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:layout_marginTop="55dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        app:menu="@menu/drawer_menu"/>-->
+
+<!--</androidx.drawerlayout.widget.DrawerLayout>-->

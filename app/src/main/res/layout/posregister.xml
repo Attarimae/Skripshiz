@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Activity.POSRegister">
 
     <TextView
         android:id="@+id/poslogin"
@@ -20,10 +20,22 @@
         android:textSize="28dp" />
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/posname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/poslogin"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Name"
+        android:padding="15dp" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/posname"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
@@ -41,6 +53,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:hint="Password"
+        android:inputType="textPassword"
         android:padding="15dp" />
 
     <EditText
@@ -65,27 +78,26 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:hint="Confirm Password"
+        android:inputType="textPassword"
         android:padding="15dp" />
 
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/confirm_button"
+        android:id="@+id/confirm_pos_button"
         android:layout_below="@id/confirmpw"
         android:text="Submit"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"/>
 
     <TextView
+        android:id="@+id/posopenlogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/register"
         android:text="Already have an account? Sign in here"
         android:textSize="12dp"
-        android:layout_below="@id/confirm_button"
+        android:layout_below="@id/confirm_pos_button"
         android:gravity="center"/>
-
-
 
 </RelativeLayout>
