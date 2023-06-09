@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Activity.CashierMainActivity">
+
     <item
-        android:id="@+id/miCompose"
+        android:id="@+id/action_checkout"
+        android:orderInCategory="300"
+        android:title="User"
+        android:onClick="onCheckoutCartClicked"
         android:icon="@drawable/ic_baseline_shopping_cart_24"
-        app:showAsAction="ifRoom"
-        android:title="Compose">
-    </item>
-    <item
-        android:id="@+id/account"
-        app:showAsAction="never"
-        android:title="Logout">
-    </item>
+        app:showAsAction="ifRoom"/>
+
 </menu>
+
+    <!--<menu xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    >-->
+    <!--    <item-->
+    <!--        android:id="@+id/miCompose"-->
+    <!--        android:icon="@drawable/ic_baseline_shopping_cart_24"-->
+    <!--        app:showAsAction="ifRoom"-->
+    <!--        android:title="Compose">-->
+    <!--    </item>-->
+    <!--    <item-->
+    <!--        android:id="@+id/account"-->
+    <!--        app:showAsAction="never"-->
+    <!--        android:title="Logout">-->
+    <!--    </item>-->
+    <!--</menu>-->

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.CashierMainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/container_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/MMA_gambarRestoran"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="20dp"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher_background"
+                android:scaleType="centerInside"/>
+
+            <TextView
+                android:id="@+id/MMA_txtViewWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@id/MMA_gambarRestoran"
+                app:layout_constraintTop_toTopOf="@id/MMA_gambarRestoran"
+                app:layout_constraintBottom_toBottomOf="@id/MMA_gambarRestoran"
+                app:layout_constraintEnd_toStartOf="@id/MMA_buttonLogout"
+                android:text="Welcome, Mr. PEPEGA\nManager" />
+
+            <Button
+                android:id="@+id/MMA_buttonLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/MMA_txtViewWelcome"
+                app:layout_constraintTop_toTopOf="@id/MMA_gambarRestoran"
+                app:layout_constraintBottom_toBottomOf="@id/MMA_gambarRestoran"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/MMA_ManagerMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/MMA_ManageRestoMenu"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/MMA_EditLandingPage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/MMA_ManageEmployeeMenu"
+                android:textAllCaps="false"
+                android:text="Manage\nRestaurant Menu"
+                android:padding="10dp"
+                />
+
+            <Button
+                android:id="@+id/MMA_ManageEmployeeMenu"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/MMA_EditWebsiteMenu"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/MMA_ManageRestoMenu"
+                android:textAllCaps="false"
+                android:text="Manage\nEmployee Menu"
+                android:padding="10dp"/>
+
+            <Button
+                android:id="@+id/MMA_EditLandingPage"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/MMA_ManageRestoMenu"
+                app:layout_constraintBottom_toTopOf="@id/MMA_EditPOSApplication"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/MMA_ManageEmployeeMenu"
+                android:textAllCaps="false"
+                android:text="Edit\nLanding Menu"
+                android:padding="10dp"/>
+
+            <Button
+                android:id="@+id/MMA_EditWebsiteMenu"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/MMA_ManageRestoMenu"
+                app:layout_constraintBottom_toTopOf="@id/MMA_EditPaidOrder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/MMA_ManageRestoMenu"
+                android:textAllCaps="false"
+                android:text="Edit\nWebsite Menu"
+                android:padding="10dp"/>
+
+            <Button
+                android:id="@+id/MMA_EditPOSApplication"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/MMA_EditLandingPage"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/MMA_EditPaidOrder"
+                android:textAllCaps="false"
+                android:text="Edit\nPOS Application"
+                android:padding="10dp"/>
+
+            <Button
+                android:id="@+id/MMA_EditPaidOrder"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/MMA_EditWebsiteMenu"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/MMA_EditPOSApplication"
+                android:textAllCaps="false"
+                android:text="Edit\nPaid Order"
+                android:padding="10dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

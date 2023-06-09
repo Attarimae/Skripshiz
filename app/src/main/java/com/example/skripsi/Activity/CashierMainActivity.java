@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,21 +11,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
 import com.example.skripsi.API.SessionManager;
 import com.example.skripsi.Activity.Fragment.CheckoutFragment;
 import com.example.skripsi.Activity.Fragment.MenuFragment;
+import com.example.skripsi.Activity.Fragment.OrderListFragment;
 import com.example.skripsi.Adapter.MainDrawerItemAdapter;
 import com.example.skripsi.Model.MainDrawerMenuModel;
 import com.example.skripsi.R;
 
-public class MainActivity extends AppCompatActivity {
+public class CashierMainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private String[] mNavigationDrawerItemTitles;
@@ -34,13 +33,14 @@ public class MainActivity extends AppCompatActivity {
     private ListView mDrawerList;
     private CharSequence mDrawerTitle, mTitle;
     private ActionBarDrawerToggle mDrawerToggle;
+    private Menu cashierMenu;
 
     SessionManager sm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_cashier_main);
 
         mTitle = mDrawerTitle = getTitle();
         mNavigationDrawerItemTitles= getResources().getStringArray(R.array.menu_items_array);
@@ -51,16 +51,16 @@ public class MainActivity extends AppCompatActivity {
 
         MainDrawerMenuModel[] drawerItem = new MainDrawerMenuModel[6];
 
-        drawerItem[0] = new MainDrawerMenuModel("Profile Picture");
-        drawerItem[1] = new MainDrawerMenuModel("Home");
-        drawerItem[2] = new MainDrawerMenuModel("Order List");
-        drawerItem[3] = new MainDrawerMenuModel("Order History");
-        drawerItem[4] = new MainDrawerMenuModel("Report Order");
-        drawerItem[5] = new MainDrawerMenuModel("Settings");
+        drawerItem[0] = new MainDrawerMenuModel(R.drawable.ic_baseline_person_24,"Profile Picture");
+        drawerItem[1] = new MainDrawerMenuModel(R.drawable.ic_baseline_home_24,"Home");
+        drawerItem[2] = new MainDrawerMenuModel(R.drawable.ic_baseline_list_24,"Order List");
+        drawerItem[3] = new MainDrawerMenuModel(R.drawable.ic_baseline_history_24,"Order History");
+        drawerItem[4] = new MainDrawerMenuModel(R.drawable.ic_baseline_bar_chart_24,"Report Order");
+        drawerItem[5] = new MainDrawerMenuModel(R.drawable.ic_baseline_settings_24,"Settings");
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        MainDrawerItemAdapter adapter = new MainDrawerItemAdapter(this, R.layout.list_menu_item, drawerItem);
+        MainDrawerItemAdapter adapter = new MainDrawerItemAdapter(this, R.layout.drawer_list_item, drawerItem);
         mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
         setupDrawerToggle();
 
         sm = new SessionManager(this);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, new MenuFragment()).commit();
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -77,19 +80,43 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        cashierMenu = menu;
+        return true;
+    }
+
     private void selectItem(int position) {
 
         Fragment fragment = null;
 
         switch (position) {
 
-            //initestingaja
-            case 0:
-                fragment = new MenuFragment(); // klik si Profile Picture
+            case 0: // Profile Picture Fragment
+                //fragment = new MenuFragment();
+                Toast.makeText(this, "Profile Picture Soon", Toast.LENGTH_SHORT).show();
                 break;
-            case 1:
-                //fragment = new CheckoutFragment(); blom ku buat checkoutfragment dlm bentuk portraitny
-                //break;
+            case 1: // Home Fragment
+                fragment = new MenuFragment();
+                addCheckoutCart();
+                break;
+            case 2: // Order List Fragment
+                fragment = new OrderListFragment();
+                removeCheckoutCart();
+                break;
+            case 3: // Order History Fragment
+                //fragment = new MenuFragment();
+                removeCheckoutCart();
+                break;
+            case 4: // Report Order Fragment
+                //fragment = new CheckoutFragment();
+                removeCheckoutCart();
+                break;
+            case 5: // Settings Fragment
+                //fragment = new MenuFragment();
+                Toast.makeText(this, "Setting Soon", Toast.LENGTH_SHORT).show();
+                break;
 
             default:
                 break;
@@ -111,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -140,6 +167,22 @@ public class MainActivity extends AppCompatActivity {
     void setupDrawerToggle(){
         mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,toolbar,R.string.app_name, R.string.app_name);
         mDrawerToggle.syncState();
+    }
+
+    public void onCheckoutCartClicked(MenuItem mi) {
+        Fragment fragment = new CheckoutFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+    }
+
+    private void removeCheckoutCart(){
+        cashierMenu.findItem(R.id.action_checkout).setVisible(false);
+        cashierMenu.findItem(R.id.action_checkout).setEnabled(false);
+    }
+
+    private void addCheckoutCart(){
+        cashierMenu.findItem(R.id.action_checkout).setVisible(true);
+        cashierMenu.findItem(R.id.action_checkout).setEnabled(true);
     }
 
 }

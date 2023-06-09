@@ -40,8 +40,8 @@ public class MainDrawerItemAdapter extends ArrayAdapter<MainDrawerMenuModel> {
 
         MainDrawerMenuModel folder = data[position];
 
-        imageViewIcon.setImageResource(R.drawable.ic_launcher_background);
-        textViewName.setText(folder.name);
+        imageViewIcon.setImageResource(folder.getIcon());
+        textViewName.setText(folder.getName());
 
         return listItem;
     }

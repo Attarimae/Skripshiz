@@ -14,12 +14,4 @@
         <!-- Customize your theme here. -->
     </style>
 
-
-    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <!-- android:textColorPrimary adalah warna teks title yang ada di Toolbar  -->
-        <item name="android:textColorPrimary">@android:color/holo_blue_light</item>
-        <!-- actionMenuTextColor adalah warna teks action (menu item)  -->
-        <item name="actionMenuTextColor">@android:color/holo_green_light</item>
-    </style>
-
 </resources>

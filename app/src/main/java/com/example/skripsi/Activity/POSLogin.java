@@ -81,8 +81,8 @@ public class POSLogin extends AppCompatActivity {
         finish();
     }
 
-    private void openPOSHomepage(){
-        Intent intent = new Intent(this, MainActivity.class);
+    private void openCashierPOSHomepage(){
+        Intent intent = new Intent(this, CashierMainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -97,7 +97,7 @@ public class POSLogin extends AppCompatActivity {
             public void onResponse(Call<StaffDataModel> call, Response<StaffDataModel> response) {
                 StaffDataModel modalAPI = response.body();
                 sm.saveAuthToken(modalAPI.getKey());
-                openPOSHomepage();
+                openCashierPOSHomepage();
             }
 
             @Override
