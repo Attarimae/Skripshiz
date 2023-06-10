@@ -41,4 +41,13 @@ public class SessionManager{
     public String fetchStaffID(){
         return sharedPreferences.getString("staff_id", null);
     }
+
+    public void saveStaffRole(String role){
+        editor.putString("role", role);
+        editor.commit();
+    }
+
+    public String fetchStaffRole(){
+        return sharedPreferences.getString("role", null);
+    }
 }

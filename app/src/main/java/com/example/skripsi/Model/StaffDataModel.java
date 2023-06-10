@@ -13,6 +13,8 @@ public class StaffDataModel {
     private String phone_number;
     @SerializedName("password")
     private String password;
+    @SerializedName("role")
+    private String role;
 
     private String key;
 
@@ -22,18 +24,20 @@ public class StaffDataModel {
     }
 
     //Register
-    public StaffDataModel(String name, String email, String phone_number, String password) {
+    public StaffDataModel(String name, String email, String phone_number, String password, String role) {
         this.name = name;
         this.email = email;
         this.phone_number = phone_number;
         this.password = password;
+        this.role = role;
     }
 
     //Login
-    public StaffDataModel(String staff_id, String email, String password) {
+    public StaffDataModel(String staff_id, String role, String email, String password) {
         this.staff_id = staff_id;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public String getStaff_id() {
@@ -74,5 +78,21 @@ public class StaffDataModel {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

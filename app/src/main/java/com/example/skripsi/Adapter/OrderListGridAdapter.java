@@ -11,14 +11,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.skripsi.Model.OrderListItemModel;
+import com.example.skripsi.Model.OrderListItemDataModel;
 import com.example.skripsi.R;
 
 import java.util.ArrayList;
 
-public class OrderListGridAdapter extends ArrayAdapter<OrderListItemModel> {
+public class OrderListGridAdapter extends ArrayAdapter<OrderListItemDataModel> {
 
-    public OrderListGridAdapter(@NonNull Context context, ArrayList<OrderListItemModel> menuItemModelArrayList) {
+    public OrderListGridAdapter(@NonNull Context context, ArrayList<OrderListItemDataModel> menuItemModelArrayList) {
         super(context, 0, menuItemModelArrayList);
     }
 
@@ -28,7 +28,7 @@ public class OrderListGridAdapter extends ArrayAdapter<OrderListItemModel> {
             listitem = LayoutInflater.from(getContext()).inflate(R.layout.order_list_card_item, parent, false);
         }
 
-        OrderListItemModel menuItemModel = getItem(position);
+        OrderListItemDataModel menuItemModel = getItem(position);
         TextView orderListName = listitem.findViewById(R.id.order_list_Name);
         TextView orderListPrice = listitem.findViewById(R.id.order_list_TotalPrice);
         ImageView orderListImage = listitem.findViewById(R.id.order_list_Image);

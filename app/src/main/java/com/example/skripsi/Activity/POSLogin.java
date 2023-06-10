@@ -67,7 +67,7 @@ public class POSLogin extends AppCompatActivity {
             public void onClick(View view) {
                 isAllFieldsChecked = CheckAllFields();
                 if(isAllFieldsChecked){
-                    //postPOSLogin(sm.fetchStaffID(), email.getText().toString(), password.getText().toString());
+                    //postPOSLogin(sm.fetchStaffID(), sm.fetchStaffRole(), email.getText().toString(), password.getText().toString());
                 }
             }
         });
@@ -87,16 +87,16 @@ public class POSLogin extends AppCompatActivity {
         finish();
     }
 
-    private void postPOSLogin(String staff_id, String email, String password){
+    private void postPOSLogin(String staff_id, String role, String email, String password){
         ServiceGenerator service = new ServiceGenerator();
-        StaffDataModel modal = new StaffDataModel(staff_id, email, password);
+        StaffDataModel modal = new StaffDataModel(staff_id, role, email, password);
         Call<StaffDataModel> call = service.getApiService(this).postStaffLogin(modal);
         call.enqueue(new Callback<StaffDataModel>(){
 
             @Override
             public void onResponse(Call<StaffDataModel> call, Response<StaffDataModel> response) {
                 StaffDataModel modalAPI = response.body();
-                sm.saveAuthToken(modalAPI.getKey());
+                sm.saveStaffRole(modalAPI.getRole());
                 openCashierPOSHomepage();
             }
 

@@ -28,9 +28,9 @@ public interface APIInterface {
     //Get All Staff
     //@GET("/staff/users/")
     //Call<StaffDataModel> getAllStaff();
-    //blom kubuat getAllStaffnya
+    //blm kubuat bisa pake API ini
 
-    //Update Restaurant
+    //Update Employee
     //@POST("/staff/users/")
     //
 
@@ -40,7 +40,13 @@ public interface APIInterface {
 
     //Get All Menu
     //@GET("/menu/")
-    //
+    //Call<MenuItemModel> getAllMenu();
+    //blm kubuat bisa pake API ini
+
+    //Get Order
+    //@GET("/order")
+    //Call<OrderListDataModel> getAllOrderList();
+    //model baru, blm ada apa" ini
 
     //Order
     //@POST("/order/")
@@ -49,12 +55,12 @@ public interface APIInterface {
     //Update Order
     //@PATCH("/order/")
     //Call<OrderDataModel> updateOrder();
-    //blom kubuat modelnya
+    //masih blm kubuat ini
 
     //Get Menu by Category
     //@GET("/menu")
     //Call<MenuDataModel> getMenuCategory(@Query("category") String category);
-    //ini juga blom
+    //blm kubuat bisa pake API ini, mungkin perlu kuupdate jg ini
 
     //Upload Photo
     //@POST("/upload/")

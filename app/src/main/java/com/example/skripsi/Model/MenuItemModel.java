@@ -1,8 +1,20 @@
 package com.example.skripsi.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class MenuItemModel {
 
-    private String menuName, menuPrice;
+    @SerializedName(value="categoryName", alternate={"category","category_name"})
+    private String menuCategory;
+    @SerializedName("menu_name")
+    private String menuName;
+    @SerializedName("price")
+    private String menuPrice;
+    @SerializedName("description")
+    private String menuDescription;
+    @SerializedName("picture_code")
+    private String menuImg;
+
     private int imgID;
 
     public MenuItemModel(String menuName, String menuPrice, int imgID) {

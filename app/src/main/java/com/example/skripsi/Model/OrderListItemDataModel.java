@@ -1,11 +1,22 @@
 package com.example.skripsi.Model;
 
-public class OrderListItemModel {
+import com.google.gson.annotations.SerializedName;
 
-    private String orderName, totalPrice;
+public class OrderListItemDataModel {
+
+    @SerializedName("tableNumber")
+    private String tableNumber;
+    @SerializedName(value="orderId", alternate="order_id")
+    private String orderId;
+    //Kita perlu Nama Ordernya gk ya
+    private String orderName;
+    //Ini perlu juga kah?
+    private String totalPrice;
+    //Ini juga kah?
     private int imgID;
+    //Note: Blom kutambahin "order_detail" utk POST ke endpointnya
 
-    public OrderListItemModel(String orderName, String totalPrice, int imgID) {
+    public OrderListItemDataModel(String orderName, String totalPrice, int imgID) {
         this.orderName = orderName;
         this.totalPrice = totalPrice;
         this.imgID = imgID;
