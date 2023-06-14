@@ -1,10 +1,15 @@
 package com.example.skripsi.API;
 
+import com.example.skripsi.Model.Menus.MenuItemModel;
+import com.example.skripsi.Model.Orders.OrderListItemDataModel;
 import com.example.skripsi.Model.RestaurantDataModel;
 import com.example.skripsi.Model.StaffDataModel;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
@@ -36,21 +41,23 @@ public interface APIInterface {
 
     //Create Menu
     //@POST("/menu/")
-    //
+    //Call<MenuItemModel> postCreateMenu(@Body MenuItemModel menuItemModel);
+    //blm kutest
 
     //Get All Menu
-    //@GET("/menu/")
-    //Call<MenuItemModel> getAllMenu();
+    @GET("/menu/")
+    Call<ArrayList<MenuItemModel>> getAllMenu();
     //blm kubuat bisa pake API ini
 
     //Get Order
-    //@GET("/order")
-    //Call<OrderListDataModel> getAllOrderList();
-    //model baru, blm ada apa" ini
+    @GET("/order")
+    Call<ArrayList<OrderListItemDataModel>> getAllOrderList();
+    //model baru, blm kutest
 
     //Order
-    //@POST("/order/")
-    //
+    @POST("/order/")
+    Call<OrderListItemDataModel> postCreateOrder(@Body OrderListItemDataModel orderListItemDataModel);
+    //blm kutest
 
     //Update Order
     //@PATCH("/order/")

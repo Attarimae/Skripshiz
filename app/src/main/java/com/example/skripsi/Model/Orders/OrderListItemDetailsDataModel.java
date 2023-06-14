@@ -1,4 +1,4 @@
-package com.example.skripsi.Model;
+package com.example.skripsi.Model.Orders;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -10,6 +10,8 @@ public class OrderListItemDetailsDataModel {
     private String menuName;
     @SerializedName("amount")
     private String menuPrice;
+    @SerializedName("description")
+    private String menuDescription;
     @SerializedName("quantity")
     private int menuQuantity;
     @SerializedName("picture_code")
@@ -19,14 +21,25 @@ public class OrderListItemDetailsDataModel {
     @SerializedName("order_detail_id")
     private String order_detail_id;
 
-    public OrderListItemDetailsDataModel(String menuId, String menuName, String menuPrice, int menuQuantity, int imgID, String status, String order_detail_id) {
+    //Display
+    public OrderListItemDetailsDataModel(String menuId, String menuName, String menuPrice, String menuDescription, int menuQuantity, int imgID, String status, String order_detail_id) {
         this.menuId = menuId;
         this.menuName = menuName;
         this.menuPrice = menuPrice;
+        this.menuDescription = menuDescription;
         this.menuQuantity = menuQuantity;
         this.imgID = imgID;
         this.status = status;
         this.order_detail_id = order_detail_id;
+    }
+
+    //POST ke Endpoint
+    public OrderListItemDetailsDataModel(String menuName, String menuPrice, String menuDescription, int menuQuantity, int imgID) {
+        this.menuName = menuName;
+        this.menuPrice = menuPrice;
+        this.menuDescription = menuDescription;
+        this.menuQuantity = menuQuantity;
+        this.imgID = imgID;
     }
 
     public String getMenuId() {
@@ -83,5 +96,13 @@ public class OrderListItemDetailsDataModel {
 
     public void setOrder_detail_id(String order_detail_id) {
         this.order_detail_id = order_detail_id;
+    }
+
+    public String getMenuDescription() {
+        return menuDescription;
+    }
+
+    public void setMenuDescription(String menuDescription) {
+        this.menuDescription = menuDescription;
     }
 }

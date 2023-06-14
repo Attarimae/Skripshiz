@@ -14,14 +14,13 @@
         android:textSize="24sp"
         android:layout_gravity="center_horizontal"/>
 
-    <EditText
-        android:id="@+id/FR_editTextMenu"
+    <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search"
-        android:layout_marginTop="10dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp" />
+        android:id="@+id/FT_searchViewMenu"
+        android:iconifiedByDefault="false"
+        android:queryHint="Cari makan? Cari minum? Disini Banh"
+        android:layout_marginBottom="5dp"/>
 
     <GridView
         android:id="@+id/FR_gridMenu"

@@ -1,55 +1,92 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Activity.Fragment.OrderDetailsFragment">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/FR_txtViewOrderDetails"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Order Details"
-        android:padding="10dp"
-        android:textSize="24sp"/>
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/FR_txtViewOrderDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order Details"
+            android:padding="10dp"
+            android:textSize="32sp"
+            android:layout_gravity="center_horizontal"/>
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/FR_txtViewOrderDetailsTableNumberTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Table Number"
+                android:layout_marginTop="5dp"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/FR_txtViewOrderDetailsTableNumberBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
     <GridView
         android:id="@+id/FR_gridOrderDetails"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/FR_txtViewOrderDetails"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:numColumns="1"
         android:horizontalSpacing="2dp"
-        android:verticalSpacing="2dp"/>
+        android:verticalSpacing="2dp" />
 
-    <TextView
-        android:id="@+id/FR_txtViewOrderDetailsTotalPriceLeft"
-        app:layout_constraintBottom_toTopOf="@id/FR_buttonPayment"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Total"
-        android:padding="10dp"
-        android:layout_marginStart="24dp"
-        android:textSize="24sp"/>
+        android:orientation="horizontal"
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/FR_txtViewOrderDetailsTotalPriceRight"
-        app:layout_constraintBottom_toTopOf="@id/FR_buttonPayment"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rp 69.000"
-        android:padding="10dp"
-        android:layout_marginEnd="24dp"
-        android:textSize="24sp"/>
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/FR_txtViewOrderDetailsTotalPriceLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total"
+            android:layout_margin="10dp"
+            android:textSize="30sp" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/FR_txtViewOrderDetailsTotalPriceRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp 69.000"
+            android:layout_marginEnd="24dp"
+            android:textSize="30sp" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/FR_buttonPayment"
@@ -57,8 +94,6 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="Checkout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_gravity="center_horizontal"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

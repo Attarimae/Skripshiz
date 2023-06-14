@@ -42,6 +42,13 @@ public class CashierMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cashier_main);
 
+        sm = new SessionManager(this);
+        //Ini buat ngetest aja
+        sm.saveAuthToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0aW5nLTM3MzFmOWRkLTZjMTYtNGM2OS1iZTA2LWI1MDkyNGM2YWRmYyIsImlhdCI6MTY4NjQ3OTI0OCwiZXhwIjoxMTgwNTM1NDc0MDEwMjB9.Kz8kFzrASWbMrzYOhu0Nt1bVKB8HgzeMdZe61J3St4DTunj5UivqqLnGGh1vEPbzaXgLa7q3fIPpqLgTsu4HYg");
+        sm.saveRestaurantID("testing-3731f9dd-6c16-4c69-be06-b50924c6adfc");
+        sm.saveStaffID("testing-f7dcb933-c6c7-4d46-a713-fe50aa709b38");
+        sm.saveStaffRole("cashier");
+
         mTitle = mDrawerTitle = getTitle();
         mNavigationDrawerItemTitles= getResources().getStringArray(R.array.menu_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -67,8 +74,6 @@ public class CashierMainActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         setupDrawerToggle();
 
-        sm = new SessionManager(this);
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, new MenuFragment()).commit();
     }
@@ -88,14 +93,13 @@ public class CashierMainActivity extends AppCompatActivity {
     }
 
     private void selectItem(int position) {
-
         Fragment fragment = null;
 
         switch (position) {
 
             case 0: // Profile Picture Fragment
                 //fragment = new MenuFragment();
-                Toast.makeText(this, "Profile Picture Soon", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Profile Picture Soon", Toast.LENGTH_SHORT).show();
                 break;
             case 1: // Home Fragment
                 fragment = new MenuFragment();
@@ -107,11 +111,11 @@ public class CashierMainActivity extends AppCompatActivity {
                 break;
             case 3: // Order History Fragment
                 //fragment = new MenuFragment();
-                removeCheckoutCart();
+                //removeCheckoutCart();
                 break;
             case 4: // Report Order Fragment
                 //fragment = new CheckoutFragment();
-                removeCheckoutCart();
+                //removeCheckoutCart();
                 break;
             case 5: // Settings Fragment
                 //fragment = new MenuFragment();

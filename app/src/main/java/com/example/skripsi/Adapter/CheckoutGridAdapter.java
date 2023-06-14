@@ -1,7 +1,6 @@
 package com.example.skripsi.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,22 +47,22 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
         TextView checkoutPrice = listitem.findViewById(R.id.checkout_TotalPrice);
         ImageView checkoutImg = listitem.findViewById(R.id.checkout_Image);
 
-        final String txtCheckoutPrice = checkoutItemModel.getCheckoutPrice();
+        final String txtCheckoutPrice = checkoutItemModel.getCheckoutMenuPrice();
         final String txtPrice = txtCheckoutPrice.substring(4).replace(".", "");
 
-        final Integer checkoutTotalQty = checkoutItemModel.getCheckoutQuantity();
-        final Integer checkoutTotalPrice = Integer.parseInt(txtPrice) * checkoutTotalQty;
+        final Integer checkoutTotalQty = checkoutItemModel.getCheckoutMenuQuantity();
+        final Integer checkoutSubtotalPrice = Integer.parseInt(txtPrice) * checkoutTotalQty;
 
-        checkoutName.setText(checkoutItemModel.getCheckoutName());
+        checkoutName.setText(checkoutItemModel.getCheckoutMenuName());
         checkoutQuantity.setText(String.valueOf(checkoutTotalQty));
-        checkoutPrice.setText("Rp. " + formatPrice(checkoutTotalPrice));
+        checkoutPrice.setText("Rp. " + formatPrice(checkoutSubtotalPrice));
         checkoutImg.setImageResource(checkoutItemModel.getImgID());
 
         addCheckoutQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkoutItemModel.setCheckoutQuantity(checkoutItemModel.getCheckoutQuantity() + 1);
-                int updatedQuantity = checkoutItemModel.getCheckoutQuantity();
+                checkoutItemModel.setCheckoutMenuQuantity(checkoutItemModel.getCheckoutMenuQuantity() + 1);
+                int updatedQuantity = checkoutItemModel.getCheckoutMenuQuantity();
                 int updatedPrice = Integer.parseInt(txtPrice) * updatedQuantity;
                 checkoutQuantity.setText(String.valueOf(updatedQuantity));
                 checkoutPrice.setText("Rp. " + formatPrice(updatedPrice));
@@ -73,10 +72,10 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
         subCheckoutQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int currentQuantity = checkoutItemModel.getCheckoutQuantity();
+                int currentQuantity = checkoutItemModel.getCheckoutMenuQuantity();
                 if (currentQuantity > 0) {
-                    checkoutItemModel.setCheckoutQuantity(currentQuantity - 1);
-                    int updatedQuantity = checkoutItemModel.getCheckoutQuantity();
+                    checkoutItemModel.setCheckoutMenuQuantity(currentQuantity - 1);
+                    int updatedQuantity = checkoutItemModel.getCheckoutMenuQuantity();
                     int updatedPrice = Integer.parseInt(txtPrice) * updatedQuantity;
                     checkoutQuantity.setText(String.valueOf(updatedQuantity));
                     checkoutPrice.setText("Rp. " + formatPrice(updatedPrice));
@@ -85,6 +84,8 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
                 }
             }
         });
+
+
 
         return listitem;
     }

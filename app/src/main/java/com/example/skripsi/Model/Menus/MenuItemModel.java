@@ -1,4 +1,4 @@
-package com.example.skripsi.Model;
+package com.example.skripsi.Model.Menus;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -13,12 +13,20 @@ public class MenuItemModel {
     @SerializedName("description")
     private String menuDescription;
     @SerializedName("picture_code")
-    private String menuImg;
+    private int imgID; //R.drawable pake int soalny
 
-    private int imgID;
-
+    //Display
     public MenuItemModel(String menuName, String menuPrice, int imgID) {
         this.menuName = menuName;
+        this.menuPrice = menuPrice;
+        this.imgID = imgID;
+    }
+
+    //POST ke Endpoint
+    public MenuItemModel(String menuCategory, String menuName, String menuDescription, String menuPrice, int imgID){
+        this.menuCategory = menuCategory;
+        this.menuName = menuName;
+        this.menuDescription = menuDescription;
         this.menuPrice = menuPrice;
         this.imgID = imgID;
     }
@@ -45,5 +53,21 @@ public class MenuItemModel {
 
     public void setImgID(int imgID) {
         this.imgID = imgID;
+    }
+
+    public String getMenuCategory() {
+        return menuCategory;
+    }
+
+    public void setMenuCategory(String menuCategory) {
+        this.menuCategory = menuCategory;
+    }
+
+    public String getMenuDescription() {
+        return menuDescription;
+    }
+
+    public void setMenuDescription(String menuDescription) {
+        this.menuDescription = menuDescription;
     }
 }

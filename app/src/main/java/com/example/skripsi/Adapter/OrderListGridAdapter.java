@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.skripsi.Model.OrderListItemDataModel;
+import com.example.skripsi.Model.Orders.OrderListItemDataModel;
 import com.example.skripsi.R;
 
 import java.util.ArrayList;
@@ -33,9 +33,10 @@ public class OrderListGridAdapter extends ArrayAdapter<OrderListItemDataModel> {
         TextView orderListPrice = listitem.findViewById(R.id.order_list_TotalPrice);
         ImageView orderListImage = listitem.findViewById(R.id.order_list_Image);
 
-        orderListName.setText(menuItemModel.getOrderName());
+        orderListName.setText("Table Number: " + menuItemModel.getTableNumber());
         orderListPrice.setText(menuItemModel.getTotalPrice());
-        orderListImage.setImageResource(menuItemModel.getImgID());
+        orderListImage.setImageResource(R.drawable.ic_launcher_background);
+        //orderListImage.setImageResource(menuItemModel.getImgID());
         return listitem;
     }
 }

@@ -13,14 +13,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.skripsi.API.SharedPreferencesCashier;
-import com.example.skripsi.Activity.Fragment.CheckoutFragment;
 import com.example.skripsi.Model.CheckoutItemModel;
-import com.example.skripsi.Model.MenuItemModel;
+import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.R;
 import com.google.gson.Gson;
 
@@ -54,8 +49,13 @@ public class MenuGridAdapter extends ArrayAdapter<MenuItemModel> {
         listItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkoutList.add(new CheckoutItemModel(menuItemModel.getMenuName(),
-                        menuItemModel.getMenuPrice(), 1, menuItemModel.getImgID()));
+                checkoutList.add(new CheckoutItemModel(
+                        menuItemModel.getMenuName(),
+                        menuItemModel.getMenuPrice(),
+                        menuItemModel.getMenuCategory(),
+                        menuItemModel.getMenuDescription(),
+                        menuItemModel.getImgID(),
+                        1));
 
                 SharedPreferences sharedPreferences = context.getSharedPreferences("Point of Sales", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -63,6 +63,8 @@ public class MenuGridAdapter extends ArrayAdapter<MenuItemModel> {
                 String checkoutListJson = gson.toJson(checkoutList);
                 editor.putString("checkoutList", checkoutListJson);
                 editor.apply();
+
+                Toast.makeText(context, "Berhasil menambahkan " + menuItemModel.getMenuName(), Toast.LENGTH_LONG).show();
             }
         });
         return listItem;

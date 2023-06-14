@@ -1,4 +1,4 @@
-package com.example.skripsi.Model;
+package com.example.skripsi.Model.Orders;
 
 import java.util.ArrayList;
 
