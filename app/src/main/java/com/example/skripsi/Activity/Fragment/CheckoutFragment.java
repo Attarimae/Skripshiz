@@ -55,7 +55,7 @@ public class CheckoutFragment extends Fragment {
         GridView checkoutGrid = view.findViewById(R.id.FR_gridCheckout);
         SharedPreferencesCashier spc = new SharedPreferencesCashier(requireContext());
         orderListDetails = new ArrayList<>();
-        checkoutList = spc.getCheckoutList();
+        checkoutList = spc.fetchCheckoutList();
         Log.i("Fragment Checkout", "onCreateView: " + checkoutList.size());
 
         CheckoutGridAdapter adapter = new CheckoutGridAdapter(requireActivity(), checkoutList);

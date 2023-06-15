@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.skripsi.API.ServiceGenerator;
 import com.example.skripsi.Adapter.OrderListGridAdapter;
@@ -23,6 +25,8 @@ import retrofit2.Response;
 
 public class OrderListFragment extends Fragment {
 
+    private ArrayList<OrderListItemDataModel> orderListArrayList;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +38,11 @@ public class OrderListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_order_list, container, false);
 
         GridView orderListGrid = view.findViewById(R.id.FR_gridOrderList);
-        ArrayList<OrderListItemDataModel> orderListArrayList = new ArrayList<>();
+        orderListArrayList = new ArrayList<>();
 
-//        orderListArrayList.add(new OrderListItemDataModel("Order Pertama Coy", "Rp 420.690", R.drawable.ic_launcher_background));
-//        orderListArrayList.add(new OrderListItemDataModel("Banh Udah Banh", "Rp 100.001", R.drawable.ic_launcher_background));
-//        orderListArrayList.add(new OrderListItemDataModel("Cek Kembali Ordernya", "Rp 12.345", R.drawable.ic_launcher_background));
+        orderListArrayList.add(new OrderListItemDataModel("101", "Rp 420.690", R.drawable.ic_launcher_background));
+        orderListArrayList.add(new OrderListItemDataModel("200", "Rp 100.001", R.drawable.ic_launcher_background));
+//        orderListArrayList.add(new OrderListItemDataModel("256", "Rp 12.345", R.drawable.ic_launcher_background));
 
         OrderListGridAdapter adapter = new OrderListGridAdapter(requireActivity(), orderListArrayList);
         orderListGrid.setAdapter(adapter);
@@ -64,7 +68,29 @@ public class OrderListFragment extends Fragment {
                 Log.e("Fragment OrderList", t.getMessage());
             }
         });
+        //Search View
+        SearchView orderListSearchView = view.findViewById(R.id.FT_searchViewOrderList);
+        orderListSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<OrderListItemDataModel> filteredOrderList = new ArrayList<>();
+                for(OrderListItemDataModel filter : orderListArrayList){
+                    if(String.valueOf(filter.getTableNumber()).toLowerCase().contains(newText.toLowerCase())){
+                        filteredOrderList.add(filter);
+                        OrderListGridAdapter adapter = new OrderListGridAdapter(requireActivity(), filteredOrderList);
+                        orderListGrid.setAdapter(adapter);
+                    }
+                } if(filteredOrderList.isEmpty()){
+                    Toast.makeText(requireContext(), "Filter not found...", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
         return view;
     }
 }

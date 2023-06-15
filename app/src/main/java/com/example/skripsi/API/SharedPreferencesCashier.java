@@ -2,7 +2,6 @@ package com.example.skripsi.API;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import com.example.skripsi.Model.CheckoutItemModel;
 import com.example.skripsi.R;
@@ -30,7 +29,7 @@ public class SharedPreferencesCashier {
         editor.commit();
     }
 
-    public ArrayList<CheckoutItemModel> getCheckoutList(){
+    public ArrayList<CheckoutItemModel> fetchCheckoutList(){
         Gson gson = new Gson();
         String json = sharedPreferences.getString("checkoutList", null);
         Type type = new TypeToken<ArrayList<CheckoutItemModel>>() {}.getType();
@@ -39,5 +38,14 @@ public class SharedPreferencesCashier {
             checkoutList = new ArrayList<>();
         }
         return checkoutList;
+    }
+
+    public void saveCashierPic(String storedImgB64){
+        editor.putString("cashierImage", storedImgB64);
+        editor.commit();
+    }
+
+    public String fetchCashierPic(){
+        return sharedPreferences.getString("cashierImage", null);
     }
 }
