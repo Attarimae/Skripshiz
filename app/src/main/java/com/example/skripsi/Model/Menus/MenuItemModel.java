@@ -2,8 +2,12 @@ package com.example.skripsi.Model.Menus;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MenuItemModel {
+import java.io.Serializable;
 
+public class MenuItemModel implements Serializable {
+
+    @SerializedName(value="id")
+    private int id;
     @SerializedName(value="categoryName", alternate={"category","category_name"})
     private String menuCategory;
     @SerializedName("menu_name")
@@ -16,14 +20,16 @@ public class MenuItemModel {
     private int imgID; //R.drawable pake int soalny
 
     //Display
-    public MenuItemModel(String menuName, String menuPrice, int imgID) {
+    public MenuItemModel(String menuName, String menuPrice, int imgID,int id) {
         this.menuName = menuName;
         this.menuPrice = menuPrice;
         this.imgID = imgID;
+        this.id = id;
     }
 
     //POST ke Endpoint
-    public MenuItemModel(String menuCategory, String menuName, String menuDescription, String menuPrice, int imgID){
+    public MenuItemModel(int id,String menuCategory, String menuName, String menuDescription, String menuPrice, int imgID){
+        this.id = id;
         this.menuCategory = menuCategory;
         this.menuName = menuName;
         this.menuDescription = menuDescription;
@@ -69,5 +75,13 @@ public class MenuItemModel {
 
     public void setMenuDescription(String menuDescription) {
         this.menuDescription = menuDescription;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

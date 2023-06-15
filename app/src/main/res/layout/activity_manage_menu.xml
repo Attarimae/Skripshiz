@@ -9,7 +9,7 @@
         android:id="@+id/FR_txtViewMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MENU"
+        android:text="MANAGE MENU"
         android:padding="10dp"
         android:textSize="24sp"
         android:layout_gravity="center_horizontal" />
@@ -19,16 +19,17 @@
         android:layout_height="wrap_content"
         android:id="@+id/FT_searchViewMenu"
         android:iconifiedByDefault="false"
-        android:queryHint="Search Menu"
+        android:queryHint="Cari makan? Cari minum? Disini Banh"
         android:layout_marginBottom="5dp" />
 
     <GridView
         android:id="@+id/FR_gridMenu"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="10dp"
         android:layout_weight="1"
-        android:numColumns="3"
         android:horizontalSpacing="10dp"
+        android:numColumns="2"
         android:verticalSpacing="10dp" />
 
 </LinearLayout>
