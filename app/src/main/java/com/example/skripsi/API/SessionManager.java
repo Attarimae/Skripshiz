@@ -50,4 +50,22 @@ public class SessionManager{
     public String fetchStaffRole(){
         return sharedPreferences.getString("role", null);
     }
+
+    public void saveStaffName(String staff_name){
+        editor.putString("staff_name", staff_name);
+        editor.commit();
+    }
+
+    public String fetchStaffName() {
+        return sharedPreferences.getString("staff_name", null);
+    }
+
+    public void saveRestaurantName(String restaurant_name){
+        editor.putString("restaurant_name", restaurant_name);
+        editor.commit();
+    }
+
+    public String fetchRestaurantName() {
+        return sharedPreferences.getString("restaurant_name", null);
+    }
 }

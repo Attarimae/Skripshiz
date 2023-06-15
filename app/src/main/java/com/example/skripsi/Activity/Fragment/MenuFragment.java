@@ -9,11 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.skripsi.API.ServiceGenerator;
 import com.example.skripsi.API.SharedPreferencesCashier;
 import com.example.skripsi.Adapter.MenuGridAdapter;
-import com.example.skripsi.Model.CheckoutItemModel;
 import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.R;
 
@@ -66,7 +67,29 @@ public class MenuFragment extends Fragment {
                 Log.e("Fragment Menu", t.getMessage());
             }
         });
+        //Search View
+        SearchView menuSearchView = view.findViewById(R.id.FT_searchViewMenu);
+        menuSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<MenuItemModel> filteredMenuList = new ArrayList<>();
+                for(MenuItemModel filter : menuList) {
+                    if (filter.getMenuName().toLowerCase().contains(newText.toLowerCase())) {
+                        filteredMenuList.add(filter);
+                        MenuGridAdapter adapter = new MenuGridAdapter(requireActivity(), filteredMenuList);
+                        menuGrid.setAdapter(adapter);
+                    }
+                } if(filteredMenuList.isEmpty()){
+                    Toast.makeText(requireContext(), "Filter not found...", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
         return view;
     }
 }

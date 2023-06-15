@@ -21,6 +21,7 @@ import com.example.skripsi.API.SessionManager;
 import com.example.skripsi.Activity.Fragment.CheckoutFragment;
 import com.example.skripsi.Activity.Fragment.MenuFragment;
 import com.example.skripsi.Activity.Fragment.OrderListFragment;
+import com.example.skripsi.Activity.Fragment.ProfilePictureFragment;
 import com.example.skripsi.Adapter.MainDrawerItemAdapter;
 import com.example.skripsi.Model.MainDrawerMenuModel;
 import com.example.skripsi.R;
@@ -45,7 +46,9 @@ public class CashierMainActivity extends AppCompatActivity {
         sm = new SessionManager(this);
         //Ini buat ngetest aja
         sm.saveAuthToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0aW5nLTM3MzFmOWRkLTZjMTYtNGM2OS1iZTA2LWI1MDkyNGM2YWRmYyIsImlhdCI6MTY4NjQ3OTI0OCwiZXhwIjoxMTgwNTM1NDc0MDEwMjB9.Kz8kFzrASWbMrzYOhu0Nt1bVKB8HgzeMdZe61J3St4DTunj5UivqqLnGGh1vEPbzaXgLa7q3fIPpqLgTsu4HYg");
+        sm.saveRestaurantName("testing");
         sm.saveRestaurantID("testing-3731f9dd-6c16-4c69-be06-b50924c6adfc");
+        sm.saveStaffName("testing");
         sm.saveStaffID("testing-f7dcb933-c6c7-4d46-a713-fe50aa709b38");
         sm.saveStaffRole("cashier");
 
@@ -98,8 +101,8 @@ public class CashierMainActivity extends AppCompatActivity {
         switch (position) {
 
             case 0: // Profile Picture Fragment
-                //fragment = new MenuFragment();
-                //Toast.makeText(this, "Profile Picture Soon", Toast.LENGTH_SHORT).show();
+                fragment = new ProfilePictureFragment();
+                removeCheckoutCart();
                 break;
             case 1: // Home Fragment
                 fragment = new MenuFragment();
@@ -113,7 +116,7 @@ public class CashierMainActivity extends AppCompatActivity {
                 //fragment = new MenuFragment();
                 //removeCheckoutCart();
                 break;
-            case 4: // Report Order Fragment
+            case 4: // Sales Report / Report Order Fragment
                 //fragment = new CheckoutFragment();
                 //removeCheckoutCart();
                 break;
