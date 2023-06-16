@@ -33,7 +33,7 @@ public class OrderListGridAdapter extends ArrayAdapter<OrderListItemDataModel> {
         TextView orderListPrice = listitem.findViewById(R.id.order_list_TotalPrice);
         ImageView orderListImage = listitem.findViewById(R.id.order_list_Image);
 
-        orderListName.setText("Table Number: " + menuItemModel.getTableNumber());
+        orderListName.setText(String.valueOf(menuItemModel.getTableNumber()));
         orderListPrice.setText(menuItemModel.getTotalPrice());
         orderListImage.setImageResource(R.drawable.ic_launcher_background);
         //orderListImage.setImageResource(menuItemModel.getImgID());

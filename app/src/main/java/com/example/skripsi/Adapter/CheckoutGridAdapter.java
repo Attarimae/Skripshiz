@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.skripsi.Activity.Fragment.CheckoutFragment;
 import com.example.skripsi.Model.CheckoutItemModel;
 import com.example.skripsi.R;
 
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 
 public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
 
+    private CheckoutFragment checkoutFragment;
+
     private String formatPrice(int price){
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setGroupingSeparator('.');
@@ -29,8 +32,9 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
         return decimalFormat.format(price);
     }
 
-    public CheckoutGridAdapter(@NonNull Context context, ArrayList<CheckoutItemModel> checkoutList) {
+    public CheckoutGridAdapter(@NonNull Context context, ArrayList<CheckoutItemModel> checkoutList, CheckoutFragment checkoutFragment) {
         super(context, 0, checkoutList);
+        this.checkoutFragment = checkoutFragment;
     }
 
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
@@ -48,10 +52,10 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
         ImageView checkoutImg = listitem.findViewById(R.id.checkout_Image);
 
         final String txtCheckoutPrice = checkoutItemModel.getCheckoutMenuPrice();
-        final String txtPrice = txtCheckoutPrice.substring(4).replace(".", "");
+        final String replace_txtPrice = txtCheckoutPrice.substring(4).replace(".", "");
 
         final Integer checkoutTotalQty = checkoutItemModel.getCheckoutMenuQuantity();
-        final Integer checkoutSubtotalPrice = Integer.parseInt(txtPrice) * checkoutTotalQty;
+        final Integer checkoutSubtotalPrice = Integer.parseInt(replace_txtPrice) * checkoutTotalQty;
 
         checkoutName.setText(checkoutItemModel.getCheckoutMenuName());
         checkoutQuantity.setText(String.valueOf(checkoutTotalQty));
@@ -63,9 +67,10 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
             public void onClick(View v) {
                 checkoutItemModel.setCheckoutMenuQuantity(checkoutItemModel.getCheckoutMenuQuantity() + 1);
                 int updatedQuantity = checkoutItemModel.getCheckoutMenuQuantity();
-                int updatedPrice = Integer.parseInt(txtPrice) * updatedQuantity;
+                int updatedPrice = Integer.parseInt(replace_txtPrice) * updatedQuantity;
                 checkoutQuantity.setText(String.valueOf(updatedQuantity));
                 checkoutPrice.setText("Rp. " + formatPrice(updatedPrice));
+                checkoutFragment.updateTotalPrice();
             }
         });
 
@@ -76,16 +81,17 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
                 if (currentQuantity > 0) {
                     checkoutItemModel.setCheckoutMenuQuantity(currentQuantity - 1);
                     int updatedQuantity = checkoutItemModel.getCheckoutMenuQuantity();
-                    int updatedPrice = Integer.parseInt(txtPrice) * updatedQuantity;
+                    int updatedPrice = Integer.parseInt(replace_txtPrice) * updatedQuantity;
                     checkoutQuantity.setText(String.valueOf(updatedQuantity));
                     checkoutPrice.setText("Rp. " + formatPrice(updatedPrice));
+                    checkoutFragment.updateTotalPrice();
                 } else {
                     Toast.makeText(v.getContext(), "Quantity can't be less than 0", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-
+        checkoutFragment.updateTotalPrice();
 
         return listitem;
     }

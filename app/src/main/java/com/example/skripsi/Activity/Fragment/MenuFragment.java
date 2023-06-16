@@ -82,10 +82,11 @@ public class MenuFragment extends Fragment {
                 for(MenuItemModel filter : menuList) {
                     if (filter.getMenuName().toLowerCase().contains(newText.toLowerCase())) {
                         filteredMenuList.add(filter);
-                        MenuGridAdapter adapter = new MenuGridAdapter(requireActivity(), filteredMenuList);
-                        menuGrid.setAdapter(adapter);
                     }
-                } if(filteredMenuList.isEmpty()){
+                }
+                MenuGridAdapter adapter = new MenuGridAdapter(requireActivity(), filteredMenuList);
+                menuGrid.setAdapter(adapter);
+                if(filteredMenuList.isEmpty()){
                     Toast.makeText(requireContext(), "Filter not found...", Toast.LENGTH_SHORT).show();
                 }
                 return false;

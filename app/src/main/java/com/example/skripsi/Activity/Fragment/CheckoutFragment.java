@@ -34,6 +34,7 @@ public class CheckoutFragment extends Fragment {
 
     private ArrayList<OrderListItemDetailsDataModel> orderListDetails;
     private ArrayList<CheckoutItemModel> checkoutList;
+    private TextView checkoutTotalPrice;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,23 +59,13 @@ public class CheckoutFragment extends Fragment {
         checkoutList = spc.fetchCheckoutList();
         Log.i("Fragment Checkout", "onCreateView: " + checkoutList.size());
 
-        CheckoutGridAdapter adapter = new CheckoutGridAdapter(requireActivity(), checkoutList);
+        CheckoutGridAdapter adapter = new CheckoutGridAdapter(requireActivity(), checkoutList, this);
         checkoutGrid.setAdapter(adapter);
 
         EditText checkoutTableNumber = view.findViewById(R.id.FR_editTextCheckoutTableNumber);
-        TextView checkoutTotalPrice = view.findViewById(R.id.FR_txtViewCheckoutTotalPriceRight);
-        int totalPrice = 0;
-        int price, quantity;
-
-        for (CheckoutItemModel item : checkoutList) {
-            price = Integer.parseInt(item.getCheckoutMenuPrice().substring(4).replace(".", ""));
-            quantity = item.getCheckoutMenuQuantity();
-            totalPrice += price * quantity;
-        }
+        checkoutTotalPrice = view.findViewById(R.id.FR_txtViewCheckoutTotalPriceRight);
 
         adapter.notifyDataSetChanged();
-
-        checkoutTotalPrice.setText("Rp. " + formatPrice(totalPrice));
 
         Button checkoutButton = view.findViewById(R.id.FR_buttonCheckout);
 
@@ -115,5 +106,18 @@ public class CheckoutFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void updateTotalPrice(){
+        int totalPrice = 0;
+        int price, quantity;
+
+        for (CheckoutItemModel item : checkoutList) {
+            price = Integer.parseInt(item.getCheckoutMenuPrice().substring(4).replace(".", ""));
+            quantity = item.getCheckoutMenuQuantity();
+            totalPrice += price * quantity;
+        }
+
+        checkoutTotalPrice.setText("Rp. " + formatPrice(totalPrice));
     }
 }

@@ -3,18 +3,23 @@ package com.example.skripsi.Activity.Fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.skripsi.API.ServiceGenerator;
+import com.example.skripsi.API.SharedPreferencesCashier;
 import com.example.skripsi.Adapter.OrderListGridAdapter;
 import com.example.skripsi.Model.Orders.OrderListItemDataModel;
+import com.example.skripsi.Model.Orders.OrderListItemDetailsDataModel;
 import com.example.skripsi.R;
 
 import java.util.ArrayList;
@@ -26,6 +31,7 @@ import retrofit2.Response;
 public class OrderListFragment extends Fragment {
 
     private ArrayList<OrderListItemDataModel> orderListArrayList;
+    private OrderListItemDataModel selectedOrderListArrayList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,8 +46,8 @@ public class OrderListFragment extends Fragment {
         GridView orderListGrid = view.findViewById(R.id.FR_gridOrderList);
         orderListArrayList = new ArrayList<>();
 
-        orderListArrayList.add(new OrderListItemDataModel("101", "Rp 420.690", R.drawable.ic_launcher_background));
-        orderListArrayList.add(new OrderListItemDataModel("200", "Rp 100.001", R.drawable.ic_launcher_background));
+//        orderListArrayList.add(new OrderListItemDataModel("101", "Rp 420.690", R.drawable.ic_launcher_background));
+//        orderListArrayList.add(new OrderListItemDataModel("200", "Rp 100.001", R.drawable.ic_launcher_background));
 //        orderListArrayList.add(new OrderListItemDataModel("256", "Rp 12.345", R.drawable.ic_launcher_background));
 
         OrderListGridAdapter adapter = new OrderListGridAdapter(requireActivity(), orderListArrayList);
@@ -68,8 +74,10 @@ public class OrderListFragment extends Fragment {
                 Log.e("Fragment OrderList", t.getMessage());
             }
         });
+
         //Search View
         SearchView orderListSearchView = view.findViewById(R.id.FT_searchViewOrderList);
+        orderListSearchView.setInputType(InputType.TYPE_CLASS_NUMBER);
         orderListSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -79,18 +87,35 @@ public class OrderListFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 ArrayList<OrderListItemDataModel> filteredOrderList = new ArrayList<>();
-                for(OrderListItemDataModel filter : orderListArrayList){
-                    if(String.valueOf(filter.getTableNumber()).toLowerCase().contains(newText.toLowerCase())){
+                for(OrderListItemDataModel filter : orderListArrayList) {
+                    if (String.valueOf(filter.getTableNumber()).toLowerCase().contains(newText.toLowerCase())) {
                         filteredOrderList.add(filter);
-                        OrderListGridAdapter adapter = new OrderListGridAdapter(requireActivity(), filteredOrderList);
-                        orderListGrid.setAdapter(adapter);
                     }
-                } if(filteredOrderList.isEmpty()){
+                }
+                OrderListGridAdapter adapter = new OrderListGridAdapter(requireActivity(), filteredOrderList);
+                orderListGrid.setAdapter(adapter);
+                if(filteredOrderList.isEmpty()){
                     Toast.makeText(requireContext(), "Filter not found...", Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
         });
+
+        orderListGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedOrderListArrayList = adapter.getItem(position);
+                openOrderDetails(selectedOrderListArrayList.getOrder_detail());
+            }
+        });
         return view;
+    }
+
+    private void openOrderDetails(ArrayList<OrderListItemDetailsDataModel> order_detail){
+        SharedPreferencesCashier spc = new SharedPreferencesCashier(requireContext());
+        spc.saveOrderDetails(order_detail);
+        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, new OrderDetailsFragment());
+        ft.commit();
     }
 }
