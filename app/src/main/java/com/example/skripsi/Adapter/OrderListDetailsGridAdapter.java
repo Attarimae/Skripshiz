@@ -1,7 +1,6 @@
 package com.example.skripsi.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.skripsi.Activity.Fragment.OrderDetailsFragment;
+import com.example.skripsi.Activity.Fragment.OrderListDetailsFragment;
 import com.example.skripsi.Model.Orders.OrderListItemDetailsDataModel;
 import com.example.skripsi.R;
 
@@ -24,14 +23,19 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
-public class OrderDetailsGridAdapter extends ArrayAdapter<OrderListItemDetailsDataModel> {
+public class OrderListDetailsGridAdapter extends ArrayAdapter<OrderListItemDetailsDataModel> {
 
-    private OrderDetailsFragment orderDetailsFragment;
-    private String[] spinnerStatus = {
-            "Order Receive",
-            "Order Has been Prepare",
-            "Order Has been Cooking",
-            "Order Has been Serve"
+    private OrderListDetailsFragment orderListDetailsFragment;
+
+    private final String[] spinnerStatus = {
+            "Order Receive", // 01
+            "Order Has been Prepare", // 02
+            "Order Has been Cooking", // 03
+            "Order Has been Serve" // 04
+    };
+
+    private final String[] spinnerID_Status = {
+            "01", "02", "03", "04"
     };
 
     private String formatPrice(int price){
@@ -41,9 +45,9 @@ public class OrderDetailsGridAdapter extends ArrayAdapter<OrderListItemDetailsDa
         return decimalFormat.format(price);
     }
 
-    public OrderDetailsGridAdapter(@NonNull Context context, @NonNull ArrayList<OrderListItemDetailsDataModel> orderListItemDetailsDataModels, OrderDetailsFragment orderDetailsFragment) {
+    public OrderListDetailsGridAdapter(@NonNull Context context, @NonNull ArrayList<OrderListItemDetailsDataModel> orderListItemDetailsDataModels, OrderListDetailsFragment orderListDetailsFragment) {
         super(context, 0, orderListItemDetailsDataModels);
-        this.orderDetailsFragment = orderDetailsFragment;
+        this.orderListDetailsFragment = orderListDetailsFragment;
     }
 
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
@@ -61,12 +65,23 @@ public class OrderDetailsGridAdapter extends ArrayAdapter<OrderListItemDetailsDa
         ImageView orderDetailsImage = listitem.findViewById(R.id.orderdetails_Image);
 
         Spinner orderDetailsStatus = listitem.findViewById(R.id.orderdetails_optionStatus);
-        ArrayAdapter<CharSequence> spinnerAD = new ArrayAdapter<>(orderDetailsFragment.requireContext(), android.R.layout.simple_spinner_item, spinnerStatus);
+        ArrayAdapter<CharSequence> spinnerAD = new ArrayAdapter<>(orderListDetailsFragment.requireContext(), android.R.layout.simple_spinner_item, spinnerStatus);
         spinnerAD.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         orderDetailsStatus.setAdapter(spinnerAD);
         final String strCurrentStatus = orderListItemDetailsDataModel.getStatus();
         final int spinnerPosition = spinnerAD.getPosition(strCurrentStatus);
         orderDetailsStatus.setSelection(spinnerPosition);
+        orderDetailsStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                orderListItemDetailsDataModel.setStatus(spinnerID_Status[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //Auto Generated
+            }
+        });
 
         final String txtOrderDetailsPrice = orderListItemDetailsDataModel.getMenuPrice();
         final Integer orderDetailsQty = orderListItemDetailsDataModel.getMenuQuantity();
@@ -77,7 +92,7 @@ public class OrderDetailsGridAdapter extends ArrayAdapter<OrderListItemDetailsDa
         orderDetailsPrice.setText("Rp. " + formatPrice(orderDetailsSubtotalPrice));
         orderDetailsImage.setImageResource(orderListItemDetailsDataModel.getImgID());
 
-        orderDetailsFragment.updateTotalPrice();
+        orderListDetailsFragment.updateTotalPrice();
 
         addOrderDetailsQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +102,7 @@ public class OrderDetailsGridAdapter extends ArrayAdapter<OrderListItemDetailsDa
                 int updatedPrice = Integer.parseInt(txtOrderDetailsPrice) * updatedQuantity;
                 orderDetailsQuantity.setText(String.valueOf(updatedQuantity));
                 orderDetailsPrice.setText("Rp. " + formatPrice(updatedPrice));
-                orderDetailsFragment.updateTotalPrice();
+                orderListDetailsFragment.updateTotalPrice();
             }
         });
 
@@ -101,7 +116,7 @@ public class OrderDetailsGridAdapter extends ArrayAdapter<OrderListItemDetailsDa
                     int updatedPrice = Integer.parseInt(txtOrderDetailsPrice) * updatedQuantity;
                     orderDetailsQuantity.setText(String.valueOf(updatedQuantity));
                     orderDetailsPrice.setText("Rp. " + formatPrice(updatedPrice));
-                    orderDetailsFragment.updateTotalPrice();
+                    orderListDetailsFragment.updateTotalPrice();
                 } else {
                     Toast.makeText(v.getContext(), "Quantity can't be less than 0", Toast.LENGTH_LONG).show();
                 }

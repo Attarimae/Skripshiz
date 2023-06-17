@@ -1,0 +1,91 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/FR_txtViewOrderDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order Details"
+            android:padding="10dp"
+            android:textSize="32sp"
+            android:layout_gravity="center_horizontal"/>
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/FR_txtViewOrderDetailsTableNumberTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Table Number"
+                android:layout_marginTop="5dp"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/FR_txtViewOrderDetailsTableNumberBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/FR_gridOrderDetails"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:numColumns="1"
+        android:horizontalSpacing="2dp"
+        android:verticalSpacing="2dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/FR_txtViewOrderDetailsTotalPriceLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total"
+            android:layout_margin="10dp"
+            android:textSize="30sp" />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/FR_txtViewOrderDetailsTotalPriceRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp 69.000"
+            android:layout_marginEnd="24dp"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

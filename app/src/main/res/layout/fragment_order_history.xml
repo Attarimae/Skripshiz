@@ -1,15 +1,16 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".Activity.Fragment.OrderHistoryFragment"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/FR_txtViewOrderList"
+        android:id="@+id/FR_txtViewOrderHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ORDER LIST"
+        android:text="ORDER HISTORY"
         android:padding="10dp"
         android:textSize="24sp"
         android:layout_gravity="center_horizontal"/>
@@ -17,13 +18,13 @@
     <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/FT_searchViewOrderList"
+        android:id="@+id/FT_searchViewOrderHistory"
         android:iconifiedByDefault="false"
         android:queryHint="Search Order Here"
         android:layout_marginBottom="5dp"/>
 
     <GridView
-        android:id="@+id/FR_gridOrderList"
+        android:id="@+id/FR_gridOrderHistory"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

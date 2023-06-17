@@ -21,17 +21,17 @@ public class OrderListItemDetailsDataModel {
     @SerializedName("order_detail_id")
     private String order_detail_id;
 
-    //Display
-    public OrderListItemDetailsDataModel(String menuId, String menuName, String menuPrice, String menuDescription, int menuQuantity, int imgID, String status, String order_detail_id) {
-        this.menuId = menuId;
-        this.menuName = menuName;
-        this.menuPrice = menuPrice;
-        this.menuDescription = menuDescription;
-        this.menuQuantity = menuQuantity;
-        this.imgID = imgID;
-        this.status = status;
-        this.order_detail_id = order_detail_id;
-    }
+    //Display Dummy Data
+//    public OrderListItemDetailsDataModel(String menuId, String menuName, String menuPrice, String menuDescription, int menuQuantity, int imgID, String status, String order_detail_id) {
+//        this.menuId = menuId;
+//        this.menuName = menuName;
+//        this.menuPrice = menuPrice;
+//        this.menuDescription = menuDescription;
+//        this.menuQuantity = menuQuantity;
+//        this.imgID = imgID;
+//        this.status = status;
+//        this.order_detail_id = order_detail_id;
+//    }
 
     //POST ke Endpoint
     public OrderListItemDetailsDataModel(String menuName, String menuPrice, String menuDescription, int menuQuantity, int imgID) {

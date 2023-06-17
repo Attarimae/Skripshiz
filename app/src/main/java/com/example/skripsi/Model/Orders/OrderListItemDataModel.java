@@ -8,37 +8,57 @@ public class OrderListItemDataModel {
 
     @SerializedName(value = "tableNumber", alternate = "table_number")
     private int tableNumber;
-    @SerializedName(value="order_id", alternate="orderId")
+    @SerializedName(value="orderId", alternate="order_id")
     private String orderId;
-    @SerializedName(value = "order_detail", alternate = "orderDetails") //Ini adalah "order_detail"
+    @SerializedName(value = "orderDetails", alternate = "order_details") //Ini adalah "order_detail"
     ArrayList<OrderListItemDetailsDataModel> order_detail;
-    //Kita perlu Nama Ordernya gk ya
-    private String orderName;
-    //Ini perlu juga kah?
+    @SerializedName(value = "order_status")
+    private String order_status;
+    @SerializedName(value = "order_done")
+    private int order_done;
+    @SerializedName(value = "total_price")
     private String totalPrice;
-    //Ini juga kah?
-    private int imgID;
+    @SerializedName(value = "id")
+    private String id;
+//    private String orderName;
+//    private int imgID;
 
-    //Ini buat Display
-    public OrderListItemDataModel(String orderName, String totalPrice, int imgID) {
-        this.orderName = orderName;
-        this.totalPrice = totalPrice;
-        this.imgID = imgID;
-    }
+    //Ini buat Display Dummy Data
+//    public OrderListItemDataModel(String orderName, String totalPrice, int imgID) {
+//        this.orderName = orderName;
+//        this.totalPrice = totalPrice;
+//        this.imgID = imgID;
+//    }
 
     //Ini buat POST ke Endpoint Create Order
     public OrderListItemDataModel(int tableNumber, ArrayList<OrderListItemDetailsDataModel> order_detail){
         this.tableNumber = tableNumber;
         this.order_detail = order_detail;
+        this.order_status = order_status;
     }
 
-    public String getOrderName() {
-        return orderName;
+    //Ini buat GET Order List/Order History
+    public OrderListItemDataModel(int tableNumber, ArrayList<OrderListItemDetailsDataModel> order_detail, String order_status, String id){
+        this.tableNumber = tableNumber;
+        this.order_detail = order_detail;
+        this.order_status = order_status;
+        this.id = id;
     }
 
-    public void setOrderName(String orderName) {
-        this.orderName = orderName;
+    //Ini buat PATCH ke Endpoint Update Order
+    public OrderListItemDataModel(String orderId, int tableNumber, ArrayList<OrderListItemDetailsDataModel> order_detail){
+        this.orderId = orderId;
+        this.tableNumber = tableNumber;
+        this.order_detail = order_detail;
     }
+
+//    public String getOrderName() {
+//        return orderName;
+//    }
+//
+//    public void setOrderName(String orderName) {
+//        this.orderName = orderName;
+//    }
 
     public String getTotalPrice() {
         return totalPrice;
@@ -48,13 +68,13 @@ public class OrderListItemDataModel {
         this.totalPrice = totalPrice;
     }
 
-    public int getImgID() {
-        return imgID;
-    }
-
-    public void setImgID(int imgID) {
-        this.imgID = imgID;
-    }
+//    public int getImgID() {
+//        return imgID;
+//    }
+//
+//    public void setImgID(int imgID) {
+//        this.imgID = imgID;
+//    }
 
     public int getTableNumber() {
         return tableNumber;
@@ -78,5 +98,29 @@ public class OrderListItemDataModel {
 
     public void setOrder_detail(ArrayList<OrderListItemDetailsDataModel> order_detail) {
         this.order_detail = order_detail;
+    }
+
+    public String getOrder_status() {
+        return order_status;
+    }
+
+    public void setOrder_status(String order_status) {
+        this.order_status = order_status;
+    }
+
+    public int getOrder_done() {
+        return order_done;
+    }
+
+    public void setOrder_done(int order_done) {
+        this.order_done = order_done;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
