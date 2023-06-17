@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.skripsi.Model.CheckoutItemModel;
+import com.example.skripsi.Model.Orders.OrderListItemDetailsDataModel;
 import com.example.skripsi.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -15,6 +16,7 @@ public class SharedPreferencesCashier {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     ArrayList<CheckoutItemModel> checkoutList;
+    ArrayList<OrderListItemDetailsDataModel> order_detail;
 
     public SharedPreferencesCashier(Context context) {
         sharedPreferences = context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE);
@@ -22,6 +24,7 @@ public class SharedPreferencesCashier {
         editor.apply();
     }
 
+    //Checkout (Create Order)
     public void saveCheckoutList(ArrayList<CheckoutItemModel> checkoutList){
         Gson gson = new Gson();
         String json = gson.toJson(checkoutList);
@@ -40,6 +43,7 @@ public class SharedPreferencesCashier {
         return checkoutList;
     }
 
+    //Profile Picture
     public void saveCashierPic(String storedImgB64){
         editor.putString("cashierImage", storedImgB64);
         editor.commit();
@@ -47,5 +51,24 @@ public class SharedPreferencesCashier {
 
     public String fetchCashierPic(){
         return sharedPreferences.getString("cashierImage", null);
+    }
+
+    //Order Details
+    public void saveOrderDetails(ArrayList<OrderListItemDetailsDataModel> order_detail){
+        Gson gson = new Gson();
+        String json = gson.toJson(order_detail);
+        editor.putString("order_detail", json);
+        editor.commit();
+    }
+
+    public ArrayList<OrderListItemDetailsDataModel> fetchOrderDetails(){
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("order_detail", null);
+        Type type = new TypeToken<ArrayList<OrderListItemDetailsDataModel>>() {}.getType();
+        order_detail = gson.fromJson(json, type);
+        if(order_detail == null){
+            order_detail = new ArrayList<>();
+        }
+        return order_detail;
     }
 }

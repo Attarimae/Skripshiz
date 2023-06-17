@@ -74,7 +74,7 @@
             android:textSize="30sp" />
 
         <Space
-            android:layout_width="10dp"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             />
 
@@ -88,12 +88,32 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/FR_buttonPayment"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Checkout"
-        android:layout_gravity="center_horizontal"/>
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/FR_buttonUpdateOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Update Order"
+            android:layout_gravity="center_horizontal"/>
+
+        <Space
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/FR_buttonPayment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Payment"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, ManagerMainActivity.class);
+                Intent intent = new Intent(MainActivity.this, CashierMainActivity.class);
                 startActivity(intent);
                 finish();
             }
