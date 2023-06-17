@@ -16,7 +16,7 @@ import com.example.skripsi.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static int SPLASH_SCREEN =4000;
+    private static int SPLASH_SCREEN =3000;
 
     Animation topAnim,topAnimLong,bottoAnim;
 
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, CashierMainActivity.class);
+                Intent intent = new Intent(MainActivity.this, ManageMenuActivity.class);
                 startActivity(intent);
                 finish();
             }

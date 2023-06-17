@@ -7,20 +7,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/grid_item_background">
+        android:background="@drawable/grid_item_background"
+        >
 
         <ImageView
             android:id="@+id/menu_Image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@mipmap/ic_launcher"/>
 
         <TextView
             android:id="@+id/menu_Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ayam Geprek Legend"
+            android:textColor="@color/black"
             android:textAlignment="center" />
 
         <TextView
@@ -28,7 +32,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Rp. 69.000"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="#888787"
+            android:layout_marginBottom="10dp"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

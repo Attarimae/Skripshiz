@@ -11,12 +11,18 @@ import com.google.gson.annotations.JsonAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface APIInterface {
     //Register Restaurant
@@ -80,15 +86,19 @@ public interface APIInterface {
     //Call<MenuDataModel> getMenuCategory(@Query("category") String category);
     //blm kubuat bisa pake API ini, mungkin perlu kuupdate jg ini
 
-    //Upload Photo
-    //@POST("/upload/")
-    //
+    @Multipart
+    @POST("/upload")
+    Call<ResponseBody> uploadFile(
+            @Part MultipartBody.Part file,
+            @Part("type") RequestBody type,
+            @Part("name") RequestBody name,
+            @Part("Authorization") RequestBody authorization
+    );
 
     //Delete Photo
     //@DELETE("/delete/")
     //
 
-    //Get Photo
-    //@GET("/download/")
-    //
+    @GET("/download/{params}")
+    Call<ResponseBody> getPhoto(@Path("params") String params);
 }

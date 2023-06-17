@@ -17,10 +17,10 @@ public class MenuItemModel implements Serializable {
     @SerializedName("description")
     private String menuDescription;
     @SerializedName("picture_code")
-    private int imgID; //R.drawable pake int soalny
+    private String imgID; //R.drawable pake int soalny
 
     //Display
-    public MenuItemModel(String menuName, String menuPrice, int imgID,int id) {
+    public MenuItemModel(String menuName, String menuPrice, String imgID,int id) {
         this.menuName = menuName;
         this.menuPrice = menuPrice;
         this.imgID = imgID;
@@ -28,7 +28,7 @@ public class MenuItemModel implements Serializable {
     }
 
     //POST ke Endpoint
-    public MenuItemModel(int id,String menuCategory, String menuName, String menuDescription, String menuPrice, int imgID){
+    public MenuItemModel(int id,String menuCategory, String menuName, String menuDescription, String menuPrice, String imgID){
         this.id = id;
         this.menuCategory = menuCategory;
         this.menuName = menuName;
@@ -53,11 +53,11 @@ public class MenuItemModel implements Serializable {
         this.menuPrice = menuPrice;
     }
 
-    public int getImgID() {
+    public String getImgID() {
         return imgID;
     }
 
-    public void setImgID(int imgID) {
+    public void setImgID(String imgID) {
         this.imgID = imgID;
     }
 

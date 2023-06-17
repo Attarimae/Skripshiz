@@ -44,7 +44,7 @@ public class MenuGridAdapter extends ArrayAdapter<MenuItemModel> {
 
         menuName.setText(menuItemModel.getMenuName());
         menuPrice.setText(menuItemModel.getMenuPrice());
-        menuImage.setImageResource(menuItemModel.getImgID());
+//        menuImage.setImageResource(Integer.parseInt(menuItemModel.getImgID()));
 
         listItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +54,7 @@ public class MenuGridAdapter extends ArrayAdapter<MenuItemModel> {
                         menuItemModel.getMenuPrice(),
                         menuItemModel.getMenuCategory(),
                         menuItemModel.getMenuDescription(),
-                        menuItemModel.getImgID(),
+                        1,
                         1));
 
                 SharedPreferences sharedPreferences = context.getSharedPreferences("Point of Sales", Context.MODE_PRIVATE);

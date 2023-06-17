@@ -11,7 +11,7 @@ public class ServiceGenerator {
 
     private APIInterface apiInterface;
 
-    private final String BASE_URL = "https://65db-2001-448a-20b0-f7a4-7949-a780-733f-5c7c.ngrok-free.app";
+    private final String BASE_URL = "https://780d-2001-448a-20b0-f7a4-e465-3239-cd97-5bb5.ngrok-free.app";
 
     public APIInterface getApiService(Context context) {
         // Initialize ApiService if not initialized yet

@@ -58,7 +58,7 @@ public class MenuFragment extends Fragment {
                     String menuDescription = response.body().get(i).getMenuDescription();
                     int id = response.body().get(i).getId();
                     //int menuImg = response.body().get(i).getImgID(); karena masih null, jadi g kumasukkin dlu
-                    menuList.add(new MenuItemModel(id,menuCategory, menuName, menuDescription, menuPrice, R.drawable.ic_launcher_background));
+                    menuList.add(new MenuItemModel(id,menuCategory, menuName, menuDescription, menuPrice, "R.drawable.ic_launcher_background"));
                     adapter.notifyDataSetChanged();
                 }
             }
