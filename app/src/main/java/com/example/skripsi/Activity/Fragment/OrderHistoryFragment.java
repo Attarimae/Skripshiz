@@ -28,10 +28,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OrderListFragment extends Fragment {
+public class OrderHistoryFragment extends Fragment {
 
-    private ArrayList<OrderListItemDataModel> orderListArrayList;
-    private OrderListItemDataModel selectedOrderListArrayList;
+    private ArrayList<OrderListItemDataModel> orderHistoryArrayList;
+    private OrderListItemDataModel selectedOrderHistoryArrayList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,17 +41,13 @@ public class OrderListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_order_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_order_history, container, false);
 
-        GridView orderListGrid = view.findViewById(R.id.FR_gridOrderList);
-        orderListArrayList = new ArrayList<>();
+        GridView orderHistoryGrid = view.findViewById(R.id.FR_gridOrderHistory);
+        orderHistoryArrayList = new ArrayList<>();
 
-//        orderListArrayList.add(new OrderListItemDataModel("101", "Rp 420.690", R.drawable.ic_launcher_background));
-//        orderListArrayList.add(new OrderListItemDataModel("200", "Rp 100.001", R.drawable.ic_launcher_background));
-//        orderListArrayList.add(new OrderListItemDataModel("256", "Rp 12.345", R.drawable.ic_launcher_background));
-
-        OrderListGridAdapter adapter = new OrderListGridAdapter(requireActivity(), orderListArrayList);
-        orderListGrid.setAdapter(adapter);
+        OrderListGridAdapter adapter = new OrderListGridAdapter(requireActivity(), orderHistoryArrayList);
+        orderHistoryGrid.setAdapter(adapter);
 
         ServiceGenerator service = new ServiceGenerator();
         Call<ArrayList<OrderListItemDataModel>> call = service.getApiService(requireContext()).getAllOrderList();
@@ -60,32 +56,25 @@ public class OrderListFragment extends Fragment {
             public void onResponse(Call<ArrayList<OrderListItemDataModel>> call, Response<ArrayList<OrderListItemDataModel>> response) {
                 int orderListSize = response.body().size();
                 for(int i=0; i < orderListSize; i++){
-//                    if(response.body().get(i).getOrder_status().equals("Order Ongoing")){
-//                        orderListArrayList.add(new OrderListItemDataModel(
-//                                response.body().get(i).getTableNumber(),
-//                                response.body().get(i).getOrder_detail(),
-//                                response.body().get(i).getOrder_status()
-//                        ));
-//                    }
-                    orderListArrayList.add(new OrderListItemDataModel(
-                            response.body().get(i).getTableNumber(),
-                            response.body().get(i).getOrder_detail(),
-                            response.body().get(i).getOrder_status(),
-                            response.body().get(i).getId()
+                    if(response.body().get(i).getOrder_status().equals("Order Finished") || response.body().get(i).getOrder_status().equals("Order Cancelled")){
+                        orderHistoryArrayList.add(new OrderListItemDataModel(
+                                response.body().get(i).getTableNumber(),
+                                response.body().get(i).getOrder_detail(),
+                                response.body().get(i).getOrder_status(),
+                                response.body().get(i).getId()
                         ));
+                    }
                     adapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<OrderListItemDataModel>> call, Throwable t) {
-                Log.e("Fragment OrderList", "onFailure: Failed Get Order List");
-                Log.e("Fragment OrderList", t.getMessage());
+                Log.e("Fragment OrderHistory", "onFailure: Failed Get Order History");
+                Log.e("Fragment OrderHistory", t.getMessage());
             }
         });
-
-        //Search View
-        SearchView orderListSearchView = view.findViewById(R.id.FT_searchViewOrderList);
+        SearchView orderListSearchView = view.findViewById(R.id.FT_searchViewOrderHistory);
         orderListSearchView.setInputType(InputType.TYPE_CLASS_NUMBER);
         orderListSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -96,13 +85,13 @@ public class OrderListFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 ArrayList<OrderListItemDataModel> filteredOrderList = new ArrayList<>();
-                for(OrderListItemDataModel filter : orderListArrayList) {
+                for(OrderListItemDataModel filter : orderHistoryArrayList) {
                     if (String.valueOf(filter.getTableNumber()).toLowerCase().contains(newText.toLowerCase())) {
                         filteredOrderList.add(filter);
                     }
                 }
                 OrderListGridAdapter adapter = new OrderListGridAdapter(requireActivity(), filteredOrderList);
-                orderListGrid.setAdapter(adapter);
+                orderHistoryGrid.setAdapter(adapter);
                 if(filteredOrderList.isEmpty()){
                     Toast.makeText(requireContext(), "Filter not found...", Toast.LENGTH_SHORT).show();
                 }
@@ -110,23 +99,25 @@ public class OrderListFragment extends Fragment {
             }
         });
 
-        orderListGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        orderHistoryGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedOrderListArrayList = adapter.getItem(position);
-                openOrderDetails(selectedOrderListArrayList.getId(), selectedOrderListArrayList.getTableNumber(),  selectedOrderListArrayList.getOrder_detail());
+                selectedOrderHistoryArrayList = adapter.getItem(position);
+                openOrderHistoryDetails(selectedOrderHistoryArrayList.getOrderId(),
+                        selectedOrderHistoryArrayList.getTableNumber(),
+                        selectedOrderHistoryArrayList.getOrder_detail());
             }
         });
         return view;
     }
 
-    private void openOrderDetails(String order_id, int table_number, ArrayList<OrderListItemDetailsDataModel> order_detail){
+    private void openOrderHistoryDetails(String order_id, int table_number, ArrayList<OrderListItemDetailsDataModel> order_detail){
         SharedPreferencesCashier spc = new SharedPreferencesCashier(requireContext());
         spc.saveOrderId(order_id);
         spc.saveTableNumber(table_number);
         spc.saveOrderDetails(order_detail);
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, new OrderListDetailsFragment());
+        //ft.replace(R.id.content_frame, new OrderHistoryDetailsFragment());
         ft.commit();
     }
 }

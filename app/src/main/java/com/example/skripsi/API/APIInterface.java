@@ -63,7 +63,6 @@ public interface APIInterface {
     //Get All Menu
     @GET("/menu/")
     Call<ArrayList<MenuItemModel>> getAllMenu();
-    //blm kubuat bisa pake API ini
 
     //Get Order
     @GET("/order")
@@ -76,10 +75,9 @@ public interface APIInterface {
     //blm kutest
 
     //Update Order
-    //@Headers("Content-Type: application/json")
-    //@PATCH("/order/")
-    //Call<OrderDataModel> updateOrder();
-    //masih blm kubuat ini
+    @Headers("Content-Type: application/json")
+    @PATCH("/order/")
+    Call<OrderListItemDataModel> patchOrderDetails(@Body OrderListItemDataModel orderListItemDataModel);
 
     //Get Menu by Category
     //@GET("/menu")

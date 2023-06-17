@@ -54,6 +54,24 @@ public class SharedPreferencesCashier {
     }
 
     //Order Details
+    public void saveOrderId(String order_id){
+        editor.putString("order_id", order_id);
+        editor.commit();
+    }
+
+    public String fetchOrderId(){
+        return sharedPreferences.getString("order_id", null);
+    }
+
+    public void saveTableNumber(int table_number){
+        editor.putInt("table_number", table_number);
+        editor.commit();
+    }
+
+    public int fetchTableNumber(){
+        return sharedPreferences.getInt("table_number", 0);
+    }
+
     public void saveOrderDetails(ArrayList<OrderListItemDetailsDataModel> order_detail){
         Gson gson = new Gson();
         String json = gson.toJson(order_detail);

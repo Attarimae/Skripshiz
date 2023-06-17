@@ -16,9 +16,9 @@ public class MenuItemModel implements Serializable {
     private String menuPrice;
     @SerializedName("description")
     private String menuDescription;
+
     @SerializedName("picture_code")
     private String imgID; //R.drawable pake int soalny
-
     //Display
     public MenuItemModel(String menuName, String menuPrice, String imgID,int id) {
         this.menuName = menuName;
