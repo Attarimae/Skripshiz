@@ -33,11 +33,20 @@ public class ManagerMainActivity extends AppCompatActivity {
 
         mTitle = mDrawerTitle = getTitle();
         MMA_ManageRestoMenu = findViewById(R.id.MMA_ManageRestoMenu);
+
+        MMA_ManageEmployeeMenu = findViewById(R.id.MMA_ManageEmployeeMenu);
         MMA_ManageRestoMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Start the ManageMenuActivity
                 Intent intent = new Intent(ManagerMainActivity.this, ManageMenuActivity.class);
+                startActivity(intent);
+            }
+        });
+        MMA_ManageEmployeeMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ManagerMainActivity.this, ManageEmployee.class);
                 startActivity(intent);
             }
         });

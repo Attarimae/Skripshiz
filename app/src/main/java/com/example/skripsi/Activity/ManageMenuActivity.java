@@ -1,18 +1,18 @@
 package com.example.skripsi.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.example.skripsi.API.ServiceGenerator;
 import com.example.skripsi.Adapter.ManageMenuAdapter;
-import com.example.skripsi.Adapter.MenuGridAdapter;
 import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.R;
 
@@ -25,20 +25,33 @@ import retrofit2.Response;
 public class ManageMenuActivity extends AppCompatActivity {
 
     private ArrayList<MenuItemModel> menuList;
-
-
+    private ArrayList<MenuItemModel> filteredMenuList;
+    private ManageMenuAdapter adapter;
+    private SearchView searchView;
+    private TextView textViewNotFound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_menu);
 
-        GridView menuGrid = findViewById(R.id.FR_gridMenu);
+        GridView menuGrid = findViewById(R.id.FR_gridManageMenu);
         menuList = new ArrayList<>();
-
-        ManageMenuAdapter adapter = new ManageMenuAdapter(this, menuList);
+        filteredMenuList = new ArrayList<>();
+        adapter = new ManageMenuAdapter(this, filteredMenuList);
         menuGrid.setAdapter(adapter);
 
+        textViewNotFound = findViewById(R.id.text_view_not_found);
+
+        // Fetch menu data from API
+        fetchMenuData();
+
+        // Setup search view
+        searchView = findViewById(R.id.FT_searchViewManageMenu);
+        setupSearchView();
+    }
+
+    private void fetchMenuData() {
         ServiceGenerator service = new ServiceGenerator();
         Call<ArrayList<MenuItemModel>> call = service.getApiService(this).getAllMenu();
         call.enqueue(new Callback<ArrayList<MenuItemModel>>() {
@@ -48,7 +61,9 @@ public class ManageMenuActivity extends AppCompatActivity {
                     ArrayList<MenuItemModel> menuItems = response.body();
                     if (menuItems != null) {
                         menuList.addAll(menuItems);
+                        filteredMenuList.addAll(menuItems);
                         adapter.notifyDataSetChanged();
+                        checkIfEmpty();
                     }
                 } else {
                     Log.e("ManageMenuActivity", "Failed to fetch menu data");
@@ -60,5 +75,56 @@ public class ManageMenuActivity extends AppCompatActivity {
                 Log.e("ManageMenuActivity", t.getMessage());
             }
         });
+    }
+
+    private void setupSearchView() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Handle search submit (e.g., perform search)
+                performSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Handle search text change (e.g., perform search as the user types)
+                performSearch(newText);
+                return false;
+            }
+        });
+    }
+
+    private void performSearch(String query) {
+        if (TextUtils.isEmpty(query)) {
+            // Show all menu items if the query is empty
+            filteredMenuList.clear();
+            filteredMenuList.addAll(menuList);
+        } else {
+            // Filter the menu items based on the search query
+            filteredMenuList.clear();
+            for (MenuItemModel menuItem : menuList) {
+                if (menuItem.getMenuName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredMenuList.add(menuItem);
+                }
+            }
+        }
+
+        adapter.notifyDataSetChanged();
+        checkIfEmpty();
+    }
+
+    private void checkIfEmpty() {
+        if (filteredMenuList.isEmpty()) {
+            textViewNotFound.setVisibility(View.VISIBLE);
+        } else {
+            textViewNotFound.setVisibility(View.GONE);
+        }
+    }
+
+    public void onBackButtonClicked(View view) {
+        Intent intent = new Intent(ManageMenuActivity.this,ManagerMainActivity.class);
+        startActivity(intent);
+        finish(); // Optional: If you want to finish the current activity after navigating to ManageMenuActivity
     }
 }

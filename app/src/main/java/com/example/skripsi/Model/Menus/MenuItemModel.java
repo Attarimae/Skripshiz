@@ -8,7 +8,7 @@ public class MenuItemModel implements Serializable {
 
     @SerializedName(value="id")
     private int id;
-    @SerializedName(value="categoryName", alternate={"category","category_name"})
+    @SerializedName(value="category_name", alternate={"category","categoryName"})
     private String menuCategory;
     @SerializedName("menu_name")
     private String menuName;

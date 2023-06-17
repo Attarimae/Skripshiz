@@ -1,15 +1,20 @@
 package com.example.skripsi.API;
 
+import com.example.skripsi.Model.CategoryList;
+import com.example.skripsi.Model.ErrorResponseDeserializer;
 import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.Model.Orders.OrderListItemDataModel;
 import com.example.skripsi.Model.RestaurantDataModel;
 import com.example.skripsi.Model.StaffDataModel;
+import com.google.gson.annotations.JsonAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
@@ -40,9 +45,14 @@ public interface APIInterface {
     //
 
     //Create Menu
-    //@POST("/menu/")
-    //Call<MenuItemModel> postCreateMenu(@Body MenuItemModel menuItemModel);
-    //blm kutest
+    @POST("/menu/")
+    Call<MenuItemModel> postCreateMenu(@Body MenuItemModel menuItemModel);
+
+    @POST("/menu/")
+    Call<MenuItemModel> postCreateMenuWithErrorResponse(@Body MenuItemModel dataModel);
+
+    @GET("/category/")
+    Call<List<CategoryList>> getCategory();
 
     //Get All Menu
     @GET("/menu/")
