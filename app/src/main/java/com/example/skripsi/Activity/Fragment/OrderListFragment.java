@@ -60,19 +60,10 @@ public class OrderListFragment extends Fragment {
             public void onResponse(Call<ArrayList<OrderListItemDataModel>> call, Response<ArrayList<OrderListItemDataModel>> response) {
                 int orderListSize = response.body().size();
                 for(int i=0; i < orderListSize; i++){
-//                    if(response.body().get(i).getOrder_status().equals("Order Ongoing")){
-//                        orderListArrayList.add(new OrderListItemDataModel(
-//                                response.body().get(i).getTableNumber(),
-//                                response.body().get(i).getOrder_detail(),
-//                                response.body().get(i).getOrder_status()
-//                        ));
-//                    }
                     orderListArrayList.add(new OrderListItemDataModel(
                             response.body().get(i).getTableNumber(),
-                            response.body().get(i).getOrder_detail(),
-                            response.body().get(i).getOrder_status(),
-                            response.body().get(i).getId()
-                        ));
+                            response.body().get(i).getOrder_detail()
+                    ));
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -114,16 +105,14 @@ public class OrderListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedOrderListArrayList = adapter.getItem(position);
-                openOrderDetails(selectedOrderListArrayList.getId(), selectedOrderListArrayList.getTableNumber(),  selectedOrderListArrayList.getOrder_detail());
+                openOrderDetails(selectedOrderListArrayList.getOrder_detail());
             }
         });
         return view;
     }
 
-    private void openOrderDetails(String order_id, int table_number, ArrayList<OrderListItemDetailsDataModel> order_detail){
+    private void openOrderDetails(ArrayList<OrderListItemDetailsDataModel> order_detail){
         SharedPreferencesCashier spc = new SharedPreferencesCashier(requireContext());
-        spc.saveOrderId(order_id);
-        spc.saveTableNumber(table_number);
         spc.saveOrderDetails(order_detail);
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, new OrderListDetailsFragment());

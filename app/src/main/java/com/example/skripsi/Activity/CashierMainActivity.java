@@ -20,6 +20,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import com.example.skripsi.API.SessionManager;
 import com.example.skripsi.Activity.Fragment.CheckoutFragment;
 import com.example.skripsi.Activity.Fragment.MenuFragment;
+import com.example.skripsi.Activity.Fragment.OrderHistoryFragment;
 import com.example.skripsi.Activity.Fragment.OrderListFragment;
 import com.example.skripsi.Activity.Fragment.ProfilePictureFragment;
 import com.example.skripsi.Adapter.MainDrawerItemAdapter;
@@ -113,7 +114,7 @@ public class CashierMainActivity extends AppCompatActivity {
                 removeCheckoutCart();
                 break;
             case 3: // Order History Fragment
-                //fragment = new MenuFragment();
+                fragment = new OrderHistoryFragment();
                 //removeCheckoutCart();
                 break;
             case 4: // Sales Report / Report Order Fragment

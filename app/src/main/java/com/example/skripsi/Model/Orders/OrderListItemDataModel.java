@@ -20,6 +20,7 @@ public class OrderListItemDataModel {
     private String totalPrice;
     @SerializedName(value = "id")
     private String id;
+
 //    private String orderName;
 //    private int imgID;
 
