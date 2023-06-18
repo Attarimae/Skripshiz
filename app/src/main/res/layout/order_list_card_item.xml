@@ -22,10 +22,10 @@
             android:textAlignment="textStart" />
 
         <TextView
-            android:id="@+id/order_list_OrderStatus"
+            android:id="@+id/order_list_TotalPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Order Ongoing"
+            android:text="Total: Rp. 69.000"
             android:textAlignment="textStart" />
     </LinearLayout>
 

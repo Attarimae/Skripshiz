@@ -6,6 +6,7 @@ import com.example.skripsi.Model.ErrorResponseDeserializer;
 import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.Model.Menus.MenuItemModelWithoutId;
 import com.example.skripsi.Model.Orders.OrderListItemDataModel;
+import com.example.skripsi.Model.Orders.UpdateOrderDataModel;
 import com.example.skripsi.Model.RestaurantDataModel;
 import com.example.skripsi.Model.StaffDataModel;
 import com.google.gson.annotations.JsonAdapter;
@@ -65,6 +66,7 @@ public interface APIInterface {
     //Get All Menu
     @GET("/menu/")
     Call<ArrayList<MenuItemModel>> getAllMenu();
+    //blm kubuat bisa pake API ini
 
     //Get Order
     @GET("/order")
@@ -80,6 +82,14 @@ public interface APIInterface {
     @Headers("Content-Type: application/json")
     @PATCH("/order/")
     Call<OrderListItemDataModel> patchOrderDetails(@Body OrderListItemDataModel orderListItemDataModel);
+
+    //Update Order Detail Status
+    @POST("/order-detail/status")
+    Call<UpdateOrderDataModel> updateOrderDetailsStatus(@Body UpdateOrderDataModel updateOrderDataModel);
+
+    //Update Order Status
+    @POST("/order/status")
+    Call<UpdateOrderDataModel> updateOrdersStatus(@Body UpdateOrderDataModel updateOrderDataModel);
 
     //Get Menu by Category
     //@GET("/menu")

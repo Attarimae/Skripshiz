@@ -23,6 +23,7 @@ import com.example.skripsi.API.SharedPreferencesCashier;
 import com.example.skripsi.Adapter.OrderListDetailsGridAdapter;
 import com.example.skripsi.Model.Orders.OrderListItemDataModel;
 import com.example.skripsi.Model.Orders.OrderListItemDetailsDataModel;
+import com.example.skripsi.Model.Orders.UpdateOrderDataModel;
 import com.example.skripsi.R;
 
 import java.text.DecimalFormat;
@@ -37,6 +38,8 @@ public class OrderListDetailsFragment extends Fragment {
 
     private ArrayList<OrderListItemDetailsDataModel> orderListDetails, originalDetails;
     private TextView orderDetailsTotalPrice;
+
+    SharedPreferencesCashier spc;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,7 @@ public class OrderListDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_order_details, container, false);
 
         GridView orderDetailsGrid = view.findViewById(R.id.FR_gridOrderDetails);
-        SharedPreferencesCashier spc = new SharedPreferencesCashier(requireContext());
+        spc = new SharedPreferencesCashier(requireContext());
 
         orderListDetails = new ArrayList<>();
         originalDetails = new ArrayList<>();
@@ -126,7 +129,7 @@ public class OrderListDetailsFragment extends Fragment {
                     call.enqueue(new Callback<OrderListItemDataModel>() {
                         @Override
                         public void onResponse(Call<OrderListItemDataModel> call, Response<OrderListItemDataModel> response) {
-                            Toast.makeText(v.getContext(), "Succesfully updated", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(v.getContext(), "Succesfully updated orders", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -162,23 +165,27 @@ public class OrderListDetailsFragment extends Fragment {
         dialog.show();
 
         EditText inputPayment = dialog.findViewById(R.id.form_payment_cash_amount);
+        inputPayment.setInputType(InputType.TYPE_CLASS_NUMBER);
         TextView totalPricePayment = dialog.findViewById(R.id.form_payment_cash_total_price);
         Button buttonCompletePayment = dialog.findViewById(R.id.form_payment_cash_button);
 
         totalPricePayment.setText("Total Price: " + orderDetailsTotalPrice.getText());
-        String inputPayment_TXT = inputPayment.getText().toString(); // MASIH ERROR INI, GAK TAU KNP KU MASUKKIN ANGKA TAPI RETURNNYA SELALU KOSONG
-        String totalPricePayment_TXT = totalPricePayment.getText().toString().substring(16).replace(".", "");
         buttonCompletePayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("PaymentButtonDialog", "onClick: " + inputPayment_TXT);
-                if(inputPayment_TXT.isEmpty()){
+                String inputPayment_TXT = inputPayment.getText().toString();
+                int inputPayment_Integer = 0;
+                if(!"".equals(inputPayment_TXT)){
+                    inputPayment_Integer = Integer.parseInt(inputPayment_TXT);
+                }
+                String totalPricePayment_TXT = totalPricePayment.getText().toString().substring(17).replace(".", "");
+
+                if(inputPayment_Integer == 0){
                     inputPayment.setError("Amount is required");
-                } else if(Integer.parseInt(inputPayment_TXT) < Integer.parseInt(totalPricePayment_TXT)) {
+                } else if(inputPayment_Integer < Integer.parseInt(totalPricePayment_TXT)) {
                     inputPayment.setError("Insufficient amount");
                 } else {
                     inputPayment.setError("null");
-                    Toast.makeText(requireActivity(), "Payment successful", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                     finishPayment();
                 }
@@ -187,8 +194,64 @@ public class OrderListDetailsFragment extends Fragment {
     }
 
     private void finishPayment(){
-        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, new OrderListFragment());
-        ft.commit();
+        //Update Order Detail Status -> Semua order dijadiin Order Has been Served
+        ServiceGenerator service = new ServiceGenerator();
+        for(int i = 0; i < orderListDetails.size(); i ++){
+            UpdateOrderDataModel modal_orderDetailStatus = new UpdateOrderDataModel(spc.fetchOrderId(), orderListDetails.get(i).getOrder_detail_id(), "04"); // 04 = Order Has been Served
+            Call<UpdateOrderDataModel> call = service.getApiService(requireContext()).updateOrderDetailsStatus(modal_orderDetailStatus);
+            call.enqueue(new Callback<UpdateOrderDataModel>() {
+                @Override
+                public void onResponse(Call<UpdateOrderDataModel> call, Response<UpdateOrderDataModel> response) {
+                    Log.i("Fragment OrderListDetails", "id: " + response.body().getOrderId() + "\namount: " +
+                            response.body().getAmount() + "\ndescription: " + response.body().getDescription() +
+                            "\nstatus: " + response.body().getStatus() + "\norder_detail_id: " +
+                            response.body().getOrder_detail_id() + "\nmenu_name: " + response.body().getMenu_name() +
+                            "\nquantity: " + response.body().getQuantity());
+                    Toast.makeText(requireContext(), "Updated Order Details Status", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<UpdateOrderDataModel> call, Throwable t) {
+                    Log.e("Fragment OrderListDetails", "Failed to finish payment (Updating Order Details Status)");
+                    Log.e("Fragment OrderListDetails", t.getMessage());
+                }
+            });
+        }
+        //Update Order Status -> Order skrg Order Finished
+        UpdateOrderDataModel modal_orderStatus = new UpdateOrderDataModel(spc.fetchOrderId(), "02");
+        Call<UpdateOrderDataModel> call = service.getApiService(requireContext()).updateOrdersStatus(modal_orderStatus);
+        call.enqueue(new Callback<UpdateOrderDataModel>() {
+            @Override
+            public void onResponse(Call<UpdateOrderDataModel> call, Response<UpdateOrderDataModel> response) {
+                Log.i("Fragment OrderDetails", "onResponse:\norder_id: " +
+                        response.body().getOrderId() + "\ntable_number: " +
+                        response.body().getTableNumber() + "\norder_done: " +
+                        response.body().getOrder_done() + "\ntotal_price: " +
+                        response.body().getTotalPrice() + "\norder_status: " +
+                        response.body().getOrder_status());
+                for(int i = 0; i < response.body().getOrder_detail().size(); i++){
+                    Log.i("Fragment OrderDetails", "orderDetails:\nid: " +
+                            response.body().getOrder_detail().get(i).getMenuId() + "\namount: " +
+                            response.body().getOrder_detail().get(i).getMenuPrice() + "\ndescription: " +
+                            response.body().getOrder_detail().get(i).getMenuDescription() + "\nstatus: " +
+                            response.body().getOrder_detail().get(i).getStatus() + "\norder_detail_id: " +
+                            response.body().getOrder_detail().get(i).getOrder_detail_id() + "\nmenu_name: " +
+                            response.body().getOrder_detail().get(i).getMenuName() + "\nquantity: " +
+                            response.body().getOrder_detail().get(i).getMenuQuantity());
+                }
+                Toast.makeText(requireContext(), "Updated Order Status", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<UpdateOrderDataModel> call, Throwable t) {
+                Log.e("Fragment OrderListDetails", "Failed to finish payment (Updating Order Status)");
+                Log.e("Fragment OrderListDetails", t.getMessage());
+            }
+        });
+
+        Toast.makeText(requireActivity(), "Payment successful", Toast.LENGTH_SHORT).show();
+//        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+//        ft.replace(R.id.content_frame, new OrderListFragment());
+//        ft.commit();
     }
 }

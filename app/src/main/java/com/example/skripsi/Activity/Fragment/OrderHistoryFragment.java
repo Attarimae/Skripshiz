@@ -55,6 +55,7 @@ public class OrderHistoryFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<OrderListItemDataModel>> call, Response<ArrayList<OrderListItemDataModel>> response) {
                 int orderListSize = response.body().size();
+                Log.i("Fragment OrderHistory", "onResponse: " + response.body().get(0).getOrder_status());
                 for(int i=0; i < orderListSize; i++){
                     if(response.body().get(i).getOrder_status().equals("Order Finished") || response.body().get(i).getOrder_status().equals("Order Cancelled")){
                         orderHistoryArrayList.add(new OrderListItemDataModel(

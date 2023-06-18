@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:text="Payment Method: Cash"
+        android:layout_margin="10dp"/>
 
     <TextView
         android:id="@+id/form_payment_cash_total_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:text="Order Total: Rp 690.000 "
+        android:hint="Total Price: Rp. 200000"
         android:layout_margin="10dp"
-        android:textAlignment="center"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:text="Payment Method: Cash"
-        android:layout_margin="10dp"/>
+        android:inputType="number"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,7 +42,7 @@
             android:inputType="number"/>
 
     </LinearLayout>
-    
+
     <Button
         android:id="@+id/form_payment_cash_button"
         android:layout_width="match_parent"

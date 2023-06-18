@@ -10,7 +10,7 @@
         android:orientation="horizontal"
         android:gravity="center">
         <TextView
-            android:id="@+id/FR_txtViewOrderDetails"
+            android:id="@+id/FR_txtViewOrderHistoryDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Order Details"
@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/FR_txtViewOrderDetailsTableNumberTop"
+                android:id="@+id/FR_txtViewOrderHistoryDetailsTableNumberTop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Table Number"
@@ -35,7 +35,7 @@
                 android:textSize="18sp"
                 android:layout_gravity="center_horizontal"/>
             <TextView
-                android:id="@+id/FR_txtViewOrderDetailsTableNumberBottom"
+                android:id="@+id/FR_txtViewOrderHistoryDetailsTableNumberBottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="100"
@@ -46,7 +46,7 @@
     </LinearLayout>
 
     <GridView
-        android:id="@+id/FR_gridOrderDetails"
+        android:id="@+id/FR_gridOrderHistoryDetails"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/FR_txtViewOrderDetailsTotalPriceLeft"
+            android:id="@+id/FR_txtViewOrderHistoryDetailsTotalPriceLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total"
@@ -79,7 +79,7 @@
             />
 
         <TextView
-            android:id="@+id/FR_txtViewOrderDetailsTotalPriceRight"
+            android:id="@+id/FR_txtViewOrderHistoryDetailsTotalPriceRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rp 69.000"
