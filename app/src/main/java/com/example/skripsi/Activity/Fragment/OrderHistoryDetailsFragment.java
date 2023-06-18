@@ -61,11 +61,10 @@ public class OrderHistoryDetailsFragment extends Fragment {
 
     public void updateTotalPrice(){
         int totalPrice = 0;
-        int price, quantity;
+        int price;
         for(OrderListItemDetailsDataModel item : orderHistoryDetails){
             price = Integer.parseInt(item.getMenuPrice());
-            quantity = item.getMenuQuantity();
-            totalPrice += price * quantity;
+            totalPrice += price;
         }
         orderHistoryDetailsTotalPrice.setText("Rp. " + formatPrice(totalPrice));
     }

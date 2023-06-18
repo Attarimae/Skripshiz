@@ -23,6 +23,7 @@ import com.example.skripsi.Activity.Fragment.MenuFragment;
 import com.example.skripsi.Activity.Fragment.OrderHistoryFragment;
 import com.example.skripsi.Activity.Fragment.OrderListFragment;
 import com.example.skripsi.Activity.Fragment.ProfilePictureFragment;
+import com.example.skripsi.Activity.Fragment.SalesReportFragment;
 import com.example.skripsi.Adapter.MainDrawerItemAdapter;
 import com.example.skripsi.Model.MainDrawerMenuModel;
 import com.example.skripsi.R;
@@ -115,11 +116,11 @@ public class CashierMainActivity extends AppCompatActivity {
                 break;
             case 3: // Order History Fragment
                 fragment = new OrderHistoryFragment();
-                //removeCheckoutCart();
+                removeCheckoutCart();
                 break;
             case 4: // Sales Report / Report Order Fragment
-                //fragment = new CheckoutFragment();
-                //removeCheckoutCart();
+                fragment = new SalesReportFragment();
+                removeCheckoutCart();
                 break;
             case 5: // Settings Fragment
                 //fragment = new MenuFragment();
@@ -134,9 +135,9 @@ public class CashierMainActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
-            mDrawerList.setItemChecked(position, true);
-            mDrawerList.setSelection(position);
-            setTitle(mNavigationDrawerItemTitles[position]);
+            //mDrawerList.setItemChecked(position, true);
+            //mDrawerList.setSelection(position);
+            //setTitle(mNavigationDrawerItemTitles[position]);
             mDrawerLayout.closeDrawer(mDrawerList);
 
         } else {

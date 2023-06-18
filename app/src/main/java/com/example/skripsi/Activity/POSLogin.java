@@ -67,7 +67,7 @@ public class POSLogin extends AppCompatActivity {
             public void onClick(View view) {
                 isAllFieldsChecked = CheckAllFields();
                 if(isAllFieldsChecked){
-                    //postPOSLogin(sm.fetchStaffID(), sm.fetchStaffRole(), email.getText().toString(), password.getText().toString());
+                    postPOSLogin(sm.fetchStaffID(), sm.fetchStaffRole(), email.getText().toString(), password.getText().toString());
                 }
             }
         });

@@ -70,7 +70,7 @@ public class RestaurantLogin extends AppCompatActivity {
             public void onClick(View view) {
                 isAllFieldsChecked = CheckAllFields();
                 if(isAllFieldsChecked){
-                    //postRestaurantLogin(sm.fetchRestaurantID(), password.getText().toString());
+                    postRestaurantLogin(sm.fetchRestaurantID(), password.getText().toString());
                 }
             }
         });

@@ -148,11 +148,10 @@ public class OrderListDetailsFragment extends Fragment {
 
     public void updateTotalPrice(){
         int totalPrice = 0;
-        int price, quantity;
+        int price;
         for(OrderListItemDetailsDataModel item : orderListDetails){
             price = Integer.parseInt(item.getMenuPrice());
-            quantity = item.getMenuQuantity();
-            totalPrice += price * quantity;
+            totalPrice += price;
         }
         orderDetailsTotalPrice.setText("Rp. " + formatPrice(totalPrice));
     }
@@ -250,8 +249,8 @@ public class OrderListDetailsFragment extends Fragment {
         });
 
         Toast.makeText(requireActivity(), "Payment successful", Toast.LENGTH_SHORT).show();
-//        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-//        ft.replace(R.id.content_frame, new OrderListFragment());
-//        ft.commit();
+        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, new OrderListFragment());
+        ft.commit();
     }
 }

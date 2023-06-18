@@ -72,7 +72,7 @@ public class POSRegister extends AppCompatActivity {
             public void onClick(View view) {
                 isAllFieldsChecked = CheckAllFields();
                 if(isAllFieldsChecked){
-                    //postPOSRegister(sm.fetchRestaurantID(), email.getText().toString(), phonenumber.getText().toString(), password.getText().toString());
+                    postPOSRegister(sm.fetchRestaurantID(), email.getText().toString(), phonenumber.getText().toString(), password.getText().toString());
                 }
             }
         });
@@ -152,6 +152,7 @@ public class POSRegister extends AppCompatActivity {
                 StaffDataModel modalAPI = response.body();
                 sm.saveStaffID(modalAPI.getStaff_id());
                 sm.saveStaffRole(modalAPI.getRole());
+                sm.saveStaffName(staffName);
                 Toast.makeText(POSRegister.this, "Berhasil membuat akun POS", Toast.LENGTH_SHORT).show();
                 openPOSLogin();
             }

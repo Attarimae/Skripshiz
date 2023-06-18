@@ -11,13 +11,13 @@ public class ServiceGenerator {
 
     private APIInterface apiInterface;
 
-    private final String BASE_URL = "https://9534-2001-448a-20b0-f7a4-61ac-f0a5-fd0f-8add.ngrok-free.app";
+    //private final String BASE_URL = "https://2657-2001-448a-20b0-f7a4-61ac-f0a5-fd0f-8add.ngrok-free.app/";
 
     public APIInterface getApiService(Context context) {
         // Initialize ApiService if not initialized yet
         if (apiInterface == null) {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(APIConstant.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okhttpClient(context))
                     .build();
