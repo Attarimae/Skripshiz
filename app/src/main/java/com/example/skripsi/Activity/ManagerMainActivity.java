@@ -35,6 +35,8 @@ public class ManagerMainActivity extends AppCompatActivity {
         MMA_ManageRestoMenu = findViewById(R.id.MMA_ManageRestoMenu);
 
         MMA_ManageEmployeeMenu = findViewById(R.id.MMA_ManageEmployeeMenu);
+
+
         MMA_ManageRestoMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +48,7 @@ public class ManagerMainActivity extends AppCompatActivity {
         MMA_ManageEmployeeMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ManagerMainActivity.this, ManageEmployee.class);
+                Intent intent = new Intent(ManagerMainActivity.this, ManageEmployeeActivity.class);
                 startActivity(intent);
             }
         });

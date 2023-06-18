@@ -1,40 +1,48 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"> <!-- Apply the grid_item_background.xml as the background -->
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/grid_item_background"
+    android:elevation="4dp"
+    android:padding="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/grid_item_background"
-        >
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/menu_Image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:id="@+id/menu_Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ayam Geprek Legend"
             android:textColor="@color/black"
-            android:textAlignment="center" />
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="menu_Name"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp" />
 
         <TextView
             android:id="@+id/menu_Price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rp. 69.000"
-            android:textAlignment="center"
             android:textColor="#888787"
-            android:layout_marginBottom="10dp"/>
+            android:textSize="14sp"
+            android:text="menu_Price"
+            android:textStyle="italic"
+            android:gravity="center"
+            android:paddingBottom="8dp" />
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

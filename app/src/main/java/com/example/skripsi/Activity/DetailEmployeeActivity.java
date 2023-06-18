@@ -28,6 +28,7 @@ import com.example.skripsi.API.APIConstant;
 import com.example.skripsi.API.ServiceGenerator;
 import com.example.skripsi.API.SessionManager;
 import com.example.skripsi.Model.CategoryList;
+import com.example.skripsi.Model.Employee.EmployeeItemModel;
 import com.example.skripsi.Model.ErrorResponse;
 import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.R;
@@ -47,12 +48,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailMenuActivity extends AppCompatActivity {
-    private TextView menuNameTextView,manageMenuTextView;
-    private TextView menuPriceTextView,menuDescipritionTextView;
-    private ImageView menuImageView;
-    private Spinner menuCategorySpinner;
-    private int menuId;
+public class DetailEmployeeActivity extends AppCompatActivity {
+    private TextView employeeNameTextView, manageEmployeeTextView;
+    private TextView employeeEmailTextView, employee_number;
+    private ImageView employeeImageView;
+    private Spinner employeeCategorySpinner;
+    private int employeeId;
+
+    private String employeeStaffId;
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int CAMERA_CAPTURE_REQUEST = 2;
@@ -62,122 +65,96 @@ public class DetailMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_menu);
+        setContentView(R.layout.activity_detail_employee);
         sm = new SessionManager(this);
-        menuNameTextView = findViewById(R.id.menu_name_textview);
-        menuPriceTextView = findViewById(R.id.menu_price_textview);
-        menuImageView = findViewById(R.id.menu_imageview);
-        menuDescipritionTextView = findViewById(R.id.menu_description_textview);
-        fetchCategoriesFromApi();
-
-        manageMenuTextView = findViewById(R.id.manage_menu);
+        employeeNameTextView = findViewById(R.id.employee_name_textview);
+        employeeEmailTextView = findViewById(R.id.employee_email_textview);
+        employeeImageView = findViewById(R.id.employee_imageview);
+        employeeCategorySpinner = findViewById(R.id.employee_role_spinner);
+        employee_number = findViewById(R.id.employee_number_textview);
+        setEmployeeRoleView();
+        manageEmployeeTextView = findViewById(R.id.manage_menu);
         Bundle extras = getIntent().getExtras();
-        MenuItemModel menuItem = (MenuItemModel) getIntent().getSerializableExtra("menu");
-        if (menuItem != null) {
-            menuId = menuItem.getId();
+        EmployeeItemModel employeeItem = (EmployeeItemModel) getIntent().getSerializableExtra("employee");
+        if (employeeItem != null) {
+            employeeId = employeeItem.getId();
+            employeeStaffId = employeeItem.getStaffId();
         }
-        menuCategorySpinner = findViewById(R.id.menu_category_spinner);
 
-        if (menuItem != null) {
-            System.out.println(menuItem.getImgID());
+        if (employeeItem != null) {
+            System.out.println(employeeItem.getImgID());
 
-            manageMenuTextView.setText(menuItem.getMenuName());
-            menuNameTextView.setText(menuItem.getMenuName());
-            menuPriceTextView.setText(menuItem.getMenuPrice());
+            manageEmployeeTextView.setText(employeeItem.getStaffName());
+            employeeNameTextView.setText(employeeItem.getStaffName());
+            employeeEmailTextView.setText(employeeItem.getEmail());
+            employee_number.setText(employeeItem.getPhoneNumber());
 
             // Load the image into the ImageView using Glide
             Glide.with(this)
-                    .load(APIConstant.BASE_URL_DOWNLOAD+menuItem.getImgID())
+                    .load(APIConstant.BASE_URL_DOWNLOAD + employeeItem.getImgID())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .skipMemoryCache(true))
-                    .into(menuImageView);
-            menuDescipritionTextView.setText(menuItem.getMenuDescription());
+                    .error(R.drawable.default_profile)
+                    .into(employeeImageView);
         } else {
-            // Handle the case when the menu item is not found
-            Toast.makeText(this, "Invalid menu item", Toast.LENGTH_SHORT).show();
-            finish(); // Close the activity if the menu item is not valid
+            // Handle the case when the employee item is not found
+            Toast.makeText(this, "Invalid employee item", Toast.LENGTH_SHORT).show();
+            finish(); // Close the activity if the employee item is not valid
         }
     }
 
-    private void fetchCategoriesFromApi() {
-        ServiceGenerator service = new ServiceGenerator();
-        Call<List<CategoryList>> categoryCall= service.getApiService(this).getCategory();
-
-        categoryCall.enqueue(new Callback<List<CategoryList>>() {
-            @Override
-            public void onResponse(Call<List<CategoryList>> call, Response<List<CategoryList>> response) {
-                if (response.isSuccessful()) {
-                    List<CategoryList> categories = response.body();
-
-                    List<String> categoryNames = new ArrayList<>();
-                    for (CategoryList category : categories) {
-                        categoryNames.add(category.getCategoryName());
-                    }
-
-                    // Populate category spinner
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(DetailMenuActivity.this, android.R.layout.simple_spinner_item, categoryNames);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    menuCategorySpinner.setAdapter(adapter);
-                } else {
-                    // Handle API error
-                    Toast.makeText(DetailMenuActivity.this, "Failed to fetch categories", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<CategoryList>> call, Throwable t) {
-                // Handle API call failure
-                Toast.makeText(DetailMenuActivity.this, "Failed to fetch categories", Toast.LENGTH_SHORT).show();
-            }
-        });
+    private void setEmployeeRoleView() {
+        List<String> role = new ArrayList<>();
+        role.add("Cashier");
+        role.add("Manager");
+        // Populate category spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(DetailEmployeeActivity.this, android.R.layout.simple_spinner_item, role);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        employeeCategorySpinner.setAdapter(adapter);
     }
 
+
     public void onBackButtonClicked(View view) {
-        Intent intent = new Intent(DetailMenuActivity.this, ManageMenuActivity.class);
+        Intent intent = new Intent(DetailEmployeeActivity.this, ManageEmployeeActivity.class);
         startActivity(intent);
         finish(); // Optional: If you want to finish the current activity after navigating to ManageMenuActivity
     }
 
     public void onSaveButtonClicked(View view) {
         // Get the references to the EditText fields
-        EditText nameEditText = findViewById(R.id.menu_name_textview);
-        EditText priceEditText = findViewById(R.id.menu_price_textview);
-        EditText descriptionEditText = findViewById(R.id.menu_description_textview);
-        Spinner menuCategorySpinner = findViewById(R.id.menu_category_spinner);
-        ImageView imageView = findViewById(R.id.menu_imageview);
+        EditText nameEditText = findViewById(R.id.employee_name_textview);
+        EditText emailEditText = findViewById(R.id.employee_email_textview);
+        EditText phoneEditText = findViewById(R.id.employee_number_textview);
+        Spinner employeeCategorySpinner = findViewById(R.id.employee_role_spinner);
+        ImageView imageView = findViewById(R.id.employee_imageview);
 
         // Get the values from the EditText fields
         String name = nameEditText.getText().toString();
-        String price = priceEditText.getText().toString();
-        String menuCategory = menuCategorySpinner.getSelectedItem().toString();
-        String description = descriptionEditText.getText().toString();
+        String email = emailEditText.getText().toString();
+        String employeeCategory = employeeCategorySpinner.getSelectedItem().toString();
+        String phone = phoneEditText.getText().toString();
 
         if (name.isEmpty()) {
             nameEditText.setError("Name cannot be empty");
             return;
         }
 
-        if (price.isEmpty()) {
-            priceEditText.setError("Price cannot be empty");
+        if (email.isEmpty()) {
+            emailEditText.setError("Email cannot be empty");
             return;
         }
 
-        if (!TextUtils.isDigitsOnly(price)) {
-            priceEditText.setError("Price should be a valid number");
+        if (phone.isEmpty()) {
+            phoneEditText.setError("Phone cannot be empty");
             return;
         }
-
-        if (description.isEmpty()) {
-            descriptionEditText.setError("Description cannot be empty");
-            return;
-        }
-
-        MenuItemModel apiModel = new MenuItemModel(menuId,menuCategory,name,description,price,"1");
-        sendImageToAPI(apiModel,imageView);
+        //this empty because imgid is set when image is sent
+        EmployeeItemModel apiModel = new EmployeeItemModel(employeeId, employeeStaffId, name, email, phone, employeeCategory, "");
+        sendImageToAPI(apiModel, imageView);
     }
 
-    private void sendImageToAPI(MenuItemModel apiModel, ImageView imageView) {
+    private void sendImageToAPI(EmployeeItemModel apiModel, ImageView imageView) {
         Uri imageUri = getImageUri(imageView);
         if (imageUri != null) {
             // Convert the image URI to a File object
@@ -188,8 +165,8 @@ public class DetailMenuActivity extends AppCompatActivity {
             MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);
 
             // Create the other request parameters
-            RequestBody typePart = RequestBody.create(MediaType.parse("text/plain"), "menu");
-            RequestBody namePart = RequestBody.create(MediaType.parse("text/plain"), apiModel.getMenuName());
+            RequestBody typePart = RequestBody.create(MediaType.parse("text/plain"), "employee");
+            RequestBody namePart = RequestBody.create(MediaType.parse("text/plain"), apiModel.getStaffId());
             RequestBody authorizationPart = RequestBody.create(MediaType.parse("text/plain"), sm.fetchAuthToken());
 
             // Make the upload request
@@ -200,20 +177,20 @@ public class DetailMenuActivity extends AppCompatActivity {
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
                         // Image uploaded successfully
-                        Toast.makeText(DetailMenuActivity.this, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailEmployeeActivity.this, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
 
                         // Continue with saving the data to the API
                         sendToApi(apiModel);
                     } else {
                         // Handle error response
-                        Toast.makeText(DetailMenuActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailEmployeeActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     // Handle network or other errors
-                    Toast.makeText(DetailMenuActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailEmployeeActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
@@ -247,35 +224,35 @@ public class DetailMenuActivity extends AppCompatActivity {
         return null;
     }
 
-    private void sendToApi(MenuItemModel dataModel) {
+    private void sendToApi(EmployeeItemModel dataModel) {
         ServiceGenerator service = new ServiceGenerator();
-        Call<MenuItemModel> call = service.getApiService(this).postUpdateMenu(dataModel);
-        call.enqueue(new Callback<MenuItemModel>() {
+        Call<EmployeeItemModel> call = service.getApiService(this).postStaff(dataModel);
+        call.enqueue(new Callback<EmployeeItemModel>() {
             @Override
-            public void onResponse(Call<MenuItemModel> call, Response<MenuItemModel> response) {
+            public void onResponse(Call<EmployeeItemModel> call, Response<EmployeeItemModel> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(DetailMenuActivity.this, "Data saved successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(DetailMenuActivity.this, ManageMenuActivity.class);
+                    Toast.makeText(DetailEmployeeActivity.this, "Data saved successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(DetailEmployeeActivity.this, ManageEmployeeActivity.class);
                     startActivity(intent);
                     finish();
                 } else if (response.code() == 400) {
                     try {
                         ErrorResponse errorResponse = new Gson().fromJson(response.errorBody().string(), ErrorResponse.class);
                         String responseMessage = errorResponse.getResponseMessage();
-                        Toast.makeText(DetailMenuActivity.this, "Failed to save data: " + responseMessage, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailEmployeeActivity.this, "Failed to save data: " + responseMessage, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
-                        Toast.makeText(DetailMenuActivity.this, "Failed to parse error response", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailEmployeeActivity.this, "Failed to parse error response", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(DetailMenuActivity.this, "Failed to save data", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailEmployeeActivity.this, "Failed to save data", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<MenuItemModel> call, Throwable t) {
+            public void onFailure(Call<EmployeeItemModel> call, Throwable t) {
                 // Handle API call failure
-                Toast.makeText(DetailMenuActivity.this, "Failed to save data: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailEmployeeActivity.this, "Failed to save data: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -291,11 +268,11 @@ public class DetailMenuActivity extends AppCompatActivity {
                 if (which == 0) {
                     // Gallery option clicked
                     // Clear Glide cache before selecting a new image
-                    Glide.get(DetailMenuActivity.this).clearMemory();
+                    Glide.get(DetailEmployeeActivity.this).clearMemory();
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            Glide.get(DetailMenuActivity.this).clearDiskCache();
+                            Glide.get(DetailEmployeeActivity.this).clearDiskCache();
                         }
                     }).start();
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -304,11 +281,11 @@ public class DetailMenuActivity extends AppCompatActivity {
                 } else if (which == 1) {
                     // Camera option clicked
                     // Clear Glide cache before capturing a new image
-                    Glide.get(DetailMenuActivity.this).clearMemory();
+                    Glide.get(DetailEmployeeActivity.this).clearMemory();
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            Glide.get(DetailMenuActivity.this).clearDiskCache();
+                            Glide.get(DetailEmployeeActivity.this).clearDiskCache();
                         }
                     }).start();
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -334,7 +311,7 @@ public class DetailMenuActivity extends AppCompatActivity {
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .skipMemoryCache(true))
-                    .into(menuImageView);
+                    .into(employeeImageView);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -348,7 +325,7 @@ public class DetailMenuActivity extends AppCompatActivity {
             // Process the captured image Bitmap as per your requirement
 
             // For example, you can display the captured image in the ImageView
-            menuImageView.setImageBitmap(imageBitmap);
+            employeeImageView.setImageBitmap(imageBitmap);
             new Thread(new Runnable() {
                 @Override
                 public void run() {

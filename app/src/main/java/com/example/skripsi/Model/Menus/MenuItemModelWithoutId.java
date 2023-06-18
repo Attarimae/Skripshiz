@@ -4,10 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class MenuItemModel implements Serializable {
-
-    @SerializedName(value="id")
-    private int id;
+public class MenuItemModelWithoutId implements Serializable {
     @SerializedName(value="category_name", alternate={"category","categoryName"})
     private String menuCategory;
     @SerializedName("menu_name")
@@ -19,25 +16,8 @@ public class MenuItemModel implements Serializable {
 
     @SerializedName("picture_code")
     private String imgID; //R.drawable pake int soalny
-    //Display
-    public MenuItemModel(String menuName, String menuPrice, String imgID,int id) {
-        this.menuName = menuName;
-        this.menuPrice = menuPrice;
-        this.imgID = imgID;
-        this.id = id;
-    }
 
-    //POST ke Endpoint
-    public MenuItemModel(int id,String menuCategory, String menuName, String menuDescription, String menuPrice, String imgID){
-        this.id = id;
-        this.menuCategory = menuCategory;
-        this.menuName = menuName;
-        this.menuDescription = menuDescription;
-        this.menuPrice = menuPrice;
-        this.imgID = imgID;
-    }
-
-    public MenuItemModel(String menuCategory, String menuName, String menuDescription, String menuPrice, String imgID){
+    public MenuItemModelWithoutId(String menuCategory, String menuName, String menuDescription, String menuPrice, String imgID){
         this.menuCategory = menuCategory;
         this.menuName = menuName;
         this.menuDescription = menuDescription;
@@ -83,13 +63,5 @@ public class MenuItemModel implements Serializable {
 
     public void setMenuDescription(String menuDescription) {
         this.menuDescription = menuDescription;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
     }
 }

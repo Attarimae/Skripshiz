@@ -15,18 +15,18 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.skripsi.API.APIConstant;
-import com.example.skripsi.Activity.DetailMenuActivity;
-import com.example.skripsi.Model.Menus.MenuItemModel;
+import com.example.skripsi.Activity.DetailEmployeeActivity;
+import com.example.skripsi.Model.Employee.EmployeeItemModel;
 import com.example.skripsi.R;
 
 import java.util.ArrayList;
 
-public class ManageMenuAdapter extends ArrayAdapter<MenuItemModel> {
+public class ManageEmployeeAdapter extends ArrayAdapter<EmployeeItemModel> {
     private Context context;
     private RequestOptions requestOptions;
 
-    public ManageMenuAdapter(Context context, ArrayList<MenuItemModel> menuItemModelArrayList) {
-        super(context, 0, menuItemModelArrayList);
+    public ManageEmployeeAdapter(Context context, ArrayList<EmployeeItemModel> employeeItemModelArrayList) {
+        super(context, 0, employeeItemModelArrayList);
         this.context = context;
 
         requestOptions = new RequestOptions()
@@ -49,10 +49,10 @@ public class ManageMenuAdapter extends ArrayAdapter<MenuItemModel> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        MenuItemModel menuItemModel = getItem(position);
+        EmployeeItemModel employeeItemModel = getItem(position);
 
-        holder.textView.setText(menuItemModel.getMenuName());
-        holder.priceView.setText(menuItemModel.getMenuPrice());
+        holder.textView.setText(employeeItemModel.getStaffName());
+        holder.priceView.setText(employeeItemModel.getRole());
 
         // Generate a unique signature based on the current time
         long timestamp = System.currentTimeMillis(); // Subtract one minute
@@ -60,9 +60,9 @@ public class ManageMenuAdapter extends ArrayAdapter<MenuItemModel> {
 
         // Load the image using Glide with cache disabled and a custom signature
         Glide.with(context)
-                .load(APIConstant.BASE_URL_DOWNLOAD + menuItemModel.getImgID())
-                .placeholder(R.drawable.smallsalad) // Optional: Add a placeholder image resource
-                .error(R.drawable.smallsalad) // Optional: Add an error image resource
+                .load(APIConstant.BASE_URL_DOWNLOAD + employeeItemModel.getImgID())
+                .placeholder(R.drawable.default_profile) // Optional: Add a placeholder image resource
+                .error(R.drawable.default_profile) // Optional: Add an error image resource
                 .apply(requestOptions)
                 .into(holder.imageView);
 
@@ -70,10 +70,10 @@ public class ManageMenuAdapter extends ArrayAdapter<MenuItemModel> {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, DetailMenuActivity.class);
-                intent.putExtra("menu", menuItemModel);
+                Intent intent = new Intent(context, DetailEmployeeActivity.class);
+                intent.putExtra("employee", employeeItemModel);
                 context.startActivity(intent);
-                Toast.makeText(context, "To detail menu: " + menuItemModel.getMenuName(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "To detail employee: " + employeeItemModel.getStaffName(), Toast.LENGTH_LONG).show();
             }
         });
 

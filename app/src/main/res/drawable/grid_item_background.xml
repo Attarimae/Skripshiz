@@ -1,4 +1,7 @@
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" android:drawable="@drawable/grid_item_pressed"/>
-    <item android:drawable="@drawable/grid_item_default"/>
-</selector>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF" />
+    <corners android:radius="8dp" />
+    <stroke
+        android:width="4dp"
+        android:color="#F80808" />
+</shape>

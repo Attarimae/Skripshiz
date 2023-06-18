@@ -13,70 +13,63 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.skripsi.API.ServiceGenerator;
-import com.example.skripsi.Adapter.ManageMenuAdapter;
-import com.example.skripsi.Model.Menus.MenuItemModel;
+import com.example.skripsi.Adapter.ManageEmployeeAdapter;
+import com.example.skripsi.Model.Employee.EmployeeItemModel;
 import com.example.skripsi.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ManageMenuActivity extends AppCompatActivity {
+public class ManageEmployeeActivity extends AppCompatActivity {
 
-    private ArrayList<MenuItemModel> menuList;
-    private ArrayList<MenuItemModel> filteredMenuList;
-    private ArrayList<MenuItemModel> storedMenuList; // Store the fetched menu data
-    private ManageMenuAdapter adapter;
+    private ArrayList<EmployeeItemModel> employeeList;
+    private ArrayList<EmployeeItemModel> filteredEmployeeList;
+    private ArrayList<EmployeeItemModel> storedEmployeeList;
+
+    private ManageEmployeeAdapter adapter;
     private SearchView searchView;
-    private TextView textViewNotFound;
+    private TextView textViewNotFound,toolbarManageEmployee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_menu);
+        setContentView(R.layout.activity_manage_employee);
 
-        GridView menuGrid = findViewById(R.id.FR_gridManageMenu);
+        GridView menuGrid = findViewById(R.id.FR_gridManageEmployee);
         ImageView imageView = findViewById(R.id.btn_add_menu);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ManageMenuActivity.this, AddMenuActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-
-        menuList = new ArrayList<>();
-        filteredMenuList = new ArrayList<>();
-        storedMenuList = new ArrayList<>(); // Initialize the stored menu data list
-        adapter = new ManageMenuAdapter(this, filteredMenuList);
+        imageView.setVisibility(View.GONE);
+        employeeList = new ArrayList<>();
+        filteredEmployeeList = new ArrayList<>();
+        storedEmployeeList = new ArrayList<>(); // Initialize the stored menu data list
+        adapter = new ManageEmployeeAdapter(this, filteredEmployeeList);
         menuGrid.setAdapter(adapter);
 
         textViewNotFound = findViewById(R.id.text_view_not_found);
-
-        // Fetch menu data from API
-        fetchMenuData();
+        toolbarManageEmployee = findViewById(R.id.manage_menu);
+        toolbarManageEmployee.setText("Manage Employee");
+        fetchEmployeeData();
 
         // Setup search view
         searchView = findViewById(R.id.FT_searchViewManageMenu);
         setupSearchView();
     }
 
-    private void fetchMenuData() {
+    private void fetchEmployeeData() {
         ServiceGenerator service = new ServiceGenerator();
-        Call<ArrayList<MenuItemModel>> call = service.getApiService(this).getAllMenu();
-        call.enqueue(new Callback<ArrayList<MenuItemModel>>() {
+        Call<ArrayList<EmployeeItemModel>> call = service.getApiService(this).getAllStaff();
+        call.enqueue(new Callback<ArrayList<EmployeeItemModel>>() {
             @Override
-            public void onResponse(Call<ArrayList<MenuItemModel>> call, Response<ArrayList<MenuItemModel>> response) {
+            public void onResponse(Call<ArrayList<EmployeeItemModel>> call, Response<ArrayList<EmployeeItemModel>> response) {
                 if (response.isSuccessful()) {
-                    ArrayList<MenuItemModel> menuItems = response.body();
-                    if (menuItems != null) {
-                        menuList.addAll(menuItems);
-                        storedMenuList.addAll(menuItems); // Store the fetched menu data
-                        filteredMenuList.addAll(menuItems);
+                    List<EmployeeItemModel> employeeItems = response.body();
+                    if (employeeItems != null) {
+                        employeeList.addAll(employeeItems);
+                        storedEmployeeList.addAll(employeeItems); // Store the fetched menu data
+                        filteredEmployeeList.addAll(employeeItems);
                         adapter.notifyDataSetChanged();
                         checkIfEmpty();
                     }
@@ -86,7 +79,7 @@ public class ManageMenuActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<MenuItemModel>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<EmployeeItemModel>> call, Throwable t) {
                 Log.e("ManageMenuActivity", t.getMessage());
             }
         });
@@ -113,14 +106,14 @@ public class ManageMenuActivity extends AppCompatActivity {
     private void performSearch(String query) {
         if (TextUtils.isEmpty(query)) {
             // Show all menu items if the query is empty
-            filteredMenuList.clear();
-            filteredMenuList.addAll(storedMenuList); // Perform search on the stored menu data
+            filteredEmployeeList.clear();
+            filteredEmployeeList.addAll(storedEmployeeList); // Perform search on the stored menu data
         } else {
             // Filter the menu items based on the search query
-            filteredMenuList.clear();
-            for (MenuItemModel menuItem : storedMenuList) { // Perform search on the stored menu data
-                if (menuItem.getMenuName().toLowerCase().contains(query.toLowerCase())) {
-                    filteredMenuList.add(menuItem);
+            filteredEmployeeList.clear();
+            for (EmployeeItemModel employeeItem : storedEmployeeList) { // Perform search on the stored menu data
+                if (employeeItem.getStaffName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredEmployeeList.add(employeeItem);
                 }
             }
         }
@@ -130,7 +123,7 @@ public class ManageMenuActivity extends AppCompatActivity {
     }
 
     private void checkIfEmpty() {
-        if (filteredMenuList.isEmpty()) {
+        if (filteredEmployeeList.isEmpty()) {
             textViewNotFound.setVisibility(View.VISIBLE);
         } else {
             textViewNotFound.setVisibility(View.GONE);
@@ -138,8 +131,8 @@ public class ManageMenuActivity extends AppCompatActivity {
     }
 
     public void onBackButtonClicked(View view) {
-        Intent intent = new Intent(ManageMenuActivity.this, ManagerMainActivity.class);
+        Intent intent = new Intent(ManageEmployeeActivity.this, ManagerMainActivity.class);
         startActivity(intent);
-        finish(); // Optional: If you want to finish the current activity after navigating to ManageMenuActivity
+        finish();
     }
 }

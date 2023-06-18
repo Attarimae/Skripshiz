@@ -1,8 +1,10 @@
 package com.example.skripsi.API;
 
 import com.example.skripsi.Model.CategoryList;
+import com.example.skripsi.Model.Employee.EmployeeItemModel;
 import com.example.skripsi.Model.ErrorResponseDeserializer;
 import com.example.skripsi.Model.Menus.MenuItemModel;
+import com.example.skripsi.Model.Menus.MenuItemModelWithoutId;
 import com.example.skripsi.Model.Orders.OrderListItemDataModel;
 import com.example.skripsi.Model.RestaurantDataModel;
 import com.example.skripsi.Model.StaffDataModel;
@@ -42,17 +44,17 @@ public interface APIInterface {
     Call<StaffDataModel> postStaffLogin(@Body StaffDataModel staffDataModel);
 
     //Get All Staff
-    //@GET("/staff/users/")
-    //Call<StaffDataModel> getAllStaff();
-    //blm kubuat bisa pake API ini
-
-    //Update Employee
-    //@POST("/staff/users/")
-    //
+    @GET("/staff/users/")
+    Call<ArrayList<EmployeeItemModel>> getAllStaff();
+    @POST("/staff/users/")
+    Call<EmployeeItemModel> postStaff(@Body EmployeeItemModel itemModel);
 
     //Create Menu
     @POST("/menu/")
-    Call<MenuItemModel> postCreateMenu(@Body MenuItemModel menuItemModel);
+    Call<MenuItemModel> postCreateMenu(@Body MenuItemModelWithoutId menuItemModel);
+
+    @POST("/menu/")
+    Call<MenuItemModel> postUpdateMenu(@Body MenuItemModel menuItemModel);
 
     @POST("/menu/")
     Call<MenuItemModel> postCreateMenuWithErrorResponse(@Body MenuItemModel dataModel);
