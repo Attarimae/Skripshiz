@@ -1,8 +1,10 @@
 package com.example.skripsi.API;
 
 import com.example.skripsi.Model.CategoryList;
+import com.example.skripsi.Model.Customer.CustomerItemModel;
 import com.example.skripsi.Model.Employee.EmployeeItemModel;
 import com.example.skripsi.Model.ErrorResponseDeserializer;
+import com.example.skripsi.Model.FullProfile;
 import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.Model.Menus.MenuItemModelWithoutId;
 import com.example.skripsi.Model.Orders.OrderListItemDataModel;
@@ -41,12 +43,14 @@ public interface APIInterface {
     Call<StaffDataModel> postStaffRegister(@Body StaffDataModel staffDataModel);
 
     //Login Staff
-    @POST("/staff/Login/")
+    @POST("/staff/login/")
     Call<StaffDataModel> postStaffLogin(@Body StaffDataModel staffDataModel);
 
     //Get All Staff
     @GET("/staff/users/")
     Call<ArrayList<EmployeeItemModel>> getAllStaff();
+    @GET("/staff/users/{params}")
+    Call<ArrayList<EmployeeItemModel>> getStaff(@Path("params") String params);
     @POST("/staff/users/")
     Call<EmployeeItemModel> postStaff(@Body EmployeeItemModel itemModel);
 
@@ -111,4 +115,14 @@ public interface APIInterface {
 
     @GET("/download/{params}")
     Call<ResponseBody> getPhoto(@Path("params") String params);
+
+    @GET("/customer/users/")
+    Call<ArrayList<CustomerItemModel>> getAllCustomer();
+    @POST("/customer/users/")
+    Call<CustomerItemModel> postCustomer(@Body CustomerItemModel itemModel);
+
+    @GET("/restaurant/profile")
+    Call<FullProfile> getRestaurantProfile();
+    @POST("/restaurant/profile")
+    Call<FullProfile> postProfile(@Body FullProfile itemModel);
 }

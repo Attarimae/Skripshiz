@@ -72,7 +72,7 @@ public class POSRegister extends AppCompatActivity {
             public void onClick(View view) {
                 isAllFieldsChecked = CheckAllFields();
                 if(isAllFieldsChecked){
-                    //postPOSRegister(sm.fetchRestaurantID(), email.getText().toString(), phonenumber.getText().toString(), password.getText().toString());
+                    postPOSRegister(sm.fetchRestaurantID(), email.getText().toString(), phonenumber.getText().toString(), password.getText().toString());
                 }
             }
         });

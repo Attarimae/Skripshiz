@@ -74,7 +74,7 @@ public class RestaurantRegister extends AppCompatActivity {
             public void onClick(View v) {
                 isAllFieldsChecked = CheckAllFields();
                 if(isAllFieldsChecked){
-                    //postRestaurantRegisterData(restaurantName.getText().toString(), email.getText().toString(), phonenumber.getText().toString(), password.getText().toString());
+                    postRestaurantRegisterData(restaurantName.getText().toString(), email.getText().toString(), phonenumber.getText().toString(), password.getText().toString());
                 }
             }
         });

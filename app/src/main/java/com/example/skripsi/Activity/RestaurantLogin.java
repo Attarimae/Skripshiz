@@ -70,7 +70,7 @@ public class RestaurantLogin extends AppCompatActivity {
             public void onClick(View view) {
                 isAllFieldsChecked = CheckAllFields();
                 if(isAllFieldsChecked){
-                    //postRestaurantLogin(sm.fetchRestaurantID(), password.getText().toString());
+                    postRestaurantLogin(sm.fetchRestaurantID(), password.getText().toString());
                 }
             }
         });
@@ -131,7 +131,7 @@ public class RestaurantLogin extends AppCompatActivity {
         } else if(passwordToText.length() < 8){
             password.setError("Password must be minimum 8 characters");
         } else if(!passwordToText.matches(password_regex)){
-            password.setError("Password is invalid");
+            password.setError("Password is invalid (Must be one uppercase and 8-20 Characters)");
         } else {
             password.setError(null);
         }

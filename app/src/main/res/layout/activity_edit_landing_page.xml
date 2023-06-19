@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/container_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_activity_detail" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/container_toolbar">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/profile_motto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Motto :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+
+                <EditText
+                    android:id="@+id/profile_motto_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Ayam"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/profile_motto_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Motto Detail :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/profile_motto_detail_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="3000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/profile_restaurant_story"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Restauran Story :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/profile_restaurant_story_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="3000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/profile_open_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Open Day:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/profile_open_day_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="datetime"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="3000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/profile_open_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="datetime"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Open Time :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/profile_open_time_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="3000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/profile_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Location :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/profile_location_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="3000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/official_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Official Email :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/official_email_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="3000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/facebook_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Facebook Url :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/facebook_url_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="3000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/instagram_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Instagram Url :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/instagram_url_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="3000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/whatsapp_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Whatsapp Number :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/whatsapp_number_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="3000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="onSaveButtonClicked"
+                android:text="Save" />
+
+        </TableLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

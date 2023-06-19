@@ -81,6 +81,8 @@ public class ManageMenuActivity extends AppCompatActivity {
                         checkIfEmpty();
                     }
                 } else {
+                    textViewNotFound.setVisibility(View.VISIBLE);
+                    textViewNotFound.setText("No Menu Found");
                     Log.e("ManageMenuActivity", "Failed to fetch menu data");
                 }
             }
