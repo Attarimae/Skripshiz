@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.Fragment.SalesReportFragment"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/FR_salesReportTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SALES REPORT"
+        android:textSize="18sp"
+        android:layout_margin="10dp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/FR_salesReport_DateText"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="Date: 17-08-2024"
+            android:textSize="18sp"
+            android:layout_margin="10dp"/>
+
+        <Space
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/FR_salesReport_DateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Pick Date"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/FR_salesReport_TextViewTotalSales"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="Total Sales:"
+            android:textSize="18sp"
+            android:layout_margin="10dp"/>
+
+        <Space
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/FR_salesReport_AmountTotalSales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp. 0"
+            android:textSize="18sp"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/FR_salesReport_TextViewSalesByEmployees"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sales by Employees:"
+        android:textSize="18sp"
+        android:layout_margin="10dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/FR_salesReport_recyclerviewSalesEmployee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+<!--    <TextView-->
+<!--        android:id="@+id/FR_salesReport_TextViewSalesByCategory"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Sales by Category:"-->
+<!--        android:textSize="18sp"-->
+<!--        android:layout_margin="10dp"/>-->
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="90dp"/>-->
+
+</LinearLayout>

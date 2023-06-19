@@ -152,6 +152,7 @@ public class POSRegister extends AppCompatActivity {
                 StaffDataModel modalAPI = response.body();
                 sm.saveStaffID(modalAPI.getStaff_id());
                 sm.saveStaffRole(modalAPI.getRole());
+                sm.saveStaffName(staffName);
                 Toast.makeText(POSRegister.this, "Berhasil membuat akun POS", Toast.LENGTH_SHORT).show();
                 openPOSLogin();
             }

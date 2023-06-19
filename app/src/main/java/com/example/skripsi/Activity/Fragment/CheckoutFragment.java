@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.skripsi.API.ServiceGenerator;
 import com.example.skripsi.API.SharedPreferencesCashier;
@@ -90,6 +91,7 @@ public class CheckoutFragment extends Fragment {
                     @Override
                     public void onResponse(Call<OrderListItemDataModel> call, Response<OrderListItemDataModel> response) {
                         checkoutList.clear();
+                        Toast.makeText(v.getContext(), "Successfully created Order", Toast.LENGTH_SHORT).show();
                         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.content_frame, new OrderListFragment());
                         ft.commit();

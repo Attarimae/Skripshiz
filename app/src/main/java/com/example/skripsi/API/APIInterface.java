@@ -3,15 +3,14 @@ package com.example.skripsi.API;
 import com.example.skripsi.Model.CategoryList;
 import com.example.skripsi.Model.Customer.CustomerItemModel;
 import com.example.skripsi.Model.Employee.EmployeeItemModel;
-import com.example.skripsi.Model.ErrorResponseDeserializer;
 import com.example.skripsi.Model.FullProfile;
 import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.Model.Menus.MenuItemModelWithoutId;
 import com.example.skripsi.Model.Orders.OrderListItemDataModel;
 import com.example.skripsi.Model.Orders.UpdateOrderDataModel;
+import com.example.skripsi.Model.SalesReport.POSTReportOrder;
 import com.example.skripsi.Model.RestaurantDataModel;
 import com.example.skripsi.Model.StaffDataModel;
-import com.google.gson.annotations.JsonAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,12 +69,18 @@ public interface APIInterface {
     //Get All Menu
     @GET("/menu/")
     Call<ArrayList<MenuItemModel>> getAllMenu();
-    //blm kubuat bisa pake API ini
 
-    //Get Order
-    @GET("/order")
-    Call<ArrayList<OrderListItemDataModel>> getAllOrderList();
-    //model baru, blm kutest
+    //Get Order (Left Unused)
+    //@GET("/order")
+    //Call<ArrayList<OrderListItemDataModel>> getAllOrderList();
+
+    //Get Order Ongoing (Order List)
+    @GET("/order/ongoing")
+    Call<ArrayList<OrderListItemDataModel>> getOngoingOrderList();
+
+    //Get Order Finished (Order History)
+    @GET("/order/finished")
+    Call<ArrayList<OrderListItemDataModel>> getFinishedOrderList();
 
     //Order
     @POST("/order/")
@@ -125,4 +130,7 @@ public interface APIInterface {
     Call<FullProfile> getRestaurantProfile();
     @POST("/restaurant/profile")
     Call<FullProfile> postProfile(@Body FullProfile itemModel);
+    //Report Order
+    @POST("/report-order")
+    Call<ArrayList<POSTReportOrder>> postReportOrder(@Body POSTReportOrder postReportOrder);
 }

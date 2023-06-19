@@ -50,22 +50,25 @@ public class OrderHistoryFragment extends Fragment {
         orderHistoryGrid.setAdapter(adapter);
 
         ServiceGenerator service = new ServiceGenerator();
-        Call<ArrayList<OrderListItemDataModel>> call = service.getApiService(requireContext()).getAllOrderList();
+        Call<ArrayList<OrderListItemDataModel>> call = service.getApiService(requireContext()).getFinishedOrderList();
         call.enqueue(new Callback<ArrayList<OrderListItemDataModel>>() {
             @Override
             public void onResponse(Call<ArrayList<OrderListItemDataModel>> call, Response<ArrayList<OrderListItemDataModel>> response) {
                 int orderListSize = response.body().size();
-                Log.i("Fragment OrderHistory", "onResponse: " + response.body().get(0).getOrder_status());
-                for(int i=0; i < orderListSize; i++){
-                    if(response.body().get(i).getOrder_status().equals("Order Finished") || response.body().get(i).getOrder_status().equals("Order Cancelled")){
-                        orderHistoryArrayList.add(new OrderListItemDataModel(
-                                response.body().get(i).getTableNumber(),
-                                response.body().get(i).getOrder_detail(),
-                                response.body().get(i).getOrder_status(),
-                                response.body().get(i).getId()
-                        ));
+                if(orderListSize == 0){
+                    Toast.makeText(view.getContext(), "There's no finished order right now...", Toast.LENGTH_SHORT).show();
+                } else {
+                    for(int i=0; i < orderListSize; i++){
+                        if(response.body().get(i).getOrder_status().equals("Order Finished")){
+                            orderHistoryArrayList.add(new OrderListItemDataModel(
+                                    response.body().get(i).getTableNumber(),
+                                    response.body().get(i).getOrder_detail(),
+                                    response.body().get(i).getOrder_status(),
+                                    response.body().get(i).getId()
+                            ));
+                        }
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
                 }
             }
 
@@ -118,7 +121,7 @@ public class OrderHistoryFragment extends Fragment {
         spc.saveTableNumber(table_number);
         spc.saveOrderDetails(order_detail);
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-        //ft.replace(R.id.content_frame, new OrderHistoryDetailsFragment());
+        ft.replace(R.id.content_frame, new OrderHistoryDetailsFragment());
         ft.commit();
     }
 }

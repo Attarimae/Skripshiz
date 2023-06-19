@@ -88,20 +88,23 @@
             android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
             android:textSize="16sp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:singleLine="false"
             android:text="Notes:"
             android:textAlignment="center" />
 
-        <TextView
-            app:layout_constraintTop_toBottomOf="@id/orderdetails_AmountQuantity"
-            app:layout_constraintStart_toEndOf="@id/orderdetails_txtNotes"
-            android:id="@+id/orderdetails_txtIsiNotesnya"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="2dp"
-            android:textSize="16sp"
-            android:text="Dibakar dong"
-            android:textAlignment="center" />
+<!--        <TextView-->
+<!--            app:layout_constraintTop_toBottomOf="@id/orderdetails_AmountQuantity"-->
+<!--            app:layout_constraintStart_toEndOf="@id/orderdetails_txtNotes"-->
+<!--            android:id="@+id/orderdetails_txtIsiNotesnya"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginStart="2dp"-->
+<!--            android:textSize="16sp"-->
+<!--            android:text="Dibakar dong"-->
+<!--            android:textAlignment="center" />-->
 
         <TextView
             app:layout_constraintTop_toBottomOf="@id/orderdetails_Name"

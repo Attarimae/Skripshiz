@@ -98,6 +98,7 @@ public class RestaurantRegister extends AppCompatActivity {
             public void onResponse(Call<RestaurantDataModel> call, Response<RestaurantDataModel> response) {
                 RestaurantDataModel modalAPI = response.body();
                 sm.saveRestaurantID(modalAPI.getRestaurant_id());
+                sm.saveRestaurantName(restaurantName);
                 Toast.makeText(RestaurantRegister.this, "Berhasil membuat akun restaurant", Toast.LENGTH_SHORT).show();
                 openRestaurantLogin();
             }

@@ -52,6 +52,7 @@ public class OrderListDetailsGridAdapter extends ArrayAdapter<OrderListItemDetai
 
         OrderListItemDetailsDataModel orderListItemDetailsDataModel = getItem(position);
         TextView orderDetailsName = listitem.findViewById(R.id.orderdetails_Name);
+        TextView orderDetailsDescription = listitem.findViewById(R.id.orderdetails_txtNotes);
         Button addOrderDetailsQuantity = listitem.findViewById(R.id.orderdetails_AddQuantity);
         Button subOrderDetailsQuantity = listitem.findViewById(R.id.orderdetails_SubQuantity);
         TextView orderDetailsQuantity = listitem.findViewById(R.id.orderdetails_AmountQuantity);
@@ -71,6 +72,7 @@ public class OrderListDetailsGridAdapter extends ArrayAdapter<OrderListItemDetai
         final Integer orderDetailsSubtotalPrice = Integer.parseInt(txtOrderDetailsPrice) * orderDetailsQty;
 
         orderDetailsName.setText(orderListItemDetailsDataModel.getMenuName());
+        orderDetailsDescription.setText(orderListItemDetailsDataModel.getMenuDescription());
         orderDetailsQuantity.setText(String.valueOf(orderDetailsQty));
         orderDetailsPrice.setText("Rp. " + formatPrice(orderDetailsSubtotalPrice));
         orderDetailsImage.setImageResource(orderListItemDetailsDataModel.getImgID());
