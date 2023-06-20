@@ -46,6 +46,8 @@ public class RestaurantRegister extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_register);
 
+        sm = new SessionManager(this);
+
         restaurantName = findViewById(R.id.restaurantName);
         email = findViewById(R.id.email);
         phonenumber = findViewById(R.id.phoneno);
@@ -78,8 +80,6 @@ public class RestaurantRegister extends AppCompatActivity {
                 }
             }
         });
-
-        sm = new SessionManager(this);
     }
 
     private void openRestaurantLogin(){

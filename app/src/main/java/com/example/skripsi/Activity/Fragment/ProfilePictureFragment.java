@@ -50,10 +50,18 @@ public class ProfilePictureFragment extends Fragment {
         imageProfilePic = view.findViewById(R.id.FR_profilepictureImages);
 
         if(spc.fetchCashierPic() == null){
-            imageProfilePic.setImageResource(R.drawable.ic_baseline_person_24); //Default Profile Picture Images
+            imageProfilePic.setImageResource(R.drawable.default_profile); //Default Profile Picture Images
         } else {
             setupTheImage(spc.fetchCashierPic()); //Load Profile Picture Images if already saved before
         }
+//            Using Glide to Display the Profile Picture
+//            Glide.with(this)
+//                    .load(APIConstant.BASE_URL_DOWNLOAD + sm.fetchRestaurantID() + "_" + sm.fetchStaffID())
+//                    .apply(new RequestOptions()
+//                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                            .skipMemoryCache(true))
+//                    .error(R.drawable.default_profile)
+//                    .into(imageProfilePic);
 
         imageProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +86,36 @@ public class ProfilePictureFragment extends Fragment {
                 FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.content_frame, new MenuFragment());
                 ft.commit();
+
+                //Saving to API Photo
+                //Uri profilepictureUri = getProfilePictureUri(imageProfilePic);
+                //if(profilepictureUri != null){
+                //    File profilepictureFile = new File(profilepictureUri.getPath());
+
+                //    RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), profilepictureFile);
+                //    MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", profilepictureFile.getName(), requestFile);
+
+                //    RequestBody typePart = RequestBody.create(MediaType.parse("text/plain"), "employee");
+                //    RequestBody namePart = RequestBody.create(MediaType.parse("text/plain"), sm.fetchStaffId());
+                //    RequestBody authorizationPart = RequestBody.create(MediaType.parse("text/plain"), sm.fetchAuthToken());
+
+                //    ServiceGenerator service = new ServiceGenerator();
+                //    Call<ResponseBody> call = service.getApiService(requireContext()).uploadFile(filePart, typePart, namePart, authorizationPart);
+                //    call.enqueue(new Callback<ResponseBody>() {
+                //        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
+                //            if(response.isSuccessful()){
+                //                Toast.makeText(requireActivity(), "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                //            } else {
+                //                Toast.makeText(requireActivity(), "Failed to upload Image", Toast.LENGTH_SHORT).show();
+                //            }
+                //        }
+                //        public void onFailure(Call<ResponseBody> call, Throwable t){
+                //            Toast.makeText(requireActivity(), "Failed to upload Image", Toast.LENGTH_SHORT).show();
+                //        }
+                //    });
+                //} else {
+                //    Toast.makeText(requireContext(), "Images uploaded successfully", Toast.LENGTH_SHORT).show();
+                //}
             }
         });
 
@@ -90,6 +128,42 @@ public class ProfilePictureFragment extends Fragment {
         chooseImg.setAction(Intent.ACTION_PICK);
 
         launchActivityResult.launch(chooseImg);
+        //Select from Camera/Gallery
+        //String[] options = {"Gallery", "Camera"};
+        //AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //builder.setTitle("Choose Image Source");
+        //builder.setItems(options, new DialogInterface.OnClickListener() {
+        //    @Override
+        //    public void onClick(DialogInterface dialog, int which) {
+        //        if (which == 0) {
+        //            // Gallery option clicked
+        //            // Clear Glide cache before selecting a new image
+        //            Glide.get(DetailEmployeeActivity.this).clearMemory();
+        //            new Thread(new Runnable() {
+        //                @Override
+        //                public void run() {
+        //                    Glide.get(DetailEmployeeActivity.this).clearDiskCache();
+        //                }
+        //            }).start();
+        //            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        //            intent.setType("image/*");
+        //            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        //        } else if (which == 1) {
+        //            // Camera option clicked
+        //            // Clear Glide cache before capturing a new image
+        //            Glide.get(DetailEmployeeActivity.this).clearMemory();
+        //            new Thread(new Runnable() {
+        //                @Override
+        //                public void run() {
+        //                    Glide.get(DetailEmployeeActivity.this).clearDiskCache();
+        //                }
+        //            }).start();
+        //            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //            startActivityForResult(intent, CAMERA_CAPTURE_REQUEST);
+        //        }
+        //    }
+        //});
+        //builder.show();
     }
 
     ActivityResultLauncher<Intent> launchActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -125,4 +199,27 @@ public class ProfilePictureFragment extends Fragment {
         Bitmap setupBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         imageProfilePic.setImageBitmap(setupBitmap);
     }
+
+    //private Uri getProfilePictureUri(ImageView imageView){
+    //    Drawable drawable = imageView.getDrawable();
+    //    if(drawable instanceof BitmapDrawable){
+    //        BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+    //        Bitmap bitmap = bitmapDrawable.getBitmap();
+    //        return getProfilePictureUriFromBitmap(bitmap);
+    //    }
+    //    return null;
+    //}
+
+    //private Uri getProfilePictureUriFromBitmap(Bitmap bitmap){
+    //    try {
+    //        File cachePath = new File(getCacheDir(), "images");
+    //        cachePath.mkdirs();
+    //        FileOutputStream outputStream = new FileOutputStream(cachePath + "/image.jpg");
+    //        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+    //        outputStream.close();
+    //        return Uri.fromFile(new File(cachePath + "/image.jpg"));
+    //    } catch (IOException e) {
+    //        e.printStackTrace();
+    //    }
+    //}
 }

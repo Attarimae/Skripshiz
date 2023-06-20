@@ -89,28 +89,32 @@ public class SalesReportFragment extends Fragment {
         call.enqueue(new Callback<ArrayList<POSTReportOrder>>() {
             @Override
             public void onResponse(Call<ArrayList<POSTReportOrder>> call, Response<ArrayList<POSTReportOrder>> response) {
-                int postreportordersize = response.body().size();
-                if(postreportordersize == 0){
-                    Toast.makeText(requireContext(), "There's no sales today...", Toast.LENGTH_SHORT).show();
-                } else {
-                    todaySalesReport.addAll(response.body());
-                    for(POSTReportOrder item : todaySalesReport){
-                        if(item.getTotalPrice() == null){
-                            totalSalesReportToday += 0;
-                        } else {
-                            totalSalesReportToday += Integer.parseInt(item.getTotalPrice());
+                if(response.isSuccessful()){
+                    int postreportordersize = response.body().size();
+                    if(postreportordersize == 0){
+                        Toast.makeText(requireContext(), "There's no sales today...", Toast.LENGTH_SHORT).show();
+                    } else {
+                        todaySalesReport.addAll(response.body());
+                        for(POSTReportOrder item : todaySalesReport){
+                            if(item.getTotalPrice() == null){
+                                totalSalesReportToday += 0;
+                            } else {
+                                totalSalesReportToday += Integer.parseInt(item.getTotalPrice());
+                            }
                         }
-                    }
-                    salesReportDateAmount.setText("Rp. " + String.valueOf(totalSalesReportToday));
+                        salesReportDateAmount.setText("Rp. " + String.valueOf(totalSalesReportToday));
 
-                    for(POSTReportOrder item : todaySalesReport){
-                        String employeeName = item.getUser_id();
-                        int removeHyphen = employeeName.indexOf("-");
-                        dummyData.add(new SalesReportEmployeeModel(employeeName.substring(0,removeHyphen), Integer.parseInt(item.getTotalPrice())));
+                        for(POSTReportOrder item : todaySalesReport){
+                            String employeeName = item.getUser_id();
+                            int removeHyphen = employeeName.indexOf("-");
+                            dummyData.add(new SalesReportEmployeeModel(employeeName.substring(0,removeHyphen), Integer.parseInt(item.getTotalPrice())));
+                        }
+                        adapter = new SalesReportRecyclerViewEmployeeAdapter(dummyData);
+                        salesReportRecyclerViewEmployees.setAdapter(adapter);
+                        salesReportRecyclerViewEmployees.setLayoutManager(new LinearLayoutManager(requireContext()));
                     }
-                    adapter = new SalesReportRecyclerViewEmployeeAdapter(dummyData);
-                    salesReportRecyclerViewEmployees.setAdapter(adapter);
-                    salesReportRecyclerViewEmployees.setLayoutManager(new LinearLayoutManager(requireContext()));
+                } else {
+                    Toast.makeText(requireContext(), "Failed to connect the servers", Toast.LENGTH_SHORT).show();
                 }
             }
 

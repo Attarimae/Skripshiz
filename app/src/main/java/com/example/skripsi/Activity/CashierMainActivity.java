@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,6 +21,11 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
+import com.example.skripsi.API.APIConstant;
 import com.example.skripsi.API.SessionManager;
 import com.example.skripsi.Activity.Fragment.CheckoutFragment;
 import com.example.skripsi.Activity.Fragment.MenuFragment;
@@ -68,6 +74,17 @@ public class CashierMainActivity extends AppCompatActivity {
                 logout();
             }
         });
+
+        ImageView MA_gambarRestoran = findViewById(R.id.MA_gambarRestoran);
+        Glide.with(this)
+                .load(APIConstant.BASE_URL_DOWNLOAD + sm.fetchRestaurantID() + "_" + sm.fetchStaffID())
+                .placeholder(R.drawable.default_profile)
+                .error(R.drawable.default_profile)
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .signature(new ObjectKey(System.currentTimeMillis())))
+                .into(MA_gambarRestoran);
+
         setupToolbar();
 
         MainDrawerMenuModel[] drawerItem = new MainDrawerMenuModel[6];

@@ -48,6 +48,8 @@ public class POSLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pos_login);
 
+        sm = new SessionManager(this);
+
         loginbtn = findViewById(R.id.loginbtn);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
@@ -76,8 +78,6 @@ public class POSLogin extends AppCompatActivity {
                 }
             }
         });
-
-        sm = new SessionManager(this);
     }
 
     private void openPOSRegistration() {
@@ -161,6 +161,8 @@ public class POSLogin extends AppCompatActivity {
             password.setError("Password must be 8-20 characters");
         } else if (!passwordToText.matches(password_regex)) {
             password.setError("Password is invalid");
+        } else {
+            password.setError(null);
         }
         return true;
     }

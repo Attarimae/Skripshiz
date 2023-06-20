@@ -50,17 +50,25 @@ public class MenuFragment extends Fragment {
         call.enqueue(new Callback<ArrayList<MenuItemModel>>() {
             @Override
             public void onResponse(Call<ArrayList<MenuItemModel>> call, Response<ArrayList<MenuItemModel>> response) {
-                int menuListSize = response.body().size();
-                for(int i=0; i < menuListSize; i++){
-                    String menuCategory = response.body().get(i).getMenuCategory();
-                    String menuName = response.body().get(i).getMenuName();
-                    String menuPrice = "Rp. " + response.body().get(i).getMenuPrice();
-                    String menuDescription = response.body().get(i).getMenuDescription();
-                    int id = response.body().get(i).getId();
-                    String menuImg = response.body().get(i).getImgID();
-                    menuList.add(new MenuItemModel(id, menuCategory, menuName, menuDescription, menuPrice, "R.drawable.ic_launcher_background"));
-                    //menuList.add(new MenuItemModel(id,menuCategory, menuName, menuDescription, menuPrice, menuImg));
-                    adapter.notifyDataSetChanged();
+                if(response.isSuccessful()){
+                    int menuListSize = response.body().size();
+                    if(menuListSize == 0){
+                        Toast.makeText(requireContext(), "There's no menu available right now...", Toast.LENGTH_SHORT).show();
+                    } else {
+                        for(int i=0; i < menuListSize; i++){
+                            String menuCategory = response.body().get(i).getMenuCategory();
+                            String menuName = response.body().get(i).getMenuName();
+                            String menuPrice = "Rp. " + response.body().get(i).getMenuPrice();
+                            String menuDescription = response.body().get(i).getMenuDescription();
+                            int id = response.body().get(i).getId();
+                            String menuImg = response.body().get(i).getImgID();
+                            menuList.add(new MenuItemModel(id, menuCategory, menuName, menuDescription, menuPrice, "R.drawable.ic_launcher_background"));
+                            //menuList.add(new MenuItemModel(id,menuCategory, menuName, menuDescription, menuPrice, menuImg));
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "Failed to connect the servers", Toast.LENGTH_SHORT).show();
                 }
             }
 

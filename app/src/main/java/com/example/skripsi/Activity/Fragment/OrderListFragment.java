@@ -58,19 +58,23 @@ public class OrderListFragment extends Fragment {
         call.enqueue(new Callback<ArrayList<OrderListItemDataModel>>() {
             @Override
             public void onResponse(Call<ArrayList<OrderListItemDataModel>> call, Response<ArrayList<OrderListItemDataModel>> response) {
-                int orderListSize = response.body().size();
-                if(orderListSize == 0){
-                    Toast.makeText(view.getContext(), "There's no orders right now...", Toast.LENGTH_SHORT).show();
-                } else {
-                    for(int i=0; i < orderListSize; i++){
-                        if(response.body().get(i).getOrder_status().equals("Order Ongoing")){
-                            orderListArrayList.add(new OrderListItemDataModel(
-                                    response.body().get(i).getTableNumber(),
-                                    response.body().get(i).getOrder_detail()
-                            ));
+                if(response.isSuccessful()){
+                    int orderListSize = response.body().size();
+                    if(orderListSize == 0){
+                        Toast.makeText(view.getContext(), "There's no orders right now...", Toast.LENGTH_SHORT).show();
+                    } else {
+                        for(int i=0; i < orderListSize; i++){
+                            if(response.body().get(i).getOrder_status().equals("Order Ongoing")){
+                                orderListArrayList.add(new OrderListItemDataModel(
+                                        response.body().get(i).getTableNumber(),
+                                        response.body().get(i).getOrder_detail()
+                                ));
+                            }
+                            adapter.notifyDataSetChanged();
                         }
-                        adapter.notifyDataSetChanged();
                     }
+                } else {
+                    Toast.makeText(view.getContext(), "Failed to connect the servers", Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.skripsi.API.ServiceGenerator;
 import com.example.skripsi.API.SessionManager;
@@ -45,6 +46,8 @@ public class RestaurantLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_login);
 
+        sm = new SessionManager(this);
+
         email = findViewById(R.id.restaurantLogin_Email);
         password = findViewById(R.id.restaurantLogin_Password);
 
@@ -74,9 +77,6 @@ public class RestaurantLogin extends AppCompatActivity {
                 }
             }
         });
-
-        sm = new SessionManager(this);
-
     }
 
     private void openRestaurantRegistration(){

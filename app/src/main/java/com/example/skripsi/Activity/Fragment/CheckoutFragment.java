@@ -75,14 +75,20 @@ public class CheckoutFragment extends Fragment {
             public void onClick(View v) {
                 ServiceGenerator service = new ServiceGenerator();
                 Integer tableNumber = Integer.valueOf(checkoutTableNumber.toString());
-                for(CheckoutItemModel item : checkoutList){
-                    orderListDetails.add(new OrderListItemDetailsDataModel(
-                            item.getCheckoutMenuName(),
-                            item.getCheckoutMenuPrice(),
-                            item.getCheckoutMenuDescription(),
-                            item.getCheckoutMenuQuantity(),
-                            item.getImgID()
+                if(checkoutList.isEmpty()){
+                    Toast.makeText(v.getContext(), "Cannot create an order!", Toast.LENGTH_SHORT).show();
+                } else {
+                    for(CheckoutItemModel item : checkoutList){
+                        if(item.getCheckoutMenuQuantity() > 0){
+                            orderListDetails.add(new OrderListItemDetailsDataModel(
+                                    item.getCheckoutMenuName(),
+                                    item.getCheckoutMenuPrice(),
+                                    item.getCheckoutMenuDescription(),
+                                    item.getCheckoutMenuQuantity(),
+                                    item.getImgID()
                             ));
+                        }
+                    }
                 }
 
                 OrderListItemDataModel modal = new OrderListItemDataModel(tableNumber, orderListDetails);
@@ -90,11 +96,15 @@ public class CheckoutFragment extends Fragment {
                 call.enqueue(new Callback<OrderListItemDataModel>() {
                     @Override
                     public void onResponse(Call<OrderListItemDataModel> call, Response<OrderListItemDataModel> response) {
-                        checkoutList.clear();
-                        Toast.makeText(v.getContext(), "Successfully created Order", Toast.LENGTH_SHORT).show();
-                        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.content_frame, new OrderListFragment());
-                        ft.commit();
+                        if(response.isSuccessful()){
+                            checkoutList.clear();
+                            Toast.makeText(v.getContext(), "Successfully created Order", Toast.LENGTH_SHORT).show();
+                            FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.content_frame, new OrderListFragment());
+                            ft.commit();
+                        } else {
+                            Toast.makeText(view.getContext(), "Failed to connect the servers", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override

@@ -48,6 +48,8 @@ public class POSRegister extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.posregister);
 
+        sm = new SessionManager(this);
+
         posName = findViewById(R.id.posname);
         email = findViewById(R.id.email);
         phonenumber = findViewById(R.id.phoneno);
@@ -80,8 +82,6 @@ public class POSRegister extends AppCompatActivity {
                 }
             }
         });
-
-        sm = new SessionManager(this);
     }
 
     private void openPOSLogin(){
