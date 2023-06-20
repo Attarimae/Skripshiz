@@ -31,7 +31,7 @@ public class ManagerMainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private TextView MMA_txtViewWelcome;
     private ImageView MMA_gambarRestoran;
-    private Button MMA_ManageRestoMenu,MMA_ManageEmployeeMenu,MMA_ManageCustomer,MMA_EditLandingPage;
+    private Button MMA_ManageRestoMenu,MMA_ManageEmployeeMenu,MMA_ManageCustomer,MMA_EditLandingPage,logoutButton;;
 
     SessionManager sm;
 
@@ -72,6 +72,14 @@ public class ManagerMainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        logoutButton = findViewById(R.id.MMA_buttonLogout);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
+
         mNavigationDrawerItemTitles= getResources().getStringArray(R.array.menu_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_manager);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -114,5 +122,12 @@ public class ManagerMainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    private void logout() {
+        sm.clearSession();
+        Intent intent = new Intent(ManagerMainActivity.this, RestaurantLogin.class);
+        startActivity(intent);
+        finish();
     }
 }

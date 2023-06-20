@@ -120,7 +120,6 @@ public class DetailMenuActivity extends AppCompatActivity {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     menuCategorySpinner.setAdapter(adapter);
                 } else {
-                    // Handle API error
                     Toast.makeText(DetailMenuActivity.this, "Failed to fetch categories", Toast.LENGTH_SHORT).show();
                 }
             }

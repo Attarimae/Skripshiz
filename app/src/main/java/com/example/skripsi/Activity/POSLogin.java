@@ -15,11 +15,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.skripsi.API.ServiceGenerator;
 import com.example.skripsi.API.SessionManager;
+import com.example.skripsi.Model.ErrorResponse;
 import com.example.skripsi.Model.StaffDataModel;
 import com.example.skripsi.R;
+import com.google.gson.Gson;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +39,7 @@ public class POSLogin extends AppCompatActivity {
     private TextView registerPOS;
 
     private static final String TAG = "POSLogin";
-    private static final String password_regex = "^(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,20}$";
+    private static final String password_regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d).+$";
 
     SessionManager sm;
 
@@ -66,7 +71,7 @@ public class POSLogin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 isAllFieldsChecked = CheckAllFields();
-                if(isAllFieldsChecked){
+                if (isAllFieldsChecked) {
                     postPOSLogin(sm.fetchStaffID(), sm.fetchStaffRole(), email.getText().toString(), password.getText().toString());
                 }
             }
@@ -75,29 +80,57 @@ public class POSLogin extends AppCompatActivity {
         sm = new SessionManager(this);
     }
 
-    private void openPOSRegistration(){
+    private void openPOSRegistration() {
         Intent intent = new Intent(this, POSRegister.class);
         startActivity(intent);
         finish();
     }
 
-    private void openCashierPOSHomepage(){
-        Intent intent = new Intent(this, CashierMainActivity.class);
-        startActivity(intent);
-        finish();
+    private void openPOSHomepage() {
+        System.out.println("SM role "+sm.fetchStaffRole());
+        System.out.println("SM restaurant id "+sm.fetchRestaurantID());
+        System.out.println("SM restaurant name "+sm.fetchRestaurantName());
+        System.out.println("SM staff name "+sm.fetchStaffName());
+        System.out.println("SM staff id "+sm.fetchStaffID());
+        String role = sm.fetchStaffRole();
+        if(role.equalsIgnoreCase("cashier")){
+            Intent intent = new Intent(this, CashierMainActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+            Intent intent = new Intent(this, ManagerMainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
-    private void postPOSLogin(String staff_id, String role, String email, String password){
+    private void postPOSLogin(String staff_id, String role, String email, String password) {
         ServiceGenerator service = new ServiceGenerator();
         StaffDataModel modal = new StaffDataModel(staff_id, role, email, password);
         Call<StaffDataModel> call = service.getApiService(this).postStaffLogin(modal);
-        call.enqueue(new Callback<StaffDataModel>(){
+        call.enqueue(new Callback<StaffDataModel>() {
 
             @Override
             public void onResponse(Call<StaffDataModel> call, Response<StaffDataModel> response) {
                 StaffDataModel modalAPI = response.body();
-                sm.saveStaffRole(modalAPI.getRole());
-                openCashierPOSHomepage();
+                if (response.isSuccessful()) {
+                    Toast.makeText(POSLogin.this, "Berhasil Login akun POS", Toast.LENGTH_SHORT).show();
+                    sm.saveStaffRole(modalAPI.getRole());
+                    sm.saveStaffID(modalAPI.getStaff_id());
+                    sm.saveStaffName(modalAPI.getName());
+                    openPOSHomepage();
+                } else if (response.code() == 400) {
+                    try {
+                        ErrorResponse errorResponse = new Gson().fromJson(response.errorBody().string(), ErrorResponse.class);
+                        String responseMessage = errorResponse.getResponseMessage();
+                        Toast.makeText(POSLogin.this, "Gagal Login akun pos: " + responseMessage, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(POSLogin.this, "Failed to parse error response", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(POSLogin.this, "Gagal membuat akun pos", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -107,29 +140,27 @@ public class POSLogin extends AppCompatActivity {
         });
     }
 
-    private boolean CheckAllFields(){
+    private boolean CheckAllFields() {
         String emailToText = email.getText().toString();
         String passwordToText = password.getText().toString();
 
-        if(emailToText.isEmpty()){
+        if (emailToText.isEmpty()) {
             email.setError("Email is required");
             return false;
-        } else if(!Patterns.EMAIL_ADDRESS.matcher(emailToText).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailToText).matches()) {
             email.setError("Email is invalid");
             return false;
         } else {
             email.setError(null);
         }
 
-        if(passwordToText.length() == 0){
+        if (passwordToText.length() == 0) {
             password.setError("Password is required");
             return false;
-        } else if(passwordToText.length() < 8){
-            password.setError("Password must be minimum 8 characters");
-        } else if(!passwordToText.matches(password_regex)){
+        } else if (passwordToText.length() < 8 && passwordToText.length() > 20) {
+            password.setError("Password must be 8-20 characters");
+        } else if (!passwordToText.matches(password_regex)) {
             password.setError("Password is invalid");
-        } else {
-            password.setError(null);
         }
         return true;
     }

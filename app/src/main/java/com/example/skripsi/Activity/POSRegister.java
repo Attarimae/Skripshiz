@@ -19,8 +19,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.skripsi.API.ServiceGenerator;
 import com.example.skripsi.API.SessionManager;
+import com.example.skripsi.Model.ErrorResponse;
 import com.example.skripsi.Model.StaffDataModel;
 import com.example.skripsi.R;
+import com.google.gson.Gson;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -95,11 +99,6 @@ public class POSRegister extends AppCompatActivity {
         if(posNameToText.isEmpty()){
             posName.setError("Name is required");
             return false;
-        } else if(!posNameToText.matches("\\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+")){
-            posName.setError("Name is invalid");
-            return false;
-        } else {
-            posName.setError(null);
         }
 
         if(emailToText.isEmpty()){
@@ -143,18 +142,29 @@ public class POSRegister extends AppCompatActivity {
 
     private void postPOSRegister(String staffName, String email, String phoneNumber, String password){
         ServiceGenerator service = new ServiceGenerator();
-        StaffDataModel modal = new StaffDataModel(staffName, email, phoneNumber, password);
+        StaffDataModel modal = new StaffDataModel(staffName, email, phoneNumber, password,null);
         Call<StaffDataModel> call = service.getApiService(this).postStaffRegister(modal);
         call.enqueue(new Callback<StaffDataModel>(){
 
             @Override
             public void onResponse(Call<StaffDataModel> call, Response<StaffDataModel> response) {
-                StaffDataModel modalAPI = response.body();
-                sm.saveStaffID(modalAPI.getStaff_id());
-                sm.saveStaffRole(modalAPI.getRole());
-                sm.saveStaffName(staffName);
-                Toast.makeText(POSRegister.this, "Berhasil membuat akun POS", Toast.LENGTH_SHORT).show();
-                openPOSLogin();
+                if (response.isSuccessful()) {
+                    Toast.makeText(POSRegister.this, "Berhasil membuat akun POS", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(POSRegister.this, POSLogin.class);
+                    startActivity(intent);
+                    finish();
+                } else if (response.code() == 400) {
+                    try {
+                        ErrorResponse errorResponse = new Gson().fromJson(response.errorBody().string(), ErrorResponse.class);
+                        String responseMessage = errorResponse.getResponseMessage();
+                        Toast.makeText(POSRegister.this, "Gagal membuat akun pos: " + responseMessage, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(POSRegister.this, "Failed to parse error response", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(POSRegister.this, "Gagal membuat akun pos", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

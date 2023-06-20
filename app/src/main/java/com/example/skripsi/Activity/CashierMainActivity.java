@@ -5,13 +5,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -38,6 +41,9 @@ public class CashierMainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private Menu cashierMenu;
 
+    TextView MA_txtViewWelcome;
+    Button logoutButton;
+
     SessionManager sm;
 
     @Override
@@ -46,19 +52,22 @@ public class CashierMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cashier_main);
 
         sm = new SessionManager(this);
-        //Ini buat ngetest aja
-        sm.saveAuthToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0aW5nLTM3MzFmOWRkLTZjMTYtNGM2OS1iZTA2LWI1MDkyNGM2YWRmYyIsImlhdCI6MTY4NjQ3OTI0OCwiZXhwIjoxMTgwNTM1NDc0MDEwMjB9.Kz8kFzrASWbMrzYOhu0Nt1bVKB8HgzeMdZe61J3St4DTunj5UivqqLnGGh1vEPbzaXgLa7q3fIPpqLgTsu4HYg");
-        sm.saveRestaurantName("testing");
-        sm.saveRestaurantID("testing-3731f9dd-6c16-4c69-be06-b50924c6adfc");
-        sm.saveStaffName("testing");
-        sm.saveStaffID("testing-f7dcb933-c6c7-4d46-a713-fe50aa709b38");
-        sm.saveStaffRole("cashier");
 
         mTitle = mDrawerTitle = getTitle();
         mNavigationDrawerItemTitles= getResources().getStringArray(R.array.menu_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
+        MA_txtViewWelcome = findViewById(R.id.MA_txtViewWelcome);
+        System.out.println("STAFFF NAME "+sm.fetchStaffName());
+        System.out.println("STAFFF ID " +sm.fetchStaffID());
+        MA_txtViewWelcome.setText("Welcome, "+sm.fetchStaffName()+"\n"+sm.fetchStaffRole());
+        logoutButton = findViewById(R.id.MA_buttonLogout);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
         setupToolbar();
 
         MainDrawerMenuModel[] drawerItem = new MainDrawerMenuModel[6];
@@ -193,5 +202,10 @@ public class CashierMainActivity extends AppCompatActivity {
         cashierMenu.findItem(R.id.action_checkout).setVisible(true);
         cashierMenu.findItem(R.id.action_checkout).setEnabled(true);
     }
-
+    private void logout() {
+        sm.clearSession();
+        Intent intent = new Intent(CashierMainActivity.this, RestaurantLogin.class);
+        startActivity(intent);
+        finish();
+    }
 }

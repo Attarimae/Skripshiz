@@ -14,7 +14,10 @@ public class SessionManager{
         editor = sharedPreferences.edit();
         editor.apply();
     }
-
+    public void clearSession(){
+        editor.clear();
+        editor.apply();
+    }
     public void saveAuthToken(String authToken){
         editor.putString("AuthToken", authToken);
         editor.commit();

@@ -97,10 +97,11 @@ public class RestaurantRegister extends AppCompatActivity {
             @Override
             public void onResponse(Call<RestaurantDataModel> call, Response<RestaurantDataModel> response) {
                 RestaurantDataModel modalAPI = response.body();
-                sm.saveRestaurantID(modalAPI.getRestaurant_id());
-                sm.saveRestaurantName(restaurantName);
                 Toast.makeText(RestaurantRegister.this, "Berhasil membuat akun restaurant", Toast.LENGTH_SHORT).show();
-                openRestaurantLogin();
+                Intent intent = new Intent(RestaurantRegister.this, ShowRestaurantIdActivity.class);
+                intent.putExtra("restaurantId", modalAPI.getRestaurant_id());
+                startActivity(intent);
+                finish();
             }
 
             @Override

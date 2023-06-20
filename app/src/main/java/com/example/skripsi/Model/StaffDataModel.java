@@ -33,7 +33,7 @@ public class StaffDataModel {
     }
 
     //Login
-    public StaffDataModel(String staff_id, String role, String email, String password) {
+    public StaffDataModel(String staff_id, String name, String email, String password) {
         this.staff_id = staff_id;
         this.email = email;
         this.password = password;
