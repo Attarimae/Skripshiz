@@ -27,6 +27,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIInterface {
     //Register Restaurant
@@ -63,6 +64,7 @@ public interface APIInterface {
     @POST("/menu/")
     Call<MenuItemModel> postCreateMenuWithErrorResponse(@Body MenuItemModel dataModel);
 
+    //Get Category
     @GET("/category/")
     Call<List<CategoryList>> getCategory();
 
@@ -102,8 +104,7 @@ public interface APIInterface {
 
     //Get Menu by Category
     //@GET("/menu")
-    //Call<MenuDataModel> getMenuCategory(@Query("category") String category);
-    //blm kubuat bisa pake API ini, mungkin perlu kuupdate jg ini
+    //Call<ArrayList<MenuItemModel>> getMenubyCategory(@Query("category") String namaCategory);
 
     @Multipart
     @POST("/upload")

@@ -14,6 +14,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.skripsi.API.APIConstant;
 import com.example.skripsi.Activity.Fragment.OrderListDetailsFragment;
 import com.example.skripsi.Model.Orders.OrderListItemDetailsDataModel;
 import com.example.skripsi.R;
@@ -75,7 +79,13 @@ public class OrderListDetailsGridAdapter extends ArrayAdapter<OrderListItemDetai
         orderDetailsDescription.setText(orderListItemDetailsDataModel.getMenuDescription());
         orderDetailsQuantity.setText(String.valueOf(orderDetailsQty));
         orderDetailsPrice.setText("Rp. " + formatPrice(orderDetailsSubtotalPrice));
-        orderDetailsImage.setImageResource(orderListItemDetailsDataModel.getImgID());
+        Glide.with(orderDetailsFragment.requireContext())
+                .load(APIConstant.BASE_URL_DOWNLOAD + orderListItemDetailsDataModel.getImgID())
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true))
+                .error(R.drawable.smallsalad)
+                .into(orderDetailsImage);
 
         orderDetailsFragment.updateTotalPrice();
 

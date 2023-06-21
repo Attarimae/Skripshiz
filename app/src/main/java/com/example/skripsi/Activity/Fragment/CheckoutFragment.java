@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +65,7 @@ public class CheckoutFragment extends Fragment {
         checkoutGrid.setAdapter(adapter);
 
         EditText checkoutTableNumber = view.findViewById(R.id.FR_editTextCheckoutTableNumber);
+        checkoutTableNumber.setInputType(InputType.TYPE_CLASS_NUMBER);
         checkoutTotalPrice = view.findViewById(R.id.FR_txtViewCheckoutTotalPriceRight);
 
         adapter.notifyDataSetChanged();
@@ -74,7 +76,13 @@ public class CheckoutFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ServiceGenerator service = new ServiceGenerator();
-                Integer tableNumber = Integer.valueOf(checkoutTableNumber.toString());
+                String tableNumber = checkoutTableNumber.getText().toString().trim();
+                int number = -1;
+                try {
+                    number = Integer.parseInt(tableNumber);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
                 if(checkoutList.isEmpty()){
                     Toast.makeText(v.getContext(), "Cannot create an order!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -82,7 +90,7 @@ public class CheckoutFragment extends Fragment {
                         if(item.getCheckoutMenuQuantity() > 0){
                             orderListDetails.add(new OrderListItemDetailsDataModel(
                                     item.getCheckoutMenuName(),
-                                    item.getCheckoutMenuPrice(),
+                                    item.getCheckoutMenuPrice().substring(4),
                                     item.getCheckoutMenuDescription(),
                                     item.getCheckoutMenuQuantity(),
                                     item.getImgID()
@@ -91,7 +99,7 @@ public class CheckoutFragment extends Fragment {
                     }
                 }
 
-                OrderListItemDataModel modal = new OrderListItemDataModel(tableNumber, orderListDetails);
+                OrderListItemDataModel modal = new OrderListItemDataModel(number, orderListDetails);
                 Call<OrderListItemDataModel> call = service.getApiService(requireContext()).postCreateOrder(modal);
                 call.enqueue(new Callback<OrderListItemDataModel>() {
                     @Override

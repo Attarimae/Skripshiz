@@ -54,7 +54,7 @@ public class MenuGridAdapter extends ArrayAdapter<MenuItemModel> {
                         menuItemModel.getMenuPrice(),
                         menuItemModel.getMenuCategory(),
                         menuItemModel.getMenuDescription(),
-                        1,
+                        menuItemModel.getImgID(),
                         1));
 
                 SharedPreferences sharedPreferences = context.getSharedPreferences("Point of Sales", Context.MODE_PRIVATE);

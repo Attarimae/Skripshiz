@@ -8,8 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.skripsi.API.ServiceGenerator;
@@ -17,6 +20,7 @@ import com.example.skripsi.API.SharedPreferencesCashier;
 import com.example.skripsi.Adapter.MenuGridAdapter;
 import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.R;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
@@ -27,6 +31,8 @@ import retrofit2.Response;
 public class MenuFragment extends Fragment {
 
     private ArrayList<MenuItemModel> menuList;
+    private ArrayList<String> categoryList;
+    private GridView menuGrid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,8 +44,12 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
-        GridView menuGrid = view.findViewById(R.id.FR_gridMenu);
+        menuGrid = view.findViewById(R.id.FR_gridMenu);
         menuList = new ArrayList<>();
+
+        categoryList = new ArrayList<>();
+        categoryList.add("All");
+
         SharedPreferencesCashier spc = new SharedPreferencesCashier(requireContext());
 
         MenuGridAdapter adapter = new MenuGridAdapter(requireActivity(), menuList);
@@ -62,9 +72,12 @@ public class MenuFragment extends Fragment {
                             String menuDescription = response.body().get(i).getMenuDescription();
                             int id = response.body().get(i).getId();
                             String menuImg = response.body().get(i).getImgID();
-                            menuList.add(new MenuItemModel(id, menuCategory, menuName, menuDescription, menuPrice, "R.drawable.ic_launcher_background"));
-                            //menuList.add(new MenuItemModel(id,menuCategory, menuName, menuDescription, menuPrice, menuImg));
+                            //menuList.add(new MenuItemModel(id, menuCategory, menuName, menuDescription, menuPrice, "R.drawable.ic_launcher_background"));
+                            menuList.add(new MenuItemModel(id,menuCategory, menuName, menuDescription, menuPrice, menuImg));
                             adapter.notifyDataSetChanged();
+                            if(!categoryList.contains(menuCategory)){
+                                categoryList.add(menuCategory);
+                            }
                         }
                     }
                 } else {
@@ -77,6 +90,26 @@ public class MenuFragment extends Fragment {
                 Log.e("Fragment Menu", t.getMessage());
             }
         });
+
+        Spinner categorySpinner = view.findViewById(R.id.FR_spinnerMenuCategory);
+
+        ArrayAdapter<String> categorySpinnerAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categoryList);
+        categorySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(categorySpinnerAdapter);
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedCategory = categoryList.get(position);
+                filterMenuByCategory(selectedCategory);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //Auto-Generated
+            }
+        });
+
         //Search View
         SearchView menuSearchView = view.findViewById(R.id.FT_searchViewMenu);
         menuSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -93,8 +126,10 @@ public class MenuFragment extends Fragment {
                         filteredMenuList.add(filter);
                     }
                 }
+
                 MenuGridAdapter adapter = new MenuGridAdapter(requireActivity(), filteredMenuList);
                 menuGrid.setAdapter(adapter);
+
                 if(filteredMenuList.isEmpty()){
                     Toast.makeText(requireContext(), "Filter not found...", Toast.LENGTH_SHORT).show();
                 }
@@ -102,5 +137,21 @@ public class MenuFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void filterMenuByCategory(String selectedCategory){
+        ArrayList<MenuItemModel> filteredMenuList = new ArrayList<>();
+        if(selectedCategory.equals("All")){
+            filteredMenuList = menuList;
+        } else {
+            for(MenuItemModel item : menuList){
+                if(item.getMenuCategory().equals(selectedCategory)){
+                    filteredMenuList.add(item);
+                }
+            }
+        }
+        MenuGridAdapter adapter = new MenuGridAdapter(requireActivity(), filteredMenuList);
+        menuGrid.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }

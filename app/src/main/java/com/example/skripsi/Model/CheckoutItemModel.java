@@ -2,17 +2,17 @@ package com.example.skripsi.Model;
 
 public class CheckoutItemModel {
 
-    private String checkoutMenuName, checkoutMenuPrice, checkoutMenuCategory, checkoutMenuDescription;
-    private int imgID, checkoutMenuQuantity;
+    private String checkoutMenuName, checkoutMenuPrice, checkoutMenuCategory, checkoutMenuDescription, imgID;
+    private int checkoutMenuQuantity;
 
-    public CheckoutItemModel(String checkoutMenuName, String checkoutMenuPrice, int checkoutMenuQuantity, int imgID) {
+    public CheckoutItemModel(String checkoutMenuName, String checkoutMenuPrice, int checkoutMenuQuantity, String imgID) {
         this.checkoutMenuName = checkoutMenuName;
         this.checkoutMenuPrice = checkoutMenuPrice;
         this.checkoutMenuQuantity = checkoutMenuQuantity;
         this.imgID = imgID;
     }
 
-    public CheckoutItemModel(String checkoutMenuName, String checkoutMenuPrice, String checkoutMenuCategory, String checkoutMenuDescription, int imgID, int checkoutMenuQuantity) {
+    public CheckoutItemModel(String checkoutMenuName, String checkoutMenuPrice, String checkoutMenuCategory, String checkoutMenuDescription, String imgID, int checkoutMenuQuantity) {
         this.checkoutMenuName = checkoutMenuName;
         this.checkoutMenuPrice = checkoutMenuPrice;
         this.checkoutMenuCategory = checkoutMenuCategory;
@@ -37,11 +37,11 @@ public class CheckoutItemModel {
         this.checkoutMenuPrice = checkoutMenuPrice;
     }
 
-    public int getImgID() {
+    public String getImgID() {
         return imgID;
     }
 
-    public void setImgID(int imgID) {
+    public void setImgID(String imgID) {
         this.imgID = imgID;
     }
 

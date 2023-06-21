@@ -15,14 +15,14 @@ public class OrderListItemDetailsDataModel {
     @SerializedName("quantity")
     private int menuQuantity;
     @SerializedName("picture_code")
-    private int imgID;
+    private String imgID;
     @SerializedName("status")
     private String status;
     @SerializedName("order_detail_id")
     private String order_detail_id;
 
     //Display
-    public OrderListItemDetailsDataModel(String menuId, String menuName, String menuPrice, String menuDescription, int menuQuantity, int imgID, String status, String order_detail_id) {
+    public OrderListItemDetailsDataModel(String menuId, String menuName, String menuPrice, String menuDescription, int menuQuantity, String imgID, String status, String order_detail_id) {
         this.menuId = menuId;
         this.menuName = menuName;
         this.menuPrice = menuPrice;
@@ -34,7 +34,7 @@ public class OrderListItemDetailsDataModel {
     }
 
     //POST ke Endpoint
-    public OrderListItemDetailsDataModel(String menuName, String menuPrice, String menuDescription, int menuQuantity, int imgID) {
+    public OrderListItemDetailsDataModel(String menuName, String menuPrice, String menuDescription, int menuQuantity, String imgID) {
         this.menuName = menuName;
         this.menuPrice = menuPrice;
         this.menuDescription = menuDescription;
@@ -74,11 +74,11 @@ public class OrderListItemDetailsDataModel {
         this.menuQuantity = menuQuantity;
     }
 
-    public int getImgID() {
+    public String getImgID() {
         return imgID;
     }
 
-    public void setImgID(int imgID) {
+    public void setImgID(String imgID) {
         this.imgID = imgID;
     }
 

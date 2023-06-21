@@ -13,6 +13,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.skripsi.API.APIConstant;
+import com.example.skripsi.API.SessionManager;
 import com.example.skripsi.Activity.Fragment.CheckoutFragment;
 import com.example.skripsi.Model.CheckoutItemModel;
 import com.example.skripsi.R;
@@ -60,7 +65,13 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
         checkoutName.setText(checkoutItemModel.getCheckoutMenuName());
         checkoutQuantity.setText(String.valueOf(checkoutTotalQty));
         checkoutPrice.setText("Rp. " + formatPrice(checkoutSubtotalPrice));
-        checkoutImg.setImageResource(checkoutItemModel.getImgID());
+        Glide.with(checkoutFragment.requireContext())
+                .load(APIConstant.BASE_URL_DOWNLOAD + checkoutItemModel.getImgID())
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true))
+                .error(R.drawable.smallsalad)
+                .into(checkoutImg);
 
         addCheckoutQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
