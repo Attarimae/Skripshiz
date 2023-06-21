@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="20dp"
                 android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:src="@drawable/ic_launcher_background"
                 android:scaleType="centerInside"/>
 
@@ -47,7 +47,10 @@
                 app:layout_constraintTop_toTopOf="@id/MA_gambarRestoran"
                 app:layout_constraintBottom_toBottomOf="@id/MA_gambarRestoran"
                 app:layout_constraintEnd_toStartOf="@id/MA_buttonLogout"
-                android:text="Welcome, Mr. PEPEGA\nCashier" />
+                android:text="Welcome, Mr. PEPEGA\nCashier"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:singleLine="false"/>
 
                 <Button
                     android:id="@+id/MA_buttonLogout"

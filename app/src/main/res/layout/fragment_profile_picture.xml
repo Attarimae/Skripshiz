@@ -18,7 +18,7 @@
             <ImageView
                 android:id="@+id/FR_profilepictureImages"
                 android:layout_margin="10dp"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:scaleType="centerInside"
                 android:adjustViewBounds="true"

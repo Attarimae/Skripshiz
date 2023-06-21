@@ -17,10 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.skripsi.API.ServiceGenerator;
-import com.example.skripsi.Adapter.SalesReportRecyclerViewEmployeeAdapter;
-import com.example.skripsi.Model.Employee.EmployeeItemModel;
+import com.example.skripsi.Adapter.SalesReportRecyclerViewAdapter;
 import com.example.skripsi.Model.SalesReport.POSTReportOrder;
-import com.example.skripsi.Model.SalesReport.SalesReportEmployeeModel;
+import com.example.skripsi.Model.SalesReport.SalesReportModel;
 import com.example.skripsi.R;
 
 import java.text.SimpleDateFormat;
@@ -34,11 +33,11 @@ import retrofit2.Response;
 
 public class SalesReportFragment extends Fragment {
 
-    ArrayList<SalesReportEmployeeModel> dummyData = new ArrayList<>();
+    ArrayList<SalesReportModel> dummyData = new ArrayList<>();
     String date;
     TextView salesReportDateAmount;
     RecyclerView salesReportRecyclerViewEmployees;
-    SalesReportRecyclerViewEmployeeAdapter adapter;
+    SalesReportRecyclerViewAdapter adapter;
     Integer totalSalesReportToday = 0;
 
     @Override
@@ -54,6 +53,8 @@ public class SalesReportFragment extends Fragment {
         salesReportDateAmount = view.findViewById(R.id.FR_salesReport_AmountTotalSales);
         Button salesReportDateButton = view.findViewById(R.id.FR_salesReport_DateButton);
         salesReportRecyclerViewEmployees = view.findViewById(R.id.FR_salesReport_recyclerviewSalesEmployee);
+        salesReportRecyclerViewEmployees.setHasFixedSize(true);
+        salesReportRecyclerViewEmployees.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         SimpleDateFormat sdf = new SimpleDateFormat("'Date: 'dd/MM/yyyy");
         salesReportDateText.setText(sdf.format(new Date()));
@@ -105,11 +106,9 @@ public class SalesReportFragment extends Fragment {
                         salesReportDateAmount.setText("Rp. " + String.valueOf(totalSalesReportToday));
 
                         for(POSTReportOrder item : todaySalesReport){
-                            String employeeName = item.getUser_id();
-                            int removeHyphen = employeeName.indexOf("-");
-                            dummyData.add(new SalesReportEmployeeModel(employeeName.substring(0,removeHyphen), Integer.parseInt(item.getTotalPrice())));
+                            dummyData.add(new SalesReportModel(item.getCreated_at(), item.getTableNumber(), item.getTotalPrice(), item.getOrder_detail()));
                         }
-                        adapter = new SalesReportRecyclerViewEmployeeAdapter(dummyData);
+                        adapter = new SalesReportRecyclerViewAdapter(requireContext(), dummyData);
                         salesReportRecyclerViewEmployees.setAdapter(adapter);
                         salesReportRecyclerViewEmployees.setLayoutManager(new LinearLayoutManager(requireContext()));
                     }

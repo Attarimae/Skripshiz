@@ -69,7 +69,7 @@ public class OrderListDetailsGridAdapter extends ArrayAdapter<OrderListItemDetai
 
         final String txtOrderDetailsPrice = orderListItemDetailsDataModel.getMenuPrice();
         final Integer orderDetailsQty = orderListItemDetailsDataModel.getMenuQuantity();
-        final Integer orderDetailsSubtotalPrice = Integer.parseInt(txtOrderDetailsPrice) * orderDetailsQty;
+        final Integer orderDetailsSubtotalPrice = Integer.parseInt(txtOrderDetailsPrice);
 
         orderDetailsName.setText(orderListItemDetailsDataModel.getMenuName());
         orderDetailsDescription.setText(orderListItemDetailsDataModel.getMenuDescription());
@@ -84,7 +84,7 @@ public class OrderListDetailsGridAdapter extends ArrayAdapter<OrderListItemDetai
             public void onClick(View v) {
                 orderListItemDetailsDataModel.setMenuQuantity(orderListItemDetailsDataModel.getMenuQuantity() + 1);
                 int updatedQuantity = orderListItemDetailsDataModel.getMenuQuantity();
-                int updatedPrice = Integer.parseInt(txtOrderDetailsPrice) * updatedQuantity;
+                int updatedPrice = Integer.parseInt(txtOrderDetailsPrice) * updatedQuantity / orderDetailsQty;
                 orderDetailsQuantity.setText(String.valueOf(updatedQuantity));
                 orderDetailsPrice.setText("Rp. " + formatPrice(updatedPrice));
                 orderDetailsFragment.updateTotalPrice();
@@ -98,7 +98,7 @@ public class OrderListDetailsGridAdapter extends ArrayAdapter<OrderListItemDetai
                 if (currentQuantity > 0) {
                     orderListItemDetailsDataModel.setMenuQuantity(orderListItemDetailsDataModel.getMenuQuantity() - 1);
                     int updatedQuantity = orderListItemDetailsDataModel.getMenuQuantity();
-                    int updatedPrice = Integer.parseInt(txtOrderDetailsPrice) * updatedQuantity;
+                    int updatedPrice = Integer.parseInt(txtOrderDetailsPrice) * updatedQuantity / orderDetailsQty;
                     orderDetailsQuantity.setText(String.valueOf(updatedQuantity));
                     orderDetailsPrice.setText("Rp. " + formatPrice(updatedPrice));
                     orderDetailsFragment.updateTotalPrice();
