@@ -42,50 +42,64 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
         this.checkoutFragment = checkoutFragment;
     }
 
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
-        View listitem = convertView;
-        if(listitem == null){
-            listitem = LayoutInflater.from(getContext()).inflate(R.layout.checkout_card_item, parent, false);
+    static class ViewHolder {
+        TextView checkoutName;
+        Button addCheckoutQuantity;
+        Button subCheckoutQuantity;
+        TextView checkoutQuantity;
+        TextView checkoutPrice;
+        ImageView checkoutImg;
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.checkout_card_item, parent, false);
+            holder = new ViewHolder();
+            holder.checkoutName = convertView.findViewById(R.id.checkout_Name);
+            holder.addCheckoutQuantity = convertView.findViewById(R.id.checkout_AddQuantity);
+            holder.subCheckoutQuantity = convertView.findViewById(R.id.checkout_SubQuantity);
+            holder.checkoutQuantity = convertView.findViewById(R.id.checkout_AmountQuantity);
+            holder.checkoutPrice = convertView.findViewById(R.id.checkout_TotalPrice);
+            holder.checkoutImg = convertView.findViewById(R.id.checkout_Image);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        CheckoutItemModel checkoutItemModel = getItem(position);
-        TextView checkoutName = listitem.findViewById(R.id.checkout_Name);
-        Button addCheckoutQuantity = listitem.findViewById(R.id.checkout_AddQuantity);
-        Button subCheckoutQuantity = listitem.findViewById(R.id.checkout_SubQuantity);
-        TextView checkoutQuantity = listitem.findViewById(R.id.checkout_AmountQuantity);
-        TextView checkoutPrice = listitem.findViewById(R.id.checkout_TotalPrice);
-        ImageView checkoutImg = listitem.findViewById(R.id.checkout_Image);
-
+        final CheckoutItemModel checkoutItemModel = getItem(position);
         final String txtCheckoutPrice = checkoutItemModel.getCheckoutMenuPrice();
         final String replace_txtPrice = txtCheckoutPrice.substring(4).replace(".", "");
-
         final Integer checkoutTotalQty = checkoutItemModel.getCheckoutMenuQuantity();
         final Integer checkoutSubtotalPrice = Integer.parseInt(replace_txtPrice) * checkoutTotalQty;
 
-        checkoutName.setText(checkoutItemModel.getCheckoutMenuName());
-        checkoutQuantity.setText(String.valueOf(checkoutTotalQty));
-        checkoutPrice.setText("Rp. " + formatPrice(checkoutSubtotalPrice));
+        holder.checkoutName.setText(checkoutItemModel.getCheckoutMenuName());
+        holder.checkoutQuantity.setText(String.valueOf(checkoutTotalQty));
+        holder.checkoutPrice.setText("Rp. " + formatPrice(checkoutSubtotalPrice));
+
         Glide.with(checkoutFragment.requireContext())
                 .load(APIConstant.BASE_URL_DOWNLOAD + checkoutItemModel.getImgID())
                 .apply(new RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true))
                 .error(R.drawable.smallsalad)
-                .into(checkoutImg);
+                .into(holder.checkoutImg);
 
-        addCheckoutQuantity.setOnClickListener(new View.OnClickListener() {
+        holder.addCheckoutQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkoutItemModel.setCheckoutMenuQuantity(checkoutItemModel.getCheckoutMenuQuantity() + 1);
                 int updatedQuantity = checkoutItemModel.getCheckoutMenuQuantity();
                 int updatedPrice = Integer.parseInt(replace_txtPrice) * updatedQuantity;
-                checkoutQuantity.setText(String.valueOf(updatedQuantity));
-                checkoutPrice.setText("Rp. " + formatPrice(updatedPrice));
+                holder.checkoutQuantity.setText(String.valueOf(updatedQuantity));
+                holder.checkoutPrice.setText("Rp. " + formatPrice(updatedPrice));
                 checkoutFragment.updateTotalPrice();
             }
         });
 
-        subCheckoutQuantity.setOnClickListener(new View.OnClickListener() {
+        holder.subCheckoutQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int currentQuantity = checkoutItemModel.getCheckoutMenuQuantity();
@@ -93,21 +107,15 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
                     checkoutItemModel.setCheckoutMenuQuantity(currentQuantity - 1);
                     int updatedQuantity = checkoutItemModel.getCheckoutMenuQuantity();
                     int updatedPrice = Integer.parseInt(replace_txtPrice) * updatedQuantity;
-                    checkoutQuantity.setText(String.valueOf(updatedQuantity));
-                    checkoutPrice.setText("Rp. " + formatPrice(updatedPrice));
+                    holder.checkoutQuantity.setText(String.valueOf(updatedQuantity));
+                    holder.checkoutPrice.setText("Rp. " + formatPrice(updatedPrice));
                     checkoutFragment.updateTotalPrice();
-                    //Additional Checking for Item that is 0
-                    if (updatedQuantity == 0) {
-                        checkoutFragment.removeZeroQuantityItem(checkoutItemModel);
-                    }
                 } else {
                     Toast.makeText(v.getContext(), "Quantity can't be less than 0", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-        checkoutFragment.updateTotalPrice();
-
-        return listitem;
+        return convertView;
     }
 }

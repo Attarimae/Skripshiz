@@ -37,6 +37,7 @@ public class CheckoutFragment extends Fragment {
     private ArrayList<OrderListItemDetailsDataModel> orderListDetails;
     private ArrayList<CheckoutItemModel> checkoutList;
     private TextView checkoutTotalPrice;
+    private CheckoutGridAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class CheckoutFragment extends Fragment {
         checkoutList = spc.fetchCheckoutList();
         Log.i("Fragment Checkout", "onCreateView: " + checkoutList.size());
 
-        CheckoutGridAdapter adapter = new CheckoutGridAdapter(requireActivity(), checkoutList, this);
+        adapter = new CheckoutGridAdapter(requireActivity(), checkoutList, this);
         checkoutGrid.setAdapter(adapter);
 
         EditText checkoutTableNumber = view.findViewById(R.id.FR_editTextCheckoutTableNumber);
@@ -131,18 +132,16 @@ public class CheckoutFragment extends Fragment {
     public void updateTotalPrice(){
         int totalPrice = 0;
         int price, quantity;
-
-        for (CheckoutItemModel item : checkoutList) {
-            price = Integer.parseInt(item.getCheckoutMenuPrice().substring(4).replace(".", ""));
-            quantity = item.getCheckoutMenuQuantity();
-            totalPrice += price * quantity;
+        for (int i = 0; i < checkoutList.size(); i++) {
+            quantity = checkoutList.get(i).getCheckoutMenuQuantity();
+            if(quantity != 0) {
+                price = Integer.parseInt(checkoutList.get(i).getCheckoutMenuPrice().substring(4).replace(".", ""));
+                totalPrice += price * quantity;
+            } else {
+                checkoutList.remove(i);
+            }
         }
-
         checkoutTotalPrice.setText("Rp. " + formatPrice(totalPrice));
-    }
-
-    public void removeZeroQuantityItem(CheckoutItemModel item) {
-        checkoutList.remove(item);
-        updateTotalPrice();
+        adapter.notifyDataSetChanged();
     }
 }
