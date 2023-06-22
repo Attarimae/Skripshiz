@@ -14,10 +14,11 @@
 
         <ImageView
             android:id="@+id/menu_Image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
             android:src="@mipmap/ic_launcher" />
 
         <TextView

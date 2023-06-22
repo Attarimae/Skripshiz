@@ -47,14 +47,6 @@ public class MenuFragment extends Fragment {
         menuGrid = view.findViewById(R.id.FR_gridMenu);
         menuList = new ArrayList<>();
 
-        categoryList = new ArrayList<>();
-        categoryList.add("All");
-
-        SharedPreferencesCashier spc = new SharedPreferencesCashier(requireContext());
-
-        MenuGridAdapter adapter = new MenuGridAdapter(requireActivity(), menuList);
-        menuGrid.setAdapter(adapter);
-
         ServiceGenerator service = new ServiceGenerator();
         Call<ArrayList<MenuItemModel>> call = service.getApiService(requireContext()).getAllMenu();
         call.enqueue(new Callback<ArrayList<MenuItemModel>>() {
@@ -74,6 +66,8 @@ public class MenuFragment extends Fragment {
                             String menuImg = response.body().get(i).getImgID();
                             //menuList.add(new MenuItemModel(id, menuCategory, menuName, menuDescription, menuPrice, "R.drawable.ic_launcher_background"));
                             menuList.add(new MenuItemModel(id,menuCategory, menuName, menuDescription, menuPrice, menuImg));
+                            MenuGridAdapter adapter = new MenuGridAdapter(requireActivity(), menuList);
+                            menuGrid.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                             if(!categoryList.contains(menuCategory)){
                                 categoryList.add(menuCategory);
@@ -90,6 +84,9 @@ public class MenuFragment extends Fragment {
                 Log.e("Fragment Menu", t.getMessage());
             }
         });
+
+        categoryList = new ArrayList<>();
+        categoryList.add("All");
 
         Spinner categorySpinner = view.findViewById(R.id.FR_spinnerMenuCategory);
 
@@ -141,6 +138,7 @@ public class MenuFragment extends Fragment {
 
     private void filterMenuByCategory(String selectedCategory){
         ArrayList<MenuItemModel> filteredMenuList = new ArrayList<>();
+        System.out.println(menuList.size());
         if(selectedCategory.equals("All")){
             filteredMenuList = menuList;
         } else {

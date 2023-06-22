@@ -14,6 +14,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.skripsi.API.APIConstant;
 import com.example.skripsi.Model.CheckoutItemModel;
 import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.R;
@@ -44,6 +48,13 @@ public class MenuGridAdapter extends ArrayAdapter<MenuItemModel> {
 
         menuName.setText(menuItemModel.getMenuName());
         menuPrice.setText(menuItemModel.getMenuPrice());
+        Glide.with(context)
+                .load(APIConstant.BASE_URL_DOWNLOAD + menuItemModel.getImgID())
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true))
+                .error(R.drawable.smallsalad)
+                .into(menuImage);
 //        menuImage.setImageResource(Integer.parseInt(menuItemModel.getImgID()));
 
         listItem.setOnClickListener(new View.OnClickListener() {
