@@ -47,8 +47,8 @@ public class CashierMainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private Menu cashierMenu;
 
-    TextView MA_txtViewWelcome;
-    Button logoutButton;
+//    TextView MA_txtViewWelcome;
+//    Button logoutButton;
 
     SessionManager sm;
 
@@ -63,38 +63,38 @@ public class CashierMainActivity extends AppCompatActivity {
         mNavigationDrawerItemTitles= getResources().getStringArray(R.array.menu_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        MA_txtViewWelcome = findViewById(R.id.MA_txtViewWelcome);
+//        MA_txtViewWelcome = findViewById(R.id.MA_txtViewWelcome);
         System.out.println("STAFFF NAME "+sm.fetchStaffName());
         System.out.println("STAFFF ID " +sm.fetchStaffID());
-        MA_txtViewWelcome.setText("Welcome, "+sm.fetchStaffName()+"\n"+sm.fetchStaffRole());
-        logoutButton = findViewById(R.id.MA_buttonLogout);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logout();
-            }
-        });
+//        MA_txtViewWelcome.setText("Welcome, "+sm.fetchStaffName()+"\n"+sm.fetchStaffRole());
+//        logoutButton = findViewById(R.id.MA_buttonLogout);
+//        logoutButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                logout();
+//            }
+//        });
 
-        ImageView MA_gambarRestoran = findViewById(R.id.MA_gambarRestoran);
-        Glide.with(this)
-                .load(APIConstant.BASE_URL_DOWNLOAD + sm.fetchRestaurantID() + "_" + sm.fetchStaffID())
-                .placeholder(R.drawable.default_profile)
-                .error(R.drawable.default_profile)
-                .apply(new RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .signature(new ObjectKey(System.currentTimeMillis())))
-                .into(MA_gambarRestoran);
+//        ImageView MA_gambarRestoran = findViewById(R.id.MA_gambarRestoran);
+//        Glide.with(this)
+//                .load(APIConstant.BASE_URL_DOWNLOAD + sm.fetchRestaurantID() + "_" + sm.fetchStaffID())
+//                .placeholder(R.drawable.default_profile)
+//                .error(R.drawable.default_profile)
+//                .apply(new RequestOptions()
+//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                        .signature(new ObjectKey(System.currentTimeMillis())))
+//                .into(MA_gambarRestoran);
 
         setupToolbar();
 
-        MainDrawerMenuModel[] drawerItem = new MainDrawerMenuModel[6];
+        MainDrawerMenuModel[] drawerItem = new MainDrawerMenuModel[5];
 
-        drawerItem[0] = new MainDrawerMenuModel(R.drawable.ic_baseline_person_24,"Profile Picture");
-        drawerItem[1] = new MainDrawerMenuModel(R.drawable.ic_baseline_home_24,"Home");
-        drawerItem[2] = new MainDrawerMenuModel(R.drawable.ic_baseline_list_24,"Order List");
-        drawerItem[3] = new MainDrawerMenuModel(R.drawable.ic_baseline_history_24,"Order History");
-        drawerItem[4] = new MainDrawerMenuModel(R.drawable.ic_baseline_bar_chart_24,"Report Order");
-        drawerItem[5] = new MainDrawerMenuModel(R.drawable.ic_baseline_settings_24,"Settings");
+        //drawerItem[0] = new MainDrawerMenuModel(R.drawable.ic_baseline_person_24,"Profile Picture");
+        drawerItem[0] = new MainDrawerMenuModel(R.drawable.ic_baseline_home_24,"Home");
+        drawerItem[1] = new MainDrawerMenuModel(R.drawable.ic_baseline_list_24,"Order List");
+        drawerItem[2] = new MainDrawerMenuModel(R.drawable.ic_baseline_history_24,"Order History");
+        drawerItem[3] = new MainDrawerMenuModel(R.drawable.ic_baseline_bar_chart_24,"Report Order");
+        drawerItem[4] = new MainDrawerMenuModel(R.drawable.ic_baseline_settings_24,"Settings");
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -128,29 +128,28 @@ public class CashierMainActivity extends AppCompatActivity {
 
         switch (position) {
 
-            case 0: // Profile Picture Fragment
-                fragment = new ProfilePictureFragment();
-                removeCheckoutCart();
-                break;
-            case 1: // Home Fragment
+//            case 0: // Profile Picture Fragment
+//                fragment = new ProfilePictureFragment();
+//                removeCheckoutCart();
+//                break;
+            case 0: // Home Fragment
                 fragment = new MenuFragment();
                 addCheckoutCart();
                 break;
-            case 2: // Order List Fragment
+            case 1: // Order List Fragment
                 fragment = new OrderListFragment();
                 removeCheckoutCart();
                 break;
-            case 3: // Order History Fragment
+            case 2: // Order History Fragment
                 fragment = new OrderHistoryFragment();
                 removeCheckoutCart();
                 break;
-            case 4: // Sales Report / Report Order Fragment
+            case 3: // Sales Report / Report Order Fragment
                 fragment = new SalesReportFragment();
                 removeCheckoutCart();
                 break;
-            case 5: // Settings Fragment
-                //fragment = new MenuFragment();
-                Toast.makeText(this, "Setting Soon", Toast.LENGTH_SHORT).show();
+            case 4: // Settings Fragment
+                openCashierSettings();
                 break;
 
             default:
@@ -224,5 +223,11 @@ public class CashierMainActivity extends AppCompatActivity {
         Intent intent = new Intent(CashierMainActivity.this, RestaurantLogin.class);
         startActivity(intent);
         finish();
+    }
+
+    private void openCashierSettings(){
+        Intent intent = new Intent(this, CashierSettingActivity.class);
+        startActivity(intent);
+        //Not using finish
     }
 }

@@ -24,45 +24,45 @@
                 layout="@layout/toolbar" />
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
 
-            <ImageView
-                android:id="@+id/MA_gambarRestoran"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_margin="20dp"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/ic_launcher_background"
-                android:scaleType="centerInside"/>
+<!--            <ImageView-->
+<!--                android:id="@+id/MA_gambarRestoran"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                android:layout_margin="20dp"-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="80dp"-->
+<!--                android:src="@drawable/ic_launcher_background"-->
+<!--                android:scaleType="centerInside"/>-->
 
-            <TextView
-                android:id="@+id/MA_txtViewWelcome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                app:layout_constraintStart_toEndOf="@id/MA_gambarRestoran"
-                app:layout_constraintTop_toTopOf="@id/MA_gambarRestoran"
-                app:layout_constraintBottom_toBottomOf="@id/MA_gambarRestoran"
-                app:layout_constraintEnd_toStartOf="@id/MA_buttonLogout"
-                android:text="Welcome, Mr. PEPEGA\nCashier"
-                android:maxLines="3"
-                android:ellipsize="end"
-                android:singleLine="false"/>
+<!--            <TextView-->
+<!--                android:id="@+id/MA_txtViewWelcome"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textAlignment="center"-->
+<!--                app:layout_constraintStart_toEndOf="@id/MA_gambarRestoran"-->
+<!--                app:layout_constraintTop_toTopOf="@id/MA_gambarRestoran"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/MA_gambarRestoran"-->
+<!--                app:layout_constraintEnd_toStartOf="@id/MA_buttonLogout"-->
+<!--                android:text="Welcome, Mr. PEPEGA\nCashier"-->
+<!--                android:maxLines="3"-->
+<!--                android:ellipsize="end"-->
+<!--                android:singleLine="false"/>-->
 
-                <Button
-                    android:id="@+id/MA_buttonLogout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Logout"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/MA_txtViewWelcome"
-                    app:layout_constraintTop_toTopOf="@id/MA_gambarRestoran"
-                    app:layout_constraintBottom_toBottomOf="@id/MA_gambarRestoran"/>
+<!--                <Button-->
+<!--                    android:id="@+id/MA_buttonLogout"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Logout"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toEndOf="@id/MA_txtViewWelcome"-->
+<!--                    app:layout_constraintTop_toTopOf="@id/MA_gambarRestoran"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@id/MA_gambarRestoran"/>-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
         <FrameLayout
             android:id="@+id/content_frame"

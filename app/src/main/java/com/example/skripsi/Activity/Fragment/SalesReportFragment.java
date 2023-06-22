@@ -53,8 +53,6 @@ public class SalesReportFragment extends Fragment {
         salesReportDateAmount = view.findViewById(R.id.FR_salesReport_AmountTotalSales);
         Button salesReportDateButton = view.findViewById(R.id.FR_salesReport_DateButton);
         salesReportRecyclerViewEmployees = view.findViewById(R.id.FR_salesReport_recyclerviewSalesEmployee);
-        salesReportRecyclerViewEmployees.setHasFixedSize(true);
-        salesReportRecyclerViewEmployees.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         SimpleDateFormat sdf = new SimpleDateFormat("'Date: 'dd/MM/yyyy");
         salesReportDateText.setText(sdf.format(new Date()));
@@ -72,6 +70,7 @@ public class SalesReportFragment extends Fragment {
                                 date = dayOfMonth + "/" + (month+1) + "/" + year;
                                 salesReportDateText.setText("Date: " + dayOfMonth + "/" + (month+1) + "/" + year);
                                 //Get your Sales Report Here!
+                                dummyData.clear();
                                 getSalesReport();
                             }
                         }, year, month, day);

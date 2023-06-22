@@ -1,29 +1,18 @@
-package com.example.skripsi.Activity.Fragment;
+package com.example.skripsi.Activity;
 
-import static android.app.Activity.RESULT_OK;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.provider.MediaStore;
-import android.util.Base64;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,10 +24,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.skripsi.API.APIConstant;
 import com.example.skripsi.API.ServiceGenerator;
 import com.example.skripsi.API.SessionManager;
-import com.example.skripsi.API.SharedPreferencesCashier;
 import com.example.skripsi.R;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -51,53 +38,46 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfilePictureFragment extends Fragment {
+public class CashierEditProfile extends AppCompatActivity {
 
-    ImageView imageProfilePic;
+    ImageView editProfilePicImages;
     SessionManager sm;
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int CAMERA_CAPTURE_REQUEST = 2;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.activity_cashier_edit_profile);
+        sm = new SessionManager(this);
+        editProfilePicImages = findViewById(R.id.cashier_editprofile_Images);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile_picture, container, false);
-        sm = new SessionManager(requireContext());
-        imageProfilePic = view.findViewById(R.id.FR_profilepictureImages);
-
-        //Using Glide to Display the Profile Picture
         Glide.with(this)
                 .load(APIConstant.BASE_URL_DOWNLOAD + sm.fetchRestaurantID() + "_" + sm.fetchStaffID())
                 .apply(new RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true))
                 .error(R.drawable.default_profile)
-                .into(imageProfilePic);
+                .into(editProfilePicImages);
 
-        imageProfilePic.setOnClickListener(new View.OnClickListener() {
+        editProfilePicImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectImages();
             }
         });
 
-        //behold the greates ID Naming, god, i want to kms so much
-        TextView profilepicNames = view.findViewById(R.id.FR_profilepicturetxtViewUserName);
-        profilepicNames.setText(sm.fetchStaffName());
-        TextView profilepicRoles = view.findViewById(R.id.FR_profilepicturetxtViewUserRole);
-        profilepicRoles.setText(sm.fetchStaffRole());
+        TextView editProfilePicName = findViewById(R.id.cashier_editprofile_ViewUserName);
+        editProfilePicName.setText(sm.fetchStaffName());
+        TextView editProfilePicRole = findViewById(R.id.cashier_editprofile_UserRole);
+        editProfilePicRole.setText(sm.fetchStaffRole());
 
-        Button imagesBtnSubmit = view.findViewById(R.id.FR_profilepictureSubmitButton);
-        imagesBtnSubmit.setOnClickListener(new View.OnClickListener() {
+        Button editProfilePicSaveButton = findViewById(R.id.cashier_editprofile_SubmitButton);
+
+        editProfilePicSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Saving to API Photo
-                Uri profilepictureUri = getProfilePictureUri(imageProfilePic);
+                Uri profilepictureUri = getProfilePictureUri(editProfilePicImages);
                 if(profilepictureUri != null){
                     File profilepictureFile = new File(profilepictureUri.getPath());
 
@@ -109,32 +89,36 @@ public class ProfilePictureFragment extends Fragment {
                     RequestBody authorizationPart = RequestBody.create(MediaType.parse("text/plain"), sm.fetchAuthToken());
 
                     ServiceGenerator service = new ServiceGenerator();
-                    Call<ResponseBody> call = service.getApiService(requireContext()).uploadFile(filePart, typePart, namePart, authorizationPart);
+                    Call<ResponseBody> call = service.getApiService(getApplicationContext()).uploadFile(filePart, typePart, namePart, authorizationPart);
                     call.enqueue(new Callback<ResponseBody>() {
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
                             if(response.isSuccessful()){
-                                Toast.makeText(requireActivity(), "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Image uploaded successfully", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(requireActivity(), "Failed to upload Image", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Failed to upload Image", Toast.LENGTH_SHORT).show();
                             }
                         }
                         public void onFailure(Call<ResponseBody> call, Throwable t){
-                            Toast.makeText(requireActivity(), "Failed to upload Image", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Failed to upload Image", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
-                    Toast.makeText(requireContext(), "Images uploaded successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Images uploaded successfully", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
 
-        return view;
+    public void onBackButtonClicked(View view) {
+        Intent intent = new Intent(this, CashierSettingActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void selectImages(){
         //Select from Camera/Gallery
         String[] options = {"Gallery", "Camera"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose Image Source");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
@@ -142,11 +126,11 @@ public class ProfilePictureFragment extends Fragment {
                 if (which == 0) {
                     // Gallery option clicked
                     // Clear Glide cache before selecting a new image
-                    Glide.get(requireActivity()).clearMemory();
+                    Glide.get(CashierEditProfile.this).clearMemory();
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            Glide.get(requireActivity()).clearDiskCache();
+                            Glide.get(CashierEditProfile.this).clearDiskCache();
                         }
                     }).start();
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -155,11 +139,11 @@ public class ProfilePictureFragment extends Fragment {
                 } else if (which == 1) {
                     // Camera option clicked
                     // Clear Glide cache before capturing a new image
-                    Glide.get(requireActivity()).clearMemory();
+                    Glide.get(CashierEditProfile.this).clearMemory();
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            Glide.get(requireActivity()).clearDiskCache();
+                            Glide.get(CashierEditProfile.this).clearDiskCache();
                         }
                     }).start();
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -170,7 +154,6 @@ public class ProfilePictureFragment extends Fragment {
         builder.show();
     }
 
-    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -185,11 +168,11 @@ public class ProfilePictureFragment extends Fragment {
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .skipMemoryCache(true))
-                    .into(imageProfilePic);
+                    .into(editProfilePicImages);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Glide.get(requireContext()).clearDiskCache();
+                    Glide.get(getApplicationContext()).clearDiskCache();
                 }
             }).start();
         } else if (requestCode == CAMERA_CAPTURE_REQUEST && resultCode == RESULT_OK && data != null) {
@@ -199,11 +182,11 @@ public class ProfilePictureFragment extends Fragment {
             // Process the captured image Bitmap as per your requirement
 
             // For example, you can display the captured image in the ImageView
-            imageProfilePic.setImageBitmap(imageBitmap);
+            editProfilePicImages.setImageBitmap(imageBitmap);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Glide.get(requireContext()).clearDiskCache();
+                    Glide.get(getApplicationContext()).clearDiskCache();
                 }
             }).start();
         }
@@ -221,7 +204,7 @@ public class ProfilePictureFragment extends Fragment {
 
     private Uri getProfilePictureUriFromBitmap(Bitmap bitmap){
         try {
-            File cachePath = new File(requireActivity().getCacheDir(), "images");
+            File cachePath = new File(getCacheDir(), "images");
             cachePath.mkdirs();
             FileOutputStream outputStream = new FileOutputStream(cachePath + "/image.jpg");
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);

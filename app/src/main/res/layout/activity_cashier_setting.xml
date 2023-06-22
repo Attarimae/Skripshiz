@@ -1,10 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.CashierSettingActivity">
+    tools:context=".Activity.CashierSettingActivity"
+    android:orientation="vertical">
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:local="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        local:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageView
+            android:id="@+id/cashier_settings_backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Back"
+            android:onClick="onBackButtonClicked"/>
+
+        <TextView
+            android:id="@+id/cashier_settingsText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Settings"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/cashier_settings_picture"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_margin="10dp"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_launcher_background"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/cashier_settings_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name: Makiel Leukimia"
+                android:layout_margin="10dp"
+                android:textSize="18sp"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:singleLine="false"/>
+
+            <TextView
+                android:id="@+id/cashier_settings_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Role: Cashier"
+                android:layout_margin="10dp"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/cashier_settings_profileButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textAllCaps="false"
+        android:text="Edit Profile Picture"
+        android:textAlignment="textStart"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/cashier_settings_feedbackButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textAllCaps="false"
+        android:text="Submit Feedback"
+        android:textAlignment="textStart"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/cashier_settings_HelpButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textAllCaps="false"
+        android:text="Help"
+        android:textAlignment="textStart"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/cashier_settings_logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textAllCaps="false"
+        android:text="Sign Out"
+        android:textAlignment="textStart"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/cashier_settings_appVersionText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text=".Sales Version 0.1\nPoint of Sale for Restaurant"
+        android:textSize="18sp"
+        android:textAlignment="center"/>
+
+</LinearLayout>
