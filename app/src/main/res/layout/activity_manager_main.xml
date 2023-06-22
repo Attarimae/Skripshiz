@@ -12,16 +12,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/container_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar" />
-        </LinearLayout>
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,7 +26,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="20dp"
                 android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:src="@drawable/ic_launcher_background"
                 android:scaleType="centerInside"/>
 
@@ -62,7 +55,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_margin="20dp">
 
             <LinearLayout
@@ -70,30 +64,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-<!--                <Button-->
-<!--                    android:id="@+id/MMA_TodayOrder"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:textAllCaps="false"-->
-<!--                    android:text="Today\nOrder"-->
-<!--                    android:padding="10dp"/>-->
-
-<!--                <Button-->
-<!--                    android:id="@+id/MMA_EditPaidOrder"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:textAllCaps="false"-->
-<!--                    android:text="Edit\nPaid Order"-->
-<!--                    android:padding="10dp"/>-->
-
-<!--                <Button-->
-<!--                    android:id="@+id/MMA_ReportOrder"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:textAllCaps="false"-->
-<!--                    android:text="Report\nOrder"-->
-<!--                    android:padding="10dp"/>-->
 
                 <Button
                     android:id="@+id/MMA_ManageRestoMenu"
@@ -126,6 +96,7 @@
                     android:textAllCaps="false"
                     android:text="Customer\nLoyalty Program"
                     android:padding="10dp"/>
+
                 <Button
                     android:id="@+id/MMA_EditLandingPage"
                     android:layout_width="match_parent"

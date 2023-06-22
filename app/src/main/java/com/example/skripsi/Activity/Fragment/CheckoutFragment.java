@@ -105,7 +105,7 @@ public class CheckoutFragment extends Fragment {
                     @Override
                     public void onResponse(Call<OrderListItemDataModel> call, Response<OrderListItemDataModel> response) {
                         if(response.isSuccessful()){
-                            checkoutList.clear();
+                             ;
                             Toast.makeText(v.getContext(), "Successfully created Order", Toast.LENGTH_SHORT).show();
                             FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
                             ft.replace(R.id.content_frame, new OrderListFragment());

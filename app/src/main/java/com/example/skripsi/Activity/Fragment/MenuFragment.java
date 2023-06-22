@@ -34,6 +34,8 @@ public class MenuFragment extends Fragment {
     private ArrayList<String> categoryList;
     private GridView menuGrid;
 
+    private boolean isInitialSetup = true;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,28 @@ public class MenuFragment extends Fragment {
                                 categoryList.add(menuCategory);
                             }
                         }
+                        Spinner categorySpinner = view.findViewById(R.id.FR_spinnerMenuCategory);
+
+                        ArrayAdapter<String> categorySpinnerAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categoryList);
+                        categorySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        categorySpinner.setAdapter(categorySpinnerAdapter);
+
+                        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                if (!isInitialSetup) {
+                                    String selectedCategory = categoryList.get(position);
+                                    filterMenuByCategory(selectedCategory);
+                                } else {
+                                    isInitialSetup = false;
+                                }
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+                                //Auto-Generated
+                            }
+                        });
                     }
                 } else {
                     Toast.makeText(requireContext(), "Failed to connect the servers", Toast.LENGTH_SHORT).show();
@@ -91,24 +115,7 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        Spinner categorySpinner = view.findViewById(R.id.FR_spinnerMenuCategory);
 
-        ArrayAdapter<String> categorySpinnerAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categoryList);
-        categorySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categorySpinner.setAdapter(categorySpinnerAdapter);
-
-        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedCategory = categoryList.get(position);
-                filterMenuByCategory(selectedCategory);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //Auto-Generated
-            }
-        });
 
         //Search View
         SearchView menuSearchView = view.findViewById(R.id.FT_searchViewMenu);
