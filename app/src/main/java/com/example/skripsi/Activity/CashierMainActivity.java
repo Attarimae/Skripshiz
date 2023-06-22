@@ -105,8 +105,7 @@ public class CashierMainActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         setupDrawerToggle();
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, new MenuFragment()).commit();
+        getBundle();
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -166,7 +165,7 @@ public class CashierMainActivity extends AppCompatActivity {
             mDrawerLayout.closeDrawer(mDrawerList);
 
         } else {
-            Log.e("MainActivity", "Error in creating fragment");
+            Log.e("CashierMainActivity", "Error in creating fragment");
         }
     }
 
@@ -228,6 +227,34 @@ public class CashierMainActivity extends AppCompatActivity {
     private void openCashierSettings(){
         Intent intent = new Intent(this, CashierSettingActivity.class);
         startActivity(intent);
-        //Not using finish
+        finish();
+    }
+
+    private void getBundle(){
+        Bundle bundle = getIntent().getExtras();
+        String fragmentString = bundle.getString("openfragment", "MenuFragment()");
+        Fragment fragment = null;
+        switch (fragmentString){
+            case "MenuFragment()":
+                fragment = new MenuFragment();
+                break;
+            case "OrderListFragment()":
+                fragment = new OrderListFragment();
+                break;
+            case "OrderHistoryFragment()":
+                fragment = new OrderHistoryFragment();
+                break;
+            case "SalesReportFragment()":
+                fragment = new SalesReportFragment();
+                break;
+            default:
+                break;
+        }
+        if(fragment != null){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        } else {
+            Log.e("CashierMainActivity", "getBundle: Error in creating fragment");
+        }
     }
 }

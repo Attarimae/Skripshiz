@@ -96,6 +96,10 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
                     checkoutQuantity.setText(String.valueOf(updatedQuantity));
                     checkoutPrice.setText("Rp. " + formatPrice(updatedPrice));
                     checkoutFragment.updateTotalPrice();
+                    //Additional Checking for Item that is 0
+                    if (updatedQuantity == 0) {
+                        checkoutFragment.removeZeroQuantityItem(checkoutItemModel);
+                    }
                 } else {
                     Toast.makeText(v.getContext(), "Quantity can't be less than 0", Toast.LENGTH_LONG).show();
                 }

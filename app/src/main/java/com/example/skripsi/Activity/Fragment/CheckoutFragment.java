@@ -140,4 +140,9 @@ public class CheckoutFragment extends Fragment {
 
         checkoutTotalPrice.setText("Rp. " + formatPrice(totalPrice));
     }
+
+    public void removeZeroQuantityItem(CheckoutItemModel item) {
+        checkoutList.remove(item);
+        updateTotalPrice();
+    }
 }

@@ -76,6 +76,8 @@ public class MenuFragment extends Fragment {
                             String menuImg = response.body().get(i).getImgID();
                             //menuList.add(new MenuItemModel(id, menuCategory, menuName, menuDescription, menuPrice, "R.drawable.ic_launcher_background"));
                             menuList.add(new MenuItemModel(id,menuCategory, menuName, menuDescription, menuPrice, menuImg));
+                            MenuGridAdapter adapter = new MenuGridAdapter(requireActivity(), menuList);
+                            menuGrid.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                             if(!categoryList.contains(menuCategory)){
                                 categoryList.add(menuCategory);

@@ -95,6 +95,9 @@ public class POSLogin extends AppCompatActivity {
         String role = sm.fetchStaffRole();
         if(role.equalsIgnoreCase("cashier")){
             Intent intent = new Intent(this, CashierMainActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("openfragment", "MenuFragment()");
+            intent.putExtras(bundle);
             startActivity(intent);
             finish();
         }else{

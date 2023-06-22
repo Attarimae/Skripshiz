@@ -99,11 +99,15 @@ public class RestaurantLogin extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<RestaurantDataModel> call, Response<RestaurantDataModel> response) {
-                RestaurantDataModel modalAPI = response.body();
-                sm.saveAuthToken(modalAPI.getKey());
-                sm.saveRestaurantID(modalAPI.getRestaurant_id());
-                sm.saveRestaurantName(modalAPI.getRestaurant_name());
-                openPOSLogin();
+                if(response.isSuccessful()){
+                    RestaurantDataModel modalAPI = response.body();
+                    sm.saveAuthToken(modalAPI.getKey());
+                    sm.saveRestaurantID(modalAPI.getRestaurant_id());
+                    sm.saveRestaurantName(modalAPI.getRestaurant_name());
+                    openPOSLogin();
+                } else {
+                    Toast.makeText(RestaurantLogin.this, "Failed to connect the servers", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
