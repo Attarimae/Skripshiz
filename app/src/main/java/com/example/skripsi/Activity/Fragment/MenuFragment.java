@@ -1,27 +1,40 @@
 package com.example.skripsi.Activity.Fragment;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.skripsi.API.ServiceGenerator;
 import com.example.skripsi.API.SharedPreferencesCashier;
 import com.example.skripsi.Adapter.MenuGridAdapter;
+import com.example.skripsi.Model.CheckoutItemModel;
 import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.R;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -33,7 +46,9 @@ public class MenuFragment extends Fragment {
     private ArrayList<MenuItemModel> menuList;
     private ArrayList<String> categoryList;
     private GridView menuGrid;
-
+    private MenuGridAdapter adapter;
+    private int inputPrice_Integer = 0;
+    private int inputQty_Integer = 0;
     private boolean isInitialSetup = true;
 
     @Override
@@ -54,7 +69,7 @@ public class MenuFragment extends Fragment {
 
         SharedPreferencesCashier spc = new SharedPreferencesCashier(requireContext());
 
-        MenuGridAdapter adapter = new MenuGridAdapter(requireActivity(), menuList);
+        adapter = new MenuGridAdapter(requireActivity(), menuList);
         menuGrid.setAdapter(adapter);
 
         ServiceGenerator service = new ServiceGenerator();
@@ -117,7 +132,14 @@ public class MenuFragment extends Fragment {
             }
         });
 
-
+        ExtendedFloatingActionButton menuFAB = view.findViewById(R.id.extend_menu_fab);
+        menuFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Display Form Isi Menu Manual (Nama, Harga, Quantity)
+                openAddMenuManualForm();
+            }
+        });
 
         //Search View
         SearchView menuSearchView = view.findViewById(R.id.FT_searchViewMenu);
@@ -162,5 +184,108 @@ public class MenuFragment extends Fragment {
         MenuGridAdapter adapter = new MenuGridAdapter(requireActivity(), filteredMenuList);
         menuGrid.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    private void openAddMenuManualForm(){
+        Dialog dialog = new Dialog(requireActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.form_add_menu_manual);
+        dialog.setCancelable(true);
+        dialog.show();
+
+        EditText inputCategory = dialog.findViewById(R.id.form_add_menu_editTxtCategory);
+        inputCategory.setInputType(InputType.TYPE_CLASS_TEXT);
+        EditText inputName = dialog.findViewById(R.id.form_add_menu_editTxtName);
+        inputName.setInputType(InputType.TYPE_CLASS_TEXT);
+        EditText inputPrice = dialog.findViewById(R.id.form_add_menu_editTxtPrice);
+        inputPrice.setInputType(InputType.TYPE_CLASS_NUMBER);
+        EditText inputDesc = dialog.findViewById(R.id.form_add_menu_editTxtDesc);
+        inputDesc.setInputType(InputType.TYPE_CLASS_TEXT);
+        EditText inputQty = dialog.findViewById(R.id.form_add_menu_editTxtQty);
+        inputQty.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        Button buttonCompletePayment = dialog.findViewById(R.id.form_add_menu_okButton);
+        buttonCompletePayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(validationAddMenuManual(inputCategory, inputName, inputPrice, inputDesc, inputQty)){
+                    dialog.dismiss();
+                    finishAddMenuManual(inputCategory.getText().toString(), inputName.getText().toString(),
+                            Integer.toString(inputPrice_Integer), inputDesc.getText().toString(), inputQty_Integer);
+                }
+            }
+        });
+    }
+
+    private boolean validationAddMenuManual(EditText inputCategory, EditText inputName, EditText inputPrice, EditText inputDesc, EditText inputQty){
+        if(inputCategory.getText().toString().isEmpty()){
+            inputCategory.setError("Category can't be empty");
+            return false;
+        } else {
+            inputCategory.setError(null);
+        }
+
+        if(inputName.getText().toString().isEmpty()){
+            inputName.setError("Name can't be empty");
+            return false;
+        } else {
+            inputName.setError(null);
+        }
+
+        if(inputDesc.getText().toString().isEmpty()){
+            inputDesc.setError("Description can't be empty");
+            return false;
+        } else {
+            inputDesc.setError(null);
+        }
+
+        String inputPrice_TXT = inputPrice.getText().toString();
+        String inputQty_TXT = inputQty.getText().toString();
+
+        if(!"".equals(inputPrice_TXT)){
+            inputPrice_Integer = Integer.parseInt(inputPrice_TXT);
+        }
+        if(inputPrice_Integer == 0){
+            inputPrice.setError("Price can't be 0");
+            return false;
+        } else {
+            inputPrice.setError("null");
+        }
+
+        if(!"".equals(inputQty_TXT)){
+            inputQty_Integer = Integer.parseInt(inputQty_TXT);
+        }
+        if(inputQty_Integer == 0){
+            inputQty.setError("Quantity can't be 0");
+            return false;
+        } else {
+            inputQty.setError("null");
+        }
+        return true;
+    }
+
+    private void finishAddMenuManual(String category, String name, String price, String description, int qty){
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("Point of Sales", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("checkoutList", null);
+        Type type = new TypeToken<ArrayList<CheckoutItemModel>>() {}.getType();
+        ArrayList<CheckoutItemModel> checkoutList = gson.fromJson(json, type);
+        if(checkoutList == null){
+            checkoutList = new ArrayList<>();
+        }
+
+        checkoutList.add(new CheckoutItemModel(name, ("Rp. " + price), category, description, "R.drawable.smallsalad", qty));
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String checkoutListJson = gson.toJson(checkoutList);
+        editor.putString("checkoutList", checkoutListJson);
+        editor.apply();
+
+        for(CheckoutItemModel item : checkoutList){
+            System.out.println(item.getCheckoutMenuCategory() + "\n" + item.getCheckoutMenuName() +
+                    "\n" + item.getCheckoutMenuPrice() + "\n" + item.getCheckoutMenuDescription() + item.getCheckoutMenuQuantity());
+        }
+
+        Toast.makeText(requireContext(), "Berhasil menambahkan " + name, Toast.LENGTH_LONG).show();
     }
 }

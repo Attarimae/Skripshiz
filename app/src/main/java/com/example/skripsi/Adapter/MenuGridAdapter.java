@@ -27,12 +27,11 @@ import java.util.ArrayList;
 
 public class MenuGridAdapter extends ArrayAdapter<MenuItemModel> {
     private Context context;
-    private ArrayList<CheckoutItemModel> checkoutList;
+    private ArrayList<CheckoutItemModel> checkoutList = new ArrayList<>();
 
     public MenuGridAdapter(@NonNull Context context, ArrayList<MenuItemModel> menuItemModelArrayList) {
         super(context, 0, menuItemModelArrayList);
         this.context = context;
-        this.checkoutList = new ArrayList<>();
     }
 
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){

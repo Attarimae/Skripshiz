@@ -102,17 +102,17 @@
             android:text="Update Order"
             android:layout_gravity="center_horizontal"/>
 
-        <Space
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"/>
+<!--        <Space-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="wrap_content"/>-->
 
-        <Button
-            android:id="@+id/FR_buttonPayment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="Payment"
-            android:layout_gravity="center_horizontal"/>
+<!--        <Button-->
+<!--            android:id="@+id/FR_buttonPayment"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:text="Payment"-->
+<!--            android:layout_gravity="center_horizontal"/>-->
 
     </LinearLayout>
 

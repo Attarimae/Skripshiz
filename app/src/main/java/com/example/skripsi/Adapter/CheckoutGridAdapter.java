@@ -95,7 +95,6 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
                 int updatedPrice = Integer.parseInt(replace_txtPrice) * updatedQuantity;
                 holder.checkoutQuantity.setText(String.valueOf(updatedQuantity));
                 holder.checkoutPrice.setText("Rp. " + formatPrice(updatedPrice));
-                checkoutFragment.updateTotalPrice();
             }
         });
 
@@ -109,13 +108,12 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
                     int updatedPrice = Integer.parseInt(replace_txtPrice) * updatedQuantity;
                     holder.checkoutQuantity.setText(String.valueOf(updatedQuantity));
                     holder.checkoutPrice.setText("Rp. " + formatPrice(updatedPrice));
-                    checkoutFragment.updateTotalPrice();
                 } else {
                     Toast.makeText(v.getContext(), "Quantity can't be less than 0", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
+        checkoutFragment.updateTotalPrice();
         return convertView;
     }
 }
