@@ -20,23 +20,32 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/FR_salesReport_DateText"
-            android:layout_width="180dp"
+            android:id="@+id/FR_salesReport_DateOneText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Date: 17-08-2024"
+            android:layout_weight="1"
+            android:text="Start Date:\n17-08-2024"
             android:textSize="18sp"
-            android:layout_margin="10dp"/>
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"/>
 
-        <Space
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/FR_salesReport_DateTwoText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="End Date:\n17-08-2024"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginStart="10dp"/>
 
         <Button
-            android:id="@+id/FR_salesReport_DateButton"
-            android:layout_width="match_parent"
+            android:id="@+id/FR_salesReport_CheckSalesBtn"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textAllCaps="false"
-            android:text="Pick Date"
+            android:text="Check Sales"
             android:layout_margin="10dp"/>
     </LinearLayout>
 
@@ -69,7 +78,7 @@
         android:id="@+id/FR_salesReport_TextViewSalesByEmployees"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sales by Employees:"
+        android:text="Sales by Orders"
         android:textSize="18sp"
         android:layout_margin="10dp"/>
 
