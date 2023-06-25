@@ -40,14 +40,13 @@ public class SendReceipts extends AsyncTask<Void, Void, Void> {
         properties.put("mail.smtp.port", "587");
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-                return new javax.mail.PasswordAuthentication("leetdummy@gmail.com", "smqcpthqupfyyhan");
+                return new javax.mail.PasswordAuthentication("Your Email Here", "Your Password Here");
             }
         });
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("receipts@pointsales.com"));
-            //message.setFrom(new InternetAddress("Email Here"));
+            message.setFrom(new InternetAddress("Email Here"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
             message.setSubject(".Sales Order Receipt");
 
