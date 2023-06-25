@@ -2,7 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:id="@+id/FR_orderDetailsLayout">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,5 +89,14 @@
             android:textSize="30sp" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/FR_buttonSendReceipt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAllCaps="false"
+        android:text="Send Receipt"
+        android:textSize="16sp"/>
 
 </LinearLayout>

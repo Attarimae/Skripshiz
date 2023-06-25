@@ -35,7 +35,7 @@ public class OrderListGridAdapter extends ArrayAdapter<OrderListItemDataModel> {
 
         orderListName.setText(String.valueOf(menuItemModel.getTableNumber()));
         orderListPrice.setText(menuItemModel.getTotalPrice());
-        orderListImage.setImageResource(R.drawable.ic_launcher_background);
+        orderListImage.setImageResource(R.drawable.salad);
         //orderListImage.setImageResource(menuItemModel.getImgID());
         return listitem;
     }

@@ -83,16 +83,14 @@
             app:layout_constraintTop_toBottomOf="@id/orderHistory_details_AmountQuantity"
             app:layout_constraintStart_toEndOf="@id/orderHistory_details_Image"
             android:id="@+id/orderHistory_details_txtNotes"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
             android:textSize="16sp"
             android:maxLines="3"
             android:ellipsize="end"
-            android:singleLine="false"
-            android:text="Notes:"
-            android:textAlignment="center" />
+            android:text="Notes:"/>
 
         <TextView
             app:layout_constraintTop_toBottomOf="@id/orderHistory_details_Name"

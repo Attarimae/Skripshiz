@@ -46,10 +46,6 @@ public class OrderListFragment extends Fragment {
         GridView orderListGrid = view.findViewById(R.id.FR_gridOrderList);
         orderListArrayList = new ArrayList<>();
 
-//        orderListArrayList.add(new OrderListItemDataModel("101", "Rp 420.690", R.drawable.ic_launcher_background));
-//        orderListArrayList.add(new OrderListItemDataModel("200", "Rp 100.001", R.drawable.ic_launcher_background));
-//        orderListArrayList.add(new OrderListItemDataModel("256", "Rp 12.345", R.drawable.ic_launcher_background));
-
         OrderListGridAdapter adapter = new OrderListGridAdapter(requireActivity(), orderListArrayList);
         orderListGrid.setAdapter(adapter);
 

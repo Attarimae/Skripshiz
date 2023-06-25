@@ -9,10 +9,11 @@
         android:orientation="vertical">
         <ImageView
             android:id="@+id/order_list_Image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher" />
+            android:scaleType="fitXY"
+            android:src="@drawable/salad" />
 
         <TextView
             android:id="@+id/order_list_Name"
