@@ -19,8 +19,12 @@ import android.widget.Toast;
 
 import com.example.skripsi.API.ServiceGenerator;
 import com.example.skripsi.API.SessionManager;
+import com.example.skripsi.Model.ErrorResponse;
 import com.example.skripsi.Model.RestaurantDataModel;
 import com.example.skripsi.R;
+import com.google.gson.Gson;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,7 +87,7 @@ public class RestaurantRegister extends AppCompatActivity {
     }
 
     private void openRestaurantLogin(){
-        Intent intent = new Intent(this, RestaurantLogin.class);
+        Intent intent = new Intent(this, POSLogin.class);
         startActivity(intent);
         finish();
     }
@@ -96,12 +100,24 @@ public class RestaurantRegister extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<RestaurantDataModel> call, Response<RestaurantDataModel> response) {
-                RestaurantDataModel modalAPI = response.body();
-                Toast.makeText(RestaurantRegister.this, "Berhasil membuat akun restaurant", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(RestaurantRegister.this, ShowRestaurantIdActivity.class);
-                intent.putExtra("restaurantId", modalAPI.getRestaurant_id());
-                startActivity(intent);
-                finish();
+                if (response.isSuccessful()) {
+                    RestaurantDataModel modalAPI = response.body();
+                    Toast.makeText(RestaurantRegister.this, "Berhasil membuat akun restaurant", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RestaurantRegister.this, POSLogin.class);
+                    startActivity(intent);
+                    finish();
+                }else if (response.code() == 400) {
+                    try {
+                        ErrorResponse errorResponse = new Gson().fromJson(response.errorBody().string(), ErrorResponse.class);
+                        String responseMessage = errorResponse.getResponseMessage();
+                        Toast.makeText(RestaurantRegister.this, "Gagal Login akun pos: " + responseMessage, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(RestaurantRegister.this, "Failed to parse error response", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(RestaurantRegister.this, "Gagal Login akun pos", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

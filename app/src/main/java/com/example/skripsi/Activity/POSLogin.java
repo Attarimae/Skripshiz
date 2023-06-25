@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.skripsi.API.ServiceGenerator;
 import com.example.skripsi.API.SessionManager;
 import com.example.skripsi.Model.ErrorResponse;
+import com.example.skripsi.Model.LoginDataModel;
 import com.example.skripsi.Model.StaffDataModel;
 import com.example.skripsi.R;
 import com.google.gson.Gson;
@@ -81,7 +82,7 @@ public class POSLogin extends AppCompatActivity {
     }
 
     private void openPOSRegistration() {
-        Intent intent = new Intent(this, POSRegister.class);
+        Intent intent = new Intent(this, RestaurantRegister.class);
         startActivity(intent);
         finish();
     }
@@ -110,17 +111,20 @@ public class POSLogin extends AppCompatActivity {
     private void postPOSLogin(String staff_id, String role, String email, String password) {
         ServiceGenerator service = new ServiceGenerator();
         StaffDataModel modal = new StaffDataModel(staff_id, role, email, password);
-        Call<StaffDataModel> call = service.getApiService(this).postStaffLogin(modal);
-        call.enqueue(new Callback<StaffDataModel>() {
+        Call<LoginDataModel> call = service.getApiService(this).postStaffLogin(modal);
+        call.enqueue(new Callback<LoginDataModel>() {
 
             @Override
-            public void onResponse(Call<StaffDataModel> call, Response<StaffDataModel> response) {
-                StaffDataModel modalAPI = response.body();
+            public void onResponse(Call<LoginDataModel> call, Response<LoginDataModel> response) {
+                LoginDataModel modalAPI = response.body();
                 if (response.isSuccessful()) {
                     Toast.makeText(POSLogin.this, "Berhasil Login akun POS", Toast.LENGTH_SHORT).show();
                     sm.saveStaffRole(modalAPI.getRole());
                     sm.saveStaffID(modalAPI.getStaff_id());
                     sm.saveStaffName(modalAPI.getName());
+                    sm.saveAuthToken(modalAPI.getKey());
+                    sm.saveRestaurantID(modalAPI.getRestaurant_id());
+                    sm.saveRestaurantName(modalAPI.getRestaurant_name());
                     openPOSHomepage();
                 } else if (response.code() == 400) {
                     try {
@@ -132,12 +136,12 @@ public class POSLogin extends AppCompatActivity {
                         Toast.makeText(POSLogin.this, "Failed to parse error response", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(POSLogin.this, "Gagal membuat akun pos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(POSLogin.this, "Gagal Login akun pos", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<StaffDataModel> call, Throwable t) {
+            public void onFailure(Call<LoginDataModel> call, Throwable t) {
                 Log.e(TAG, "onFailure: Failed - POST POS Login");
             }
         });

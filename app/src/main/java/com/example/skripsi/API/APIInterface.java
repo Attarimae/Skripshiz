@@ -4,6 +4,7 @@ import com.example.skripsi.Model.CategoryList;
 import com.example.skripsi.Model.Customer.CustomerItemModel;
 import com.example.skripsi.Model.Employee.EmployeeItemModel;
 import com.example.skripsi.Model.FullProfile;
+import com.example.skripsi.Model.LoginDataModel;
 import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.Model.Menus.MenuItemModelWithoutId;
 import com.example.skripsi.Model.Orders.OrderListItemDataModel;
@@ -44,7 +45,7 @@ public interface APIInterface {
 
     //Login Staff
     @POST("/staff/login/")
-    Call<StaffDataModel> postStaffLogin(@Body StaffDataModel staffDataModel);
+    Call<LoginDataModel> postStaffLogin(@Body StaffDataModel staffDataModel);
 
     //Get All Staff
     @GET("/staff/users/")
