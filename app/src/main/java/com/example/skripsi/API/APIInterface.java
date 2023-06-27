@@ -55,6 +55,10 @@ public interface APIInterface {
     @POST("/staff/users/")
     Call<EmployeeItemModel> postStaff(@Body EmployeeItemModel itemModel);
 
+    //Create New Employee (Cashier/Manager)
+    @POST("/staff/register")
+    Call<EmployeeItemModel> postCreateStaff(@Body StaffDataModel itemModel);
+
     //Create Menu
     @POST("/menu/")
     Call<MenuItemModel> postCreateMenu(@Body MenuItemModelWithoutId menuItemModel);

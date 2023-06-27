@@ -81,9 +81,6 @@ public class CheckoutGridAdapter extends ArrayAdapter<CheckoutItemModel> {
 
         Glide.with(checkoutFragment.requireContext())
                 .load(APIConstant.BASE_URL_DOWNLOAD + checkoutItemModel.getImgID())
-                .apply(new RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true))
                 .error(R.drawable.smallsalad)
                 .into(holder.checkoutImg);
 
