@@ -63,6 +63,7 @@ public class OrderListFragment extends Fragment {
                             if(response.body().get(i).getOrder_status().equals("Order Ongoing")){
                                 orderListArrayList.add(new OrderListItemDataModel(
                                         response.body().get(i).getTableNumber(),
+                                        response.body().get(i).getTotalPrice(),
                                         response.body().get(i).getOrder_detail()
                                 ));
                             }

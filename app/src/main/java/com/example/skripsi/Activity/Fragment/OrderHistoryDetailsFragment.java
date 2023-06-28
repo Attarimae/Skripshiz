@@ -33,12 +33,14 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class OrderHistoryDetailsFragment extends Fragment {
 
     private ArrayList<OrderListItemDetailsDataModel> orderHistoryDetails;
-    private TextView orderHistoryDetailsTotalPrice;
+    private TextView orderHistoryDetailsTotalPrice, orderHistoryDetailsDate;
     private GridView gridView;
     private View view;
     private Button sendReceiptButton;
@@ -83,6 +85,15 @@ public class OrderHistoryDetailsFragment extends Fragment {
                 sendReceiptButton.setVisibility(View.GONE);
             }
         });
+
+        orderHistoryDetailsDate = view.findViewById(R.id.FR_gridOrderHistoryDetailsDate);
+
+        String date = spc.fetchOrderCreatedAt();
+        OffsetDateTime offsetDateTime = OffsetDateTime.parse(date);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String formattedDateTime = offsetDateTime.format(formatter);
+        orderHistoryDetailsDate.setText("Order created at " + formattedDateTime);
+
         return view;
     }
 

@@ -20,6 +20,8 @@ public class OrderListItemDataModel {
     private String totalPrice;
     @SerializedName(value = "id")
     private String id;
+    @SerializedName(value = "created_at")
+    private String created_at;
 
 //    private String orderName;
 //    private int imgID;
@@ -39,11 +41,19 @@ public class OrderListItemDataModel {
     }
 
     //Ini buat GET Order List/Order History
-    public OrderListItemDataModel(int tableNumber, ArrayList<OrderListItemDetailsDataModel> order_detail, String order_status, String id){
+    public OrderListItemDataModel(int tableNumber, String totalPrice, String created_at, ArrayList<OrderListItemDetailsDataModel> order_detail, String order_status, String id){
         this.tableNumber = tableNumber;
+        this.totalPrice = totalPrice;
+        this.created_at = created_at;
         this.order_detail = order_detail;
         this.order_status = order_status;
         this.id = id;
+    }
+
+    public OrderListItemDataModel(int tableNumber, String totalPrice, ArrayList<OrderListItemDetailsDataModel> order_detail){
+        this.tableNumber = tableNumber;
+        this.order_detail = order_detail;
+        this.totalPrice = totalPrice;
     }
 
     //Ini buat PATCH ke Endpoint Update Order
@@ -123,5 +133,13 @@ public class OrderListItemDataModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 }

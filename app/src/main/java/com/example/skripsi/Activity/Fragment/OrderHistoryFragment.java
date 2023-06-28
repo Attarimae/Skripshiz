@@ -63,6 +63,8 @@ public class OrderHistoryFragment extends Fragment {
                             if(response.body().get(i).getOrder_status().equals("Order Finished")){
                                 orderHistoryArrayList.add(new OrderListItemDataModel(
                                         response.body().get(i).getTableNumber(),
+                                        response.body().get(i).getTotalPrice(),
+                                        response.body().get(i).getCreated_at(),
                                         response.body().get(i).getOrder_detail(),
                                         response.body().get(i).getOrder_status(),
                                         response.body().get(i).getId()
@@ -113,17 +115,19 @@ public class OrderHistoryFragment extends Fragment {
                 selectedOrderHistoryArrayList = adapter.getItem(position);
                 openOrderHistoryDetails(selectedOrderHistoryArrayList.getOrderId(),
                         selectedOrderHistoryArrayList.getTableNumber(),
-                        selectedOrderHistoryArrayList.getOrder_detail());
+                        selectedOrderHistoryArrayList.getOrder_detail(),
+                        selectedOrderHistoryArrayList.getCreated_at());
             }
         });
         return view;
     }
 
-    private void openOrderHistoryDetails(String order_id, int table_number, ArrayList<OrderListItemDetailsDataModel> order_detail){
+    private void openOrderHistoryDetails(String order_id, int table_number, ArrayList<OrderListItemDetailsDataModel> order_detail, String created_at){
         SharedPreferencesCashier spc = new SharedPreferencesCashier(requireContext());
         spc.saveOrderId(order_id);
         spc.saveTableNumber(table_number);
         spc.saveOrderDetails(order_detail);
+        spc.saveOrderCreatedAt(created_at);
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, new OrderHistoryDetailsFragment());
         ft.commit();
