@@ -71,7 +71,7 @@ public class AddMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_menu);
+        setContentView(R.layout.activity_add_new_menu);
         sm = new SessionManager(this);
         menuNameTextView = findViewById(R.id.menu_name_textview);
         menuPriceTextView = findViewById(R.id.menu_price_textview);
@@ -134,10 +134,10 @@ public class AddMenuActivity extends AppCompatActivity {
         });
 
         manageMenuTextView = findViewById(R.id.manage_menu);
+        manageMenuTextView.setText("Add New Menu");
 
         menuCategorySpinner = findViewById(R.id.menu_category_spinner);
         menuDescipritionTextView.setText("");
-        manageMenuTextView.setText("");
         menuNameTextView.setText("");
         menuPriceTextView.setText("");
 

@@ -19,6 +19,9 @@
             android:name=".Activity.CashierEditProfile"
             android:exported="false" />
         <activity
+            android:name=".Activity.AddEmployeeActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.CashierSettingActivity"
             android:exported="false" />
         <activity

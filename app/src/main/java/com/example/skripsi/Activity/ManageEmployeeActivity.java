@@ -41,7 +41,14 @@ public class ManageEmployeeActivity extends AppCompatActivity {
 
         GridView menuGrid = findViewById(R.id.FR_gridManageEmployee);
         ImageView imageView = findViewById(R.id.btn_add_menu);
-        imageView.setVisibility(View.GONE);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManageEmployeeActivity.this, AddEmployeeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         employeeList = new ArrayList<>();
         filteredEmployeeList = new ArrayList<>();
         storedEmployeeList = new ArrayList<>(); // Initialize the stored menu data list

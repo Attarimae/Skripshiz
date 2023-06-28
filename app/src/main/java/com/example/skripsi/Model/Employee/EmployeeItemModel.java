@@ -45,6 +45,14 @@ public class EmployeeItemModel implements Serializable {
         this.imgID = imgID;
     }
 
+    public EmployeeItemModel(String staffName, String email, String phoneNumber, String role, String imgID) {
+        this.staffName = staffName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+        this.imgID = imgID;
+    }
+
     public String getStaffId() {
         return staffId;
     }
