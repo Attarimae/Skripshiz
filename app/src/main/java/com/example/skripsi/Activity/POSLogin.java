@@ -101,8 +101,14 @@ public class POSLogin extends AppCompatActivity {
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
-        }else{
+        }
+        if(role.equalsIgnoreCase("manager")){
             Intent intent = new Intent(this, ManagerMainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        if(role.equalsIgnoreCase("koki")){
+            Intent intent = new Intent(this, KokiMainActivity.class);
             startActivity(intent);
             finish();
         }
@@ -164,10 +170,9 @@ public class POSLogin extends AppCompatActivity {
         if (passwordToText.length() == 0) {
             password.setError("Password is required");
             return false;
-        } else if (passwordToText.length() < 8 && passwordToText.length() > 20) {
-            password.setError("Password must be 8-20 characters");
-        } else if (!passwordToText.matches(password_regex)) {
-            password.setError("Password is invalid");
+        } else if (passwordToText.length() < 8) {
+            password.setError("Password must be minimum 8 characters");
+            return false;
         } else {
             password.setError(null);
         }

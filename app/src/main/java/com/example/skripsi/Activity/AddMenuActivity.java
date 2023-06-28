@@ -9,10 +9,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +33,7 @@ import com.example.skripsi.API.APIConstant;
 import com.example.skripsi.API.ServiceGenerator;
 import com.example.skripsi.API.SessionManager;
 import com.example.skripsi.Model.CategoryList;
+import com.example.skripsi.Model.CategoryPost;
 import com.example.skripsi.Model.ErrorResponse;
 import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.Model.Menus.MenuItemModelWithoutId;
@@ -49,14 +55,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddMenuActivity extends AppCompatActivity {
-    private TextView menuNameTextView,manageMenuTextView;
-    private TextView menuPriceTextView,menuDescipritionTextView;
+    private TextView menuNameTextView, manageMenuTextView;
+    private TextView menuPriceTextView, menuDescipritionTextView;
     private ImageView menuImageView;
     private Spinner menuCategorySpinner;
     private int menuId;
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int CAMERA_CAPTURE_REQUEST = 2;
+
+    private PopupWindow categoryPopupWindow;
 
     SessionManager sm;
 
@@ -69,8 +77,64 @@ public class AddMenuActivity extends AppCompatActivity {
         menuPriceTextView = findViewById(R.id.menu_price_textview);
         menuImageView = findViewById(R.id.menu_imageview);
         menuDescipritionTextView = findViewById(R.id.menu_description_textview);
+        Button addButton = findViewById(R.id.add_category);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View popupView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.popup_add_category, null);
+
+                categoryPopupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                categoryPopupWindow.setFocusable(true);
+
+                categoryPopupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+                Button saveButton = popupView.findViewById(R.id.save_button);
+
+                saveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EditText categoryNameEditText = popupView.findViewById(R.id.category_name_edittext);
+                        String categoryName = categoryNameEditText.getText().toString();
+
+                        ServiceGenerator service = new ServiceGenerator();
+                        CategoryPost categoryPost = new CategoryPost(categoryName);
+                        Call<CategoryList> categoryCall = service.getApiService(AddMenuActivity.this).postCategory(categoryPost);
+
+                        categoryCall.enqueue(new Callback<CategoryList>() {
+                            @Override
+                            public void onResponse(Call<CategoryList> call, Response<CategoryList> response) {
+                                if (response.isSuccessful()) {
+                                    Toast.makeText(AddMenuActivity.this, "Data saved successfully", Toast.LENGTH_SHORT).show();
+                                    categoryPopupWindow.dismiss(); // Close the popup window
+                                    Intent intent = new Intent(AddMenuActivity.this, AddMenuActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else if (response.code() == 400) {
+                                    try {
+                                        ErrorResponse errorResponse = new Gson().fromJson(response.errorBody().string(), ErrorResponse.class);
+                                        String responseMessage = errorResponse.getResponseMessage();
+                                        Toast.makeText(AddMenuActivity.this, "Failed to save data: " + responseMessage, Toast.LENGTH_SHORT).show();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(AddMenuActivity.this, "Failed to parse error response", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Toast.makeText(AddMenuActivity.this, "Failed to save data", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<CategoryList> call, Throwable t) {
+                                // Handle API call failure
+                                Toast.makeText(AddMenuActivity.this, "Failed to fetch categories", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+            }
+        });
 
         manageMenuTextView = findViewById(R.id.manage_menu);
+
         menuCategorySpinner = findViewById(R.id.menu_category_spinner);
         menuDescipritionTextView.setText("");
         manageMenuTextView.setText("");
@@ -88,7 +152,7 @@ public class AddMenuActivity extends AppCompatActivity {
 
     private void fetchCategoriesFromApi() {
         ServiceGenerator service = new ServiceGenerator();
-        Call<List<CategoryList>> categoryCall= service.getApiService(this).getCategory();
+        Call<List<CategoryList>> categoryCall = service.getApiService(this).getCategory();
 
         categoryCall.enqueue(new Callback<List<CategoryList>>() {
             @Override
@@ -97,6 +161,7 @@ public class AddMenuActivity extends AppCompatActivity {
                     List<CategoryList> categories = response.body();
 
                     List<String> categoryNames = new ArrayList<>();
+                    categoryNames.add("ALL");
                     for (CategoryList category : categories) {
                         categoryNames.add(category.getCategoryName());
                     }
@@ -118,6 +183,7 @@ public class AddMenuActivity extends AppCompatActivity {
             }
         });
     }
+
     public void onSaveButtonClicked(View view) {
         // Get the references to the EditText fields
         EditText nameEditText = findViewById(R.id.menu_name_textview);
@@ -152,8 +218,8 @@ public class AddMenuActivity extends AppCompatActivity {
             return;
         }
 
-        MenuItemModel apiModel = new MenuItemModel(menuCategory,name,description,price,"1");
-        sendImageToAPI(apiModel,imageView);
+        MenuItemModel apiModel = new MenuItemModel(menuCategory, name, description, price, "1");
+        sendImageToAPI(apiModel, imageView);
     }
 
     private void sendImageToAPI(MenuItemModel apiModel, ImageView imageView) {

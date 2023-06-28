@@ -111,6 +111,7 @@ public class DetailMenuActivity extends AppCompatActivity {
                     List<CategoryList> categories = response.body();
 
                     List<String> categoryNames = new ArrayList<>();
+                    categoryNames.add("ALL");
                     for (CategoryList category : categories) {
                         categoryNames.add(category.getCategoryName());
                     }

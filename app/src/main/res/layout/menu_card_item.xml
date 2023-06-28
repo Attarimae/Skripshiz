@@ -4,8 +4,9 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:background="@drawable/grid_item_background"
-    android:elevation="4dp"
-    android:padding="8dp">
+    android:elevation="20dp"
+    android:padding="8dp"
+    android:backgroundTint="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"

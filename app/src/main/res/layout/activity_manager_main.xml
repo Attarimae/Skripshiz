@@ -66,6 +66,22 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/MMA_ShowOngoingOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:text="Show Ongoing\nOrder"
+                    android:padding="10dp"/>
+
+                <Button
+                    android:id="@+id/MMA_ReportOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:text="Report\nOrder"
+                    android:padding="10dp"/>
+
+                <Button
                     android:id="@+id/MMA_ManageRestoMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -90,11 +106,11 @@
                     android:padding="10dp"/>
 
                 <Button
-                    android:id="@+id/MMA_CustomerLoyaltyProgram"
+                    android:id="@+id/MMA_QRCustomer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
-                    android:text="Customer\nLoyalty Program"
+                    android:text="QR\nOrder Customer"
                     android:padding="10dp"/>
 
                 <Button

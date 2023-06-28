@@ -100,9 +100,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="8dp"
                     android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/add_category"
+                    android:layout_width="50dp"
+                    android:background="@color/purple_200"
+                    android:layout_height="wrap_content"
+                    android:onClick="onSaveButtonClicked"
+                    android:text="+" />
             </TableRow>
 
             <TableRow android:layout_margin="10dp">

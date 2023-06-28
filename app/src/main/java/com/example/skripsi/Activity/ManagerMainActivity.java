@@ -31,7 +31,8 @@ public class ManagerMainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private TextView MMA_txtViewWelcome;
     private ImageView MMA_gambarRestoran;
-    private Button MMA_ManageRestoMenu,MMA_ManageEmployeeMenu,MMA_ManageCustomer,MMA_EditLandingPage,logoutButton;;
+    private Button MMA_ManageRestoMenu,MMA_ManageEmployeeMenu,MMA_ManageCustomer,
+            MMA_EditLandingPage,logoutButton,MMA_QRCustomer,MMA_ShowOngoingOrder,MMA_ReportOrder;;
 
     SessionManager sm;
 
@@ -41,6 +42,15 @@ public class ManagerMainActivity extends AppCompatActivity {
         sm = new SessionManager(this);
         setContentView(R.layout.activity_manager_main);
         mTitle = mDrawerTitle = getTitle();
+
+        MMA_ShowOngoingOrder = findViewById(R.id.MMA_ShowOngoingOrder);
+        MMA_ShowOngoingOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ManagerMainActivity.this, QRActivity.class);
+                startActivity(intent);
+            }
+        });
 
         MMA_gambarRestoran = findViewById(R.id.MMA_gambarRestoran);
         Glide.with(this)
@@ -77,6 +87,15 @@ public class ManagerMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 logout();
+            }
+        });
+
+        MMA_QRCustomer = findViewById(R.id.MMA_QRCustomer);
+        MMA_QRCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ManagerMainActivity.this, QRActivity.class);
+                startActivity(intent);
             }
         });
 

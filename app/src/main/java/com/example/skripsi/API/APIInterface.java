@@ -1,6 +1,7 @@
 package com.example.skripsi.API;
 
 import com.example.skripsi.Model.CategoryList;
+import com.example.skripsi.Model.CategoryPost;
 import com.example.skripsi.Model.Customer.CustomerItemModel;
 import com.example.skripsi.Model.Employee.EmployeeItemModel;
 import com.example.skripsi.Model.FullProfile;
@@ -68,6 +69,9 @@ public interface APIInterface {
     //Get Category
     @GET("/category/")
     Call<List<CategoryList>> getCategory();
+
+    @POST("/category/")
+    Call<CategoryList> postCategory(@Body CategoryPost categoryPost);
 
     //Get All Menu
     @GET("/menu/")

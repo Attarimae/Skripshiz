@@ -136,9 +136,6 @@ public class RestaurantRegister extends AppCompatActivity {
         if(restaurantNameToText.isEmpty()){
             restaurantName.setError("Restaurant Name is required");
             return false;
-        } else if(!restaurantNameToText.matches("\\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+")){
-            restaurantName.setError("Restaurant Name is invalid");
-            return false;
         } else {
             restaurantName.setError(null);
         }
@@ -157,7 +154,7 @@ public class RestaurantRegister extends AppCompatActivity {
             phonenumber.setError("Phone Number is required");
             return false;
         } else if(!phoneNumberToText.matches("^(\\+62|62|0)8[1-9][0-9]{6,9}$")){
-            phonenumber.setError("Phone Number is invalid");
+            phonenumber.setError("Phone must start with 08/+62");
             return false;
         } else {
             phonenumber.setError(null);
@@ -168,9 +165,6 @@ public class RestaurantRegister extends AppCompatActivity {
             return false;
         } else if(passwordToText.length() < 8){
             password.setError("Password must be minimum 8 characters");
-            return false;
-        } else if(!passwordToText.matches(password_regex)){
-            password.setError("Password is invalid");
             return false;
         } else if(!passwordToText.matches(confirmpassword.getText().toString())){
             confirmpassword.setError("Password does not match");
