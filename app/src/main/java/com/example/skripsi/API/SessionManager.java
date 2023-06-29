@@ -12,7 +12,6 @@ public class SessionManager{
     public SessionManager(Context context) {
         sharedPreferences = context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        editor.apply();
     }
     public void clearSession(){
         editor.clear();
@@ -67,6 +66,24 @@ public class SessionManager{
         editor.putString("restaurant_name", restaurant_name);
         editor.commit();
     }
+
+    public void addCartTotal(){
+        int countCart = fetchCartTotal();
+        System.out.println(countCart);
+        countCart++;
+        editor.putInt("cart", countCart);
+        editor.commit();
+    }
+
+    public int fetchCartTotal(){
+        return sharedPreferences.getInt("cart", 0);
+    }
+
+    public void resetCartTotal(){
+        editor.putInt("cart", 0);
+        editor.commit();
+    }
+
 
     public String fetchRestaurantName() {
         return sharedPreferences.getString("restaurant_name", null);

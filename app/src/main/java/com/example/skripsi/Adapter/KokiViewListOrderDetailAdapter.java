@@ -6,11 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,8 +25,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
-public class OrderListDetailsGridAdapter extends ArrayAdapter<OrderListItemDetailsDataModel> {
-
+public class KokiViewListOrderDetailAdapter extends ArrayAdapter<OrderListItemDetailsDataModel> {
     private OrderListDetailsFragment orderDetailsFragment;
     private String selectedStatus;
     private String[] spinnerStatus = {
@@ -45,7 +42,7 @@ public class OrderListDetailsGridAdapter extends ArrayAdapter<OrderListItemDetai
         return decimalFormat.format(price);
     }
 
-    public OrderListDetailsGridAdapter(@NonNull Context context, @NonNull ArrayList<OrderListItemDetailsDataModel> orderListItemDetailsDataModels, OrderListDetailsFragment orderDetailsFragment) {
+    public KokiViewListOrderDetailAdapter(@NonNull Context context, @NonNull ArrayList<OrderListItemDetailsDataModel> orderListItemDetailsDataModels) {
         super(context, 0, orderListItemDetailsDataModels);
         this.orderDetailsFragment = orderDetailsFragment;
     }
@@ -98,9 +95,5 @@ public class OrderListDetailsGridAdapter extends ArrayAdapter<OrderListItemDetai
             }
         });
         return listitem;
-    }
-
-    public String getOrderStatus() {
-        return selectedStatus;
     }
 }

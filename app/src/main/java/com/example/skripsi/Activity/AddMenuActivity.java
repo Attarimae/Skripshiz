@@ -55,7 +55,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddMenuActivity extends AppCompatActivity {
-    private TextView menuNameTextView, manageMenuTextView;
+    private TextView menuNameTextView, manageMenuTextView,manage_menu;
     private TextView menuPriceTextView, menuDescipritionTextView;
     private ImageView menuImageView;
     private Spinner menuCategorySpinner;
@@ -71,7 +71,7 @@ public class AddMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_menu);
+        setContentView(R.layout.activity_detail_menu);
         sm = new SessionManager(this);
         menuNameTextView = findViewById(R.id.menu_name_textview);
         menuPriceTextView = findViewById(R.id.menu_price_textview);

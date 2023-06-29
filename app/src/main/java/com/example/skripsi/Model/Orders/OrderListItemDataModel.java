@@ -47,8 +47,8 @@ public class OrderListItemDataModel {
     }
 
     //Ini buat PATCH ke Endpoint Update Order
-    public OrderListItemDataModel(String orderId, int tableNumber, ArrayList<OrderListItemDetailsDataModel> order_detail){
-        this.orderId = orderId;
+    public OrderListItemDataModel(String id, int tableNumber, ArrayList<OrderListItemDetailsDataModel> order_detail){
+        this.orderId = id;
         this.tableNumber = tableNumber;
         this.order_detail = order_detail;
     }
@@ -60,6 +60,7 @@ public class OrderListItemDataModel {
 //    public void setOrderName(String orderName) {
 //        this.orderName = orderName;
 //    }
+
 
     public String getTotalPrice() {
         return totalPrice;

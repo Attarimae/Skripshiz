@@ -36,7 +36,6 @@ public class ManageMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_menu);
-
         GridView menuGrid = findViewById(R.id.FR_gridManageMenu);
         ImageView imageView = findViewById(R.id.btn_add_menu);
         imageView.setOnClickListener(new View.OnClickListener() {

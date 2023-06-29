@@ -62,6 +62,7 @@ public class OrderListFragment extends Fragment {
                         for(int i=0; i < orderListSize; i++){
                             if(response.body().get(i).getOrder_status().equals("Order Ongoing")){
                                 orderListArrayList.add(new OrderListItemDataModel(
+                                        response.body().get(i).getOrderId(),
                                         response.body().get(i).getTableNumber(),
                                         response.body().get(i).getOrder_detail()
                                 ));
@@ -111,14 +112,15 @@ public class OrderListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedOrderListArrayList = adapter.getItem(position);
-                openOrderDetails(selectedOrderListArrayList.getOrder_detail());
+                openOrderDetails(selectedOrderListArrayList.getOrder_detail(),selectedOrderListArrayList.getOrderId());
             }
         });
         return view;
     }
 
-    private void openOrderDetails(ArrayList<OrderListItemDetailsDataModel> order_detail){
+    private void openOrderDetails(ArrayList<OrderListItemDetailsDataModel> order_detail,String orderId){
         SharedPreferencesCashier spc = new SharedPreferencesCashier(requireContext());
+        spc.saveOrderId(orderId);
         spc.saveOrderDetails(order_detail);
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, new OrderListDetailsFragment());

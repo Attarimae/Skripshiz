@@ -216,7 +216,7 @@ public class CashierSettingActivity extends AppCompatActivity {
 
     private void logout(){
         sm.clearSession();
-        Intent intent = new Intent(this, RestaurantLogin.class);
+        Intent intent = new Intent(this, POSLogin.class);
         startActivity(intent);
         finish();
     }

@@ -47,6 +47,8 @@ public class CashierMainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private Menu cashierMenu;
 
+    private TextView textView;
+
 //    TextView MA_txtViewWelcome;
 //    Button logoutButton;
 
@@ -58,7 +60,6 @@ public class CashierMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cashier_main);
 
         sm = new SessionManager(this);
-
         mTitle = mDrawerTitle = getTitle();
         mNavigationDrawerItemTitles= getResources().getStringArray(R.array.menu_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -179,6 +180,9 @@ public class CashierMainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void toOrderList(int position){
+        selectItem(1);
+    }
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
@@ -219,7 +223,7 @@ public class CashierMainActivity extends AppCompatActivity {
     }
     private void logout() {
         sm.clearSession();
-        Intent intent = new Intent(CashierMainActivity.this, RestaurantLogin.class);
+        Intent intent = new Intent(CashierMainActivity.this, POSLogin.class);
         startActivity(intent);
         finish();
     }

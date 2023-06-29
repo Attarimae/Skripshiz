@@ -53,14 +53,14 @@
         android:horizontalSpacing="10dp"
         android:verticalSpacing="10dp" />
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/extend_menu_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="15dp"
-        app:icon="@drawable/ic_baseline_add_24"
-        android:text="Add Order"
-        android:textAllCaps="false"/>
+<!--    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+<!--        android:id="@+id/extend_menu_fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|right"-->
+<!--        android:layout_margin="15dp"-->
+<!--        app:icon="@drawable/ic_baseline_add_24"-->
+<!--        android:text="Add Order"-->
+<!--        android:textAllCaps="false"/>-->
 
 </LinearLayout>

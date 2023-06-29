@@ -38,7 +38,7 @@ public class EditLandingPageActivity extends AppCompatActivity {
 
 
     private TextView motto, mottoDetail, restaurantStory, openDay,
-            openTime, Location, officialEmail, facebookUrl, instagramUrl, whatsappNumber;
+            openTime, Location, officialEmail, facebookUrl, instagramUrl, whatsappNumber,manage_menu;
 
     SessionManager sm;
 
@@ -57,7 +57,8 @@ public class EditLandingPageActivity extends AppCompatActivity {
         facebookUrl = findViewById(R.id.facebook_url_textview);
         instagramUrl = findViewById(R.id.instagram_url_textview);
         whatsappNumber = findViewById(R.id.whatsapp_number_textview);
-
+        manage_menu = findViewById(R.id.manage_menu);
+        manage_menu.setText("Edit Landing Page");
         setDataFromAPI();
     }
 

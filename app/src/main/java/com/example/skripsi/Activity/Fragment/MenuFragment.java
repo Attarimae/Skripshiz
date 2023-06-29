@@ -132,14 +132,14 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        ExtendedFloatingActionButton menuFAB = view.findViewById(R.id.extend_menu_fab);
-        menuFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Display Form Isi Menu Manual (Nama, Harga, Quantity)
-                openAddMenuManualForm();
-            }
-        });
+//        ExtendedFloatingActionButton menuFAB = view.findViewById(R.id.extend_menu_fab);
+//        menuFAB.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //Display Form Isi Menu Manual (Nama, Harga, Quantity)
+//                openAddMenuManualForm();
+//            }
+//        });
 
         //Search View
         SearchView menuSearchView = view.findViewById(R.id.FT_searchViewMenu);
