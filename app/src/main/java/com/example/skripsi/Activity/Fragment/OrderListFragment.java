@@ -64,6 +64,7 @@ public class OrderListFragment extends Fragment {
                                 orderListArrayList.add(new OrderListItemDataModel(
                                         response.body().get(i).getOrderId(),
                                         response.body().get(i).getTableNumber(),
+                                        response.body().get(i).getTotalPrice(),
                                         response.body().get(i).getOrder_detail()
                                 ));
                             }

@@ -89,4 +89,13 @@ public class SharedPreferencesCashier {
     public int fetchTableNumber(){
         return sharedPreferences.getInt("table_number", -1);
     }
+
+    public void saveOrderCreatedAt(String created_at){
+        editor.putString("created_at", created_at);
+        editor.commit();
+    }
+
+    public String fetchOrderCreatedAt(){
+        return sharedPreferences.getString("created_at", null);
+    }
 }
