@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.RestaurantRegister">
+    tools:context=".Activity.RestaurantRegister"
+    android:background="?attr/colorOnPrimary">
 
     <TextView
         android:id="@+id/restaurantlogin"
@@ -83,13 +84,17 @@
 
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirm_restaurant_registration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/confirm_restaurant_registration"
         android:layout_below="@id/confirmpw"
-        android:text="Submit"
         android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"/>
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Submit"
+        android:textColor="@color/white"/>
 
     <TextView
         android:layout_width="match_parent"

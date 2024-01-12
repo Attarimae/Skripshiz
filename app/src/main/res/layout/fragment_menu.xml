@@ -3,13 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?attr/colorOnPrimary">
 
     <TextView
         android:id="@+id/FR_txtViewMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MENU"
+        android:textColor="@color/black"
         android:padding="10dp"
         android:textSize="24sp"
         android:layout_gravity="center_horizontal" />
@@ -32,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Menu Category"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:layout_margin="10dp"/>
 
@@ -49,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:numColumns="3"
+        android:numColumns="1"
         android:horizontalSpacing="10dp"
         android:verticalSpacing="10dp" />
 

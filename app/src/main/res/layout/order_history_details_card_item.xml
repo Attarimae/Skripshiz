@@ -29,6 +29,7 @@
             android:layout_marginStart="10dp"
             android:textSize="16sp"
             android:text="Ayam Goreng"
+            android:textColor="@color/black"
             android:maxLines="3"
             android:textAlignment="textStart" />
 
@@ -78,6 +79,7 @@
             android:layout_marginStart="10dp"
             android:textSize="16sp"
             android:text="Quantity: 69"
+            android:textColor="@color/black"
             android:textAlignment="center" />
 
         <TextView
@@ -91,7 +93,8 @@
             android:textSize="16sp"
             android:maxLines="3"
             android:ellipsize="end"
-            android:text="Notes:"/>
+            android:text="Notes:"
+            android:textColor="@color/black"/>
 
         <TextView
             app:layout_constraintTop_toBottomOf="@id/orderHistory_details_Name"
@@ -103,6 +106,7 @@
             android:layout_marginEnd="10dp"
             android:paddingEnd="4dp"
             android:text="Rp. 69.000"
+            android:textColor="@color/black"
             android:textAlignment="center" />
 
         <TextView
@@ -115,6 +119,7 @@
             android:layout_marginEnd="10dp"
             android:paddingEnd="4dp"
             android:text="Subtotal"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textAlignment="center" />
 
@@ -127,6 +132,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:text="Order Status: Order Has been Served"
+            android:textColor="@color/black"
             android:textSize="16sp"/>
 
 <!--        <Spinner-->

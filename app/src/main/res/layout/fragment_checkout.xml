@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?attr/colorOnPrimary">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Checkout"
+            android:textColor="@color/black"
             android:padding="10dp"
             android:textSize="32sp"
             android:layout_gravity="center_horizontal"/>
@@ -32,6 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Table Number"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:layout_gravity="center_horizontal"/>
             <EditText
@@ -69,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total"
+            android:textColor="@color/black"
             android:layout_margin="10dp"
             android:textSize="30sp" />
 
@@ -82,6 +86,7 @@
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:text="Rp 690.000.000"
+            android:textColor="@color/black"
             android:layout_marginEnd="24dp"
             android:textSize="30sp" />
 
@@ -93,6 +98,7 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="Checkout"
+        android:textColor="@color/white"
         android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

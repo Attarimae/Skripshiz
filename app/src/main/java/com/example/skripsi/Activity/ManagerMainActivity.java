@@ -32,7 +32,7 @@ public class ManagerMainActivity extends AppCompatActivity {
     private TextView MMA_txtViewWelcome;
     private ImageView MMA_gambarRestoran;
     private Button MMA_ManageRestoMenu,MMA_ManageEmployeeMenu,MMA_ManageCustomer,
-            MMA_EditLandingPage,logoutButton,MMA_QRCustomer,MMA_ShowOngoingOrder,MMA_ReportOrder;;
+            MMA_EditLandingPage,logoutButton,MMA_QRCustomer,MMA_ShowOngoingOrder,MMA_ReportOrder;
 
     SessionManager sm;
 
@@ -65,14 +65,14 @@ public class ManagerMainActivity extends AppCompatActivity {
 
         ManageMenu();
         ManageEmployee();
-        MMA_ManageCustomer = findViewById(R.id.MMA_ManageCustomer);
-        MMA_ManageCustomer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ManagerMainActivity.this, ManageCustomer.class);
-                startActivity(intent);
-            }
-        });
+//        MMA_ManageCustomer = findViewById(R.id.MMA_ManageCustomer);
+//        MMA_ManageCustomer.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(ManagerMainActivity.this, ManageCustomer.class);
+//                startActivity(intent);
+//            }
+//        });
 
         MMA_EditLandingPage = findViewById(R.id.MMA_EditLandingPage);
         MMA_EditLandingPage.setOnClickListener(new View.OnClickListener() {

@@ -1,6 +1,8 @@
 package com.example.skripsi.Activity.Fragment;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,7 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.skripsi.API.ServiceGenerator;
+import com.example.skripsi.API.SessionManager;
 import com.example.skripsi.API.SharedPreferencesCashier;
+import com.example.skripsi.Activity.CashierMainActivity;
 import com.example.skripsi.Adapter.CheckoutGridAdapter;
 import com.example.skripsi.Model.CheckoutItemModel;
 import com.example.skripsi.Model.Orders.OrderListItemDataModel;
@@ -41,6 +45,7 @@ public class CheckoutFragment extends Fragment {
     private ArrayList<CheckoutItemModel> checkoutList;
     private TextView checkoutTotalPrice;
     private CheckoutGridAdapter adapter;
+    SessionManager sm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class CheckoutFragment extends Fragment {
 
         GridView checkoutGrid = view.findViewById(R.id.FR_gridCheckout);
         SharedPreferencesCashier spc = new SharedPreferencesCashier(requireContext());
+        sm = new SessionManager(requireContext());
         orderListDetails = new ArrayList<>();
         checkoutList = spc.fetchCheckoutList();
         Log.i("Fragment Checkout", "onCreateView: " + checkoutList.size());
@@ -107,6 +113,8 @@ public class CheckoutFragment extends Fragment {
                 totalPrice += price * quantity;
             } else {
                 checkoutList.remove(i);
+                sm.subtractCartTotal();
+                ((CashierMainActivity) requireContext()).updateCheckoutIcon();
             }
         }
         checkoutTotalPrice.setText("Rp. " + formatPrice(totalPrice));
@@ -175,6 +183,7 @@ public class CheckoutFragment extends Fragment {
                     FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.content_frame, new OrderListFragment());
                     ft.commit();
+                    ((CashierMainActivity) requireContext()).clearCheckout();
                 } else {
                     Toast.makeText(requireContext(), "Failed to connect the servers", Toast.LENGTH_SHORT).show();
                 }

@@ -4,13 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.Fragment.SalesReportFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?attr/colorOnPrimary">
 
     <TextView
         android:id="@+id/FR_salesReportTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SALES REPORT"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:textSize="18sp"
         android:layout_margin="10dp"
         android:gravity="center"/>
@@ -25,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Start Date:\n17-08-2024"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginStart="10dp"/>
@@ -35,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="End Date:\n17-08-2024"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginStart="10dp"/>
@@ -46,6 +51,7 @@
             android:layout_weight="1"
             android:textAllCaps="false"
             android:text="Check Sales"
+            android:textColor="@color/white"
             android:layout_margin="10dp"/>
     </LinearLayout>
 
@@ -58,6 +64,7 @@
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="Total Sales:"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:layout_margin="10dp"/>
 
@@ -70,6 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rp. 0"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:layout_margin="10dp"/>
     </LinearLayout>
@@ -79,6 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sales by Orders"
+        android:textColor="@color/black"
         android:textSize="18sp"
         android:layout_margin="10dp"/>
 

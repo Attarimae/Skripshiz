@@ -113,18 +113,19 @@ public class OrderListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedOrderListArrayList = adapter.getItem(position);
-                openOrderDetails(selectedOrderListArrayList.getOrder_detail(),selectedOrderListArrayList.getOrderId());
+                openOrderDetails(selectedOrderListArrayList.getOrder_detail(), selectedOrderListArrayList.getTableNumber(), selectedOrderListArrayList.getOrderId());
             }
         });
         return view;
     }
 
-    private void openOrderDetails(ArrayList<OrderListItemDetailsDataModel> order_detail,String orderId){
+    private void openOrderDetails(ArrayList<OrderListItemDetailsDataModel> order_detail, int tableNumber, String orderId){
         SharedPreferencesCashier spc = new SharedPreferencesCashier(requireContext());
         spc.saveOrderId(orderId);
+        spc.saveTableNumber(tableNumber);
         spc.saveOrderDetails(order_detail);
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, new OrderListDetailsFragment());
+        ft.replace(R.id.content_frame, new OrderListDetailsFragment()).addToBackStack("OrderListDetails");
         ft.commit();
     }
 }

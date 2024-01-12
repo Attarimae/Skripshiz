@@ -41,7 +41,7 @@ import retrofit2.Response;
 public class OrderListDetailsFragment extends Fragment {
 
     private ArrayList<OrderListItemDetailsDataModel> orderListDetails, originalDetails;
-    private TextView orderDetailsTotalPrice;
+    private TextView orderDetailsTotalPrice, orderDetailsTableNumber;
 
     SharedPreferencesCashier spc;
 
@@ -78,6 +78,9 @@ public class OrderListDetailsFragment extends Fragment {
         orderDetailsGrid.setAdapter(adapter);
 
         orderDetailsTotalPrice = view.findViewById(R.id.FR_txtViewOrderDetailsTotalPriceRight);
+        updateTotalPrice();
+        orderDetailsTableNumber = view.findViewById(R.id.FR_txtViewOrderDetailsTableNumberBottom);
+        orderDetailsTableNumber.setText(String.valueOf(spc.fetchTableNumber()));
         Button updateButton = view.findViewById(R.id.FR_buttonUpdateOrder);
 
         updateButton.setOnClickListener(new View.OnClickListener() {
@@ -156,5 +159,15 @@ public class OrderListDetailsFragment extends Fragment {
         //        });
 
         return view;
+    }
+
+    public void updateTotalPrice(){
+        int totalPrice = 0;
+        int price;
+        for(OrderListItemDetailsDataModel item : orderListDetails){
+            price = Integer.parseInt(item.getMenuPrice());
+            totalPrice += price;
+        }
+        orderDetailsTotalPrice.setText("Rp. " + formatPrice(totalPrice));
     }
 }

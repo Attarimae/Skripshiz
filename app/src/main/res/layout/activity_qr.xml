@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorOnPrimary">
 
     <include
         android:id="@+id/toolbar"
@@ -13,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/table_qr"
         android:layout_centerHorizontal="true"
-        android:text="Generate QR Code" />
+        android:text="Generate QR Code"
+        android:textColor="@color/white"/>
 
     <EditText
         android:id="@+id/table_qr"
@@ -40,5 +42,6 @@
         android:layout_below="@id/qr_code_image_view"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="Save QR" />
+        android:text="Save QR"
+        android:textColor="@color/white"/>
 </RelativeLayout>

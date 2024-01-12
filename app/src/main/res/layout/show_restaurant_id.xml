@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="?attr/colorOnPrimary">
 
     <TextView
         android:id="@+id/restaurantid_text"
@@ -11,11 +12,12 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/liner"
         android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="RESTAURANT ID"
+        android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"/>
+        android:textStyle="bold" />
     <LinearLayout
         android:id="@+id/liner"
         android:layout_width="match_parent"
@@ -30,6 +32,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="RESTAURANT ID"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -42,7 +45,8 @@
         android:layout_below="@id/liner"
         android:layout_centerInParent="true"
         android:minWidth="50dp"
-        android:text="Copy"/>
+        android:text="Copy"
+        android:textColor="@color/white"/>
     <Button
         android:id="@+id/button_to_login"
         android:layout_width="wrap_content"
@@ -52,6 +56,7 @@
         android:layout_marginTop="16dp"
         android:minWidth="100dp"
         android:text="LOGIN RESTAURANT"
+        android:textColor="@color/white"
         android:layout_centerInParent="true"/>
 
 </RelativeLayout>

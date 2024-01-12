@@ -18,6 +18,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.skripsi.API.APIConstant;
+import com.example.skripsi.API.SessionManager;
+import com.example.skripsi.Activity.CashierMainActivity;
 import com.example.skripsi.Model.CheckoutItemModel;
 import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.R;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 public class MenuGridAdapter extends ArrayAdapter<MenuItemModel> {
     private Context context;
     private ArrayList<CheckoutItemModel> checkoutList = new ArrayList<>();
+    SessionManager sm;
 
     public MenuGridAdapter(@NonNull Context context, ArrayList<MenuItemModel> menuItemModelArrayList) {
         super(context, 0, menuItemModelArrayList);
@@ -39,6 +42,8 @@ public class MenuGridAdapter extends ArrayAdapter<MenuItemModel> {
         if(listItem  == null){
             listItem  = LayoutInflater.from(getContext()).inflate(R.layout.menu_card_item, parent, false);
         }
+
+        sm = new SessionManager(context);
 
         MenuItemModel menuItemModel = getItem(position);
         TextView menuName = listItem .findViewById(R.id.menu_Name);
@@ -72,6 +77,8 @@ public class MenuGridAdapter extends ArrayAdapter<MenuItemModel> {
                 Gson gson = new Gson();
                 String checkoutListJson = gson.toJson(checkoutList);
                 editor.putString("checkoutList", checkoutListJson);
+                sm.addCartTotal();
+                ((CashierMainActivity) context).updateCheckoutIcon();
                 editor.apply();
 
                 Toast.makeText(context, "Berhasil menambahkan " + menuItemModel.getMenuName(), Toast.LENGTH_LONG).show();

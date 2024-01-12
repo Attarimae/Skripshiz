@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.CashierSettingActivity"
+    android:background="?attr/colorOnPrimary"
     android:orientation="vertical">
 
     <LinearLayout
@@ -60,6 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Name: Makiel Leukimia"
+                    android:textColor="@color/black"
                     android:layout_margin="10dp"
                     android:textSize="18sp"
                     android:maxLines="3"
@@ -71,6 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Role: Cashier"
+                    android:textColor="@color/black"
                     android:layout_margin="10dp"
                     android:textSize="18sp"/>
 
@@ -85,6 +88,7 @@
             android:layout_margin="10dp"
             android:textAllCaps="false"
             android:text="Edit Profile Picture"
+            android:textColor="@color/white"
             android:textAlignment="textStart"
             android:textSize="18sp"/>
 
@@ -95,6 +99,7 @@
             android:layout_margin="10dp"
             android:textAllCaps="false"
             android:text="Submit Feedback"
+            android:textColor="@color/white"
             android:textAlignment="textStart"
             android:textSize="18sp"/>
 
@@ -105,6 +110,7 @@
             android:layout_margin="10dp"
             android:textAllCaps="false"
             android:text="Help"
+            android:textColor="@color/white"
             android:textAlignment="textStart"
             android:textSize="18sp"/>
 
@@ -115,6 +121,7 @@
             android:layout_margin="10dp"
             android:textAllCaps="false"
             android:text="Sign Out"
+            android:textColor="@color/white"
             android:textAlignment="textStart"
             android:textSize="18sp"/>
 
@@ -124,6 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text=".Sales Version 0.1\nPoint of Sale for Restaurant"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textAlignment="center"/>
     </LinearLayout>

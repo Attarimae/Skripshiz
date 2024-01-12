@@ -50,7 +50,8 @@ public class OrderListItemDataModel {
         this.id = id;
     }
 
-    public OrderListItemDataModel(int tableNumber, String totalPrice, ArrayList<OrderListItemDetailsDataModel> order_detail){
+    public OrderListItemDataModel(String id, int tableNumber, String totalPrice, ArrayList<OrderListItemDetailsDataModel> order_detail){
+        this.orderId = id;
         this.tableNumber = tableNumber;
         this.order_detail = order_detail;
         this.totalPrice = totalPrice;

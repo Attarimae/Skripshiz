@@ -111,9 +111,7 @@ public class SalesReportFragment extends Fragment {
                         Toast.makeText(requireContext(), "Cannot perform Sales Report\nMake sure End Date is not larger than Start Date", Toast.LENGTH_LONG).show();
                     } else {
                         //Get your Sales Report Here!
-                        if(days_difference == 0){
-                            days_difference+=1; //Tembak ke Endpoint dgn Unit 0 = resultnya [], sehingga += 1
-                        }
+                        days_difference+=1;
                         dummyData.clear();
                         getSalesReport(days_difference);
                     }
