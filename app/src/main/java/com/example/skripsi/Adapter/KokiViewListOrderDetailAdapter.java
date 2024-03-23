@@ -9,91 +9,149 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.skripsi.API.APIConstant;
-import com.example.skripsi.Activity.Fragment.OrderListDetailsFragment;
+import com.example.skripsi.API.ServiceGenerator;
+import com.example.skripsi.API.SharedPreferencesCashier;
+import com.example.skripsi.Activity.Fragment.OrderListFragment;
 import com.example.skripsi.Model.Orders.OrderListItemDetailsDataModel;
+import com.example.skripsi.Model.Orders.UpdateOrderDataModel;
 import com.example.skripsi.R;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class KokiViewListOrderDetailAdapter extends ArrayAdapter<OrderListItemDetailsDataModel> {
-    private OrderListDetailsFragment orderDetailsFragment;
-    private String selectedStatus;
+    private static class ViewHolder {
+        TextView orderDetailsNameTextView;
+        TextView orderDetailsQuantityTextView;
+        TextView orderDetailsTxtNotes;
+        TextView orderDetailsTxtStatus;
+        Spinner orderDetailsOptionStatus;
+        ImageView orderdetails_Image;
+    }
+
     private String[] spinnerStatus = {
-            "Order Receive",
+            "Order Received",
             "Preparing Order",
-            "Order Has been Cooked",
+            "Order Being Cook",
             "Order Served"
     };
-
-    private String formatPrice(int price){
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setGroupingSeparator('.');
-        DecimalFormat decimalFormat = new DecimalFormat("#,###.###", symbols);
-        return decimalFormat.format(price);
+    public interface StatusUpdateCallback {
+        void onStatusUpdated();
     }
 
-    public KokiViewListOrderDetailAdapter(@NonNull Context context, @NonNull ArrayList<OrderListItemDetailsDataModel> orderListItemDetailsDataModels) {
-        super(context, 0, orderListItemDetailsDataModels);
-        this.orderDetailsFragment = orderDetailsFragment;
+    private int first;
+    private StatusUpdateCallback statusUpdateCallback;
+    private String orderId;
+
+    public KokiViewListOrderDetailAdapter(Context context, ArrayList<OrderListItemDetailsDataModel> orderDetailsList, String orderId) {
+        super(context, 0, orderDetailsList);
+        this.orderId = orderId;
+        this.first=0;
     }
 
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
-        View listitem = convertView;
-        if(listitem == null){
-            listitem = LayoutInflater.from(getContext()).inflate(R.layout.order_details_card_item, parent, false);
+    public void setStatusUpdateCallback(StatusUpdateCallback callback) {
+        this.statusUpdateCallback = callback;
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        OrderListItemDetailsDataModel orderDetail = getItem(position);
+        ViewHolder viewHolder;
+
+        if (convertView == null) {
+            viewHolder = new ViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.koki_details, parent, false);
+            viewHolder.orderDetailsNameTextView = convertView.findViewById(R.id.orderdetails_Name);
+            viewHolder.orderDetailsQuantityTextView = convertView.findViewById(R.id.orderdetails_AmountQuantity);
+            viewHolder.orderDetailsTxtNotes = convertView.findViewById(R.id.orderdetails_txtNotes);
+            viewHolder.orderDetailsTxtStatus = convertView.findViewById(R.id.orderdetails_txtStatus);
+            viewHolder.orderDetailsOptionStatus = convertView.findViewById(R.id.orderdetails_optionStatus);
+            viewHolder.orderdetails_Image = convertView.findViewById(R.id.orderdetails_Image);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        OrderListItemDetailsDataModel orderListItemDetailsDataModel = getItem(position);
-        TextView orderDetailsName = listitem.findViewById(R.id.orderdetails_Name);
-        TextView orderDetailsDescription = listitem.findViewById(R.id.orderdetails_txtNotes);
-        TextView orderDetailsQuantity = listitem.findViewById(R.id.orderdetails_AmountQuantity);
-        TextView orderDetailsPrice = listitem.findViewById(R.id.orderdetails_TotalPrice);
-        ImageView orderDetailsImage = listitem.findViewById(R.id.orderdetails_Image);
+        viewHolder.orderDetailsNameTextView.setText(orderDetail.getMenuName());
+        viewHolder.orderDetailsQuantityTextView.setText("Quantity: " + String.valueOf(orderDetail.getMenuQuantity()));
+        viewHolder.orderDetailsTxtNotes.setText("Notes: ");
+        viewHolder.orderDetailsTxtStatus.setText("Order Status");
 
-        Spinner orderDetailsStatus = listitem.findViewById(R.id.orderdetails_optionStatus);
-        ArrayAdapter<CharSequence> spinnerAD = new ArrayAdapter<>(orderDetailsFragment.requireContext(), android.R.layout.simple_spinner_item, spinnerStatus);
-        spinnerAD.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        orderDetailsStatus.setAdapter(spinnerAD);
-        final String strCurrentStatus = orderListItemDetailsDataModel.getStatus();
-        final int spinnerPosition = spinnerAD.getPosition(strCurrentStatus);
-        orderDetailsStatus.setSelection(spinnerPosition);
-        final String txtOrderDetailsPrice = orderListItemDetailsDataModel.getMenuPrice();
-        final Integer orderDetailsQty = orderListItemDetailsDataModel.getMenuQuantity();
-        final Integer orderDetailsSubtotalPrice = Integer.parseInt(txtOrderDetailsPrice);
-
-        orderDetailsName.setText(orderListItemDetailsDataModel.getMenuName());
-        orderDetailsDescription.setText(orderListItemDetailsDataModel.getMenuDescription());
-        orderDetailsQuantity.setText(String.valueOf(orderDetailsQty) + "pcs");
-        orderDetailsPrice.setText("Rp. " + formatPrice(orderDetailsSubtotalPrice));
-        Glide.with(orderDetailsFragment.requireContext())
-                .load(APIConstant.BASE_URL_DOWNLOAD + orderListItemDetailsDataModel.getImgID())
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, spinnerStatus);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        viewHolder.orderDetailsOptionStatus.setAdapter(spinnerAdapter);
+        Glide.with(getContext())
+                .load(APIConstant.BASE_URL_DOWNLOAD + orderDetail.getImgID())
                 .apply(new RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true))
-                .error(R.drawable.smallsalad)
-                .into(orderDetailsImage);
-        orderDetailsStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .skipMemoryCache(false)
+                        .error(R.drawable.smallsalad))
+                .into(viewHolder.orderdetails_Image);
+
+        // Handle spinner selection
+        viewHolder.orderDetailsOptionStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedStatus = spinnerStatus[position];
-                orderListItemDetailsDataModel.setStatus(selectedStatus);
+                String selectedStatus = spinnerStatus[position];
+                orderDetail.setStatus(selectedStatus);
+                ServiceGenerator service = new ServiceGenerator();
+                switch (orderDetail.getStatus()) {
+                    case "Order Received":
+                        orderDetail.setStatus("01");
+                        break;
+                    case "Preparing Order":
+                        orderDetail.setStatus("02");
+                        break;
+                    case "Order Being Cook":
+                        orderDetail.setStatus("03");
+                        break;
+                    case "Order Served":
+                        orderDetail.setStatus("04");
+                        break;
+                }
+                UpdateOrderDataModel modal = new UpdateOrderDataModel(orderId, orderDetail.getOrder_detail_id(), orderDetail.getStatus());
+                Call<UpdateOrderDataModel> call = service.getApiService(getContext()).updateOrderDetailsStatus(modal);
+                call.enqueue(new Callback<UpdateOrderDataModel>() {
+                    @Override
+                    public void onResponse(Call<UpdateOrderDataModel> call, Response<UpdateOrderDataModel> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getContext(), "Successfully updated", Toast.LENGTH_SHORT).show();
+                            if (statusUpdateCallback != null && first>0) {
+                                statusUpdateCallback.onStatusUpdated();
+                            }
+                        } else {
+                            Toast.makeText(getContext(), "Failed to update status to the server", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UpdateOrderDataModel> call, Throwable t) {
+                        Toast.makeText(getContext(), "Failed to update status to the server", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Handle case where nothing is selected, if needed
             }
         });
-        return listitem;
+
+        return convertView;
     }
 }

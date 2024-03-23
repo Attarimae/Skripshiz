@@ -8,6 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.example.skripsi.Activity.Fragment.OrderListDetailsFragment;
+import com.example.skripsi.Adapter.KokiViewListOrderDetailAdapter;
 import com.example.skripsi.Model.Orders.OrderListItemDataModel;
 import com.example.skripsi.Model.Orders.OrderListItemDetailsDataModel;
 import com.example.skripsi.R;
@@ -22,8 +26,17 @@ public class KokiAdapter extends ArrayAdapter<OrderListItemDataModel> {
     }
 
     private KokiViewListOrderDetailAdapter adapter;
-    public KokiAdapter(Context context, ArrayList<OrderListItemDataModel> orders) {
+
+    public interface StatusUpdateCallback {
+        void onStatusUpdated();
+    }
+
+    private StatusUpdateCallback callback;
+
+
+    public KokiAdapter(Context context, ArrayList<OrderListItemDataModel> orders, StatusUpdateCallback callback) {
         super(context, 0, orders);
+        this.callback = callback;
     }
 
     @Override
@@ -43,11 +56,18 @@ public class KokiAdapter extends ArrayAdapter<OrderListItemDataModel> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.orderIdTextView.setText("Order ID: " + order.getOrderId());
+        viewHolder.orderIdTextView.setText("ID: " + order.getOrderId());
         viewHolder.tableNumberTextView.setText("Table Number: " + order.getTableNumber());
 
-        // Create an ArrayAdapter to populate the order details in the ListView
-        adapter = new KokiViewListOrderDetailAdapter(KokiAdapter.this.getContext(),order.getOrder_detail());
+        adapter = new KokiViewListOrderDetailAdapter(KokiAdapter.this.getContext(), order.getOrder_detail(), order.getOrderId());
+        adapter.setStatusUpdateCallback(new KokiViewListOrderDetailAdapter.StatusUpdateCallback() {
+            @Override
+            public void onStatusUpdated() {
+                if (callback != null) {
+                    callback.onStatusUpdated();
+                }
+            }
+        });
         viewHolder.orderDetailsListView.setAdapter(adapter);
 
         return convertView;
