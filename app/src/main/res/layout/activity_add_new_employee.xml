@@ -33,7 +33,7 @@
                 android:layout_margin="10dp"
                 android:onClick="onImageClicked"
                 android:scaleType="fitXY"
-                android:src="@drawable/salad" />
+                android:src="@drawable/default_profile" />
 
             <TableRow android:layout_margin="10dp">
 

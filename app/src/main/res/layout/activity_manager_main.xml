@@ -104,14 +104,14 @@
                     android:textColor="@color/white"
                     android:padding="10dp"/>
 
-<!--                <Button-->
-<!--                    android:id="@+id/MMA_ManageCustomer"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:textAllCaps="false"-->
-<!--                    android:text="Manage\nCustomer"-->
-                <!-- android:textColor="@color/white" -->
-<!--                    android:padding="10dp"/>-->
+                <Button
+                    android:id="@+id/MMA_ManagePromotion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:text="Manage\nCustomer"
+                    android:textColor="@color/white"
+                    android:padding="10dp"/>
 
                 <Button
                     android:id="@+id/MMA_QRCustomer"
