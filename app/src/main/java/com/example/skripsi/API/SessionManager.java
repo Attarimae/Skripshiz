@@ -75,6 +75,14 @@ public class SessionManager{
         editor.commit();
     }
 
+    public void subtractCartTotal(){
+        int countCart = fetchCartTotal();
+        System.out.println(countCart);
+        countCart--;
+        editor.putInt("cart", countCart);
+        editor.commit();
+    }
+
     public int fetchCartTotal(){
         return sharedPreferences.getInt("cart", 0);
     }

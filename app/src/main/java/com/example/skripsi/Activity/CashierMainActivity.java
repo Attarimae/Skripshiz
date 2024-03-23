@@ -5,9 +5,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +29,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.skripsi.API.APIConstant;
 import com.example.skripsi.API.SessionManager;
+import com.example.skripsi.API.SharedPreferencesCashier;
 import com.example.skripsi.Activity.Fragment.CheckoutFragment;
 import com.example.skripsi.Activity.Fragment.MenuFragment;
 import com.example.skripsi.Activity.Fragment.OrderHistoryFragment;
@@ -36,6 +39,8 @@ import com.example.skripsi.Activity.Fragment.SalesReportFragment;
 import com.example.skripsi.Adapter.MainDrawerItemAdapter;
 import com.example.skripsi.Model.MainDrawerMenuModel;
 import com.example.skripsi.R;
+
+import java.util.ArrayList;
 
 public class CashierMainActivity extends AppCompatActivity {
 
@@ -47,12 +52,14 @@ public class CashierMainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private Menu cashierMenu;
 
-    private TextView textView;
+    private TextView checkoutCounter;
+    private ImageView checkoutCounterBg;
 
 //    TextView MA_txtViewWelcome;
 //    Button logoutButton;
 
     SessionManager sm;
+    SharedPreferencesCashier spc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,8 @@ public class CashierMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cashier_main);
 
         sm = new SessionManager(this);
+        spc = new SharedPreferencesCashier(this);
+
         mTitle = mDrawerTitle = getTitle();
         mNavigationDrawerItemTitles= getResources().getStringArray(R.array.menu_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -120,6 +129,24 @@ public class CashierMainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         cashierMenu = menu;
+
+        MenuItem item = cashierMenu.findItem(R.id.action_checkout);
+
+        // Find the views within the action layout
+        checkoutCounterBg = item.getActionView().findViewById(R.id.menu_CheckoutCartNotif);
+        checkoutCounter = item.getActionView().findViewById(R.id.menu_CheckoutCartCounter);
+        clearCheckout();
+        ImageView checkoutCounterImg = item.getActionView().findViewById(R.id.menu_CheckoutCartImage);
+
+        checkoutCounterImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new CheckoutFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+            }
+        });
+
         return true;
     }
 
@@ -134,6 +161,7 @@ public class CashierMainActivity extends AppCompatActivity {
 //                break;
             case 0: // Home Fragment
                 fragment = new MenuFragment();
+                clearCheckout();
                 addCheckoutCart();
                 break;
             case 1: // Order List Fragment
@@ -172,7 +200,7 @@ public class CashierMainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        
+
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -204,12 +232,6 @@ public class CashierMainActivity extends AppCompatActivity {
     void setupDrawerToggle(){
         mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,toolbar,R.string.app_name, R.string.app_name);
         mDrawerToggle.syncState();
-    }
-
-    public void onCheckoutCartClicked(MenuItem mi) {
-        Fragment fragment = new CheckoutFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
     }
 
     private void removeCheckoutCart(){
@@ -260,5 +282,24 @@ public class CashierMainActivity extends AppCompatActivity {
         } else {
             Log.e("CashierMainActivity", "getBundle: Error in creating fragment");
         }
+    }
+
+    public void updateCheckoutIcon(){
+        int cartCount = sm.fetchCartTotal();
+        if(cartCount == 0){
+            checkoutCounterBg.setVisibility(View.GONE);
+            checkoutCounter.setVisibility(View.GONE);
+        } else {
+            checkoutCounterBg.setVisibility(View.VISIBLE);
+            checkoutCounter.setVisibility(View.VISIBLE);
+        }
+        checkoutCounter.setText(String.valueOf(cartCount));
+    }
+
+    public void clearCheckout(){
+        sm.resetCartTotal();
+        checkoutCounterBg.setVisibility(View.GONE);
+        checkoutCounter.setVisibility(View.GONE);
+        spc.saveCheckoutList(new ArrayList<>());
     }
 }

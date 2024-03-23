@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorOnPrimary"
     tools:context=".Activity.POSLogin">
 
     <TextView
@@ -64,6 +65,7 @@
         android:id="@+id/loginbtn"
         android:layout_below="@id/password"
         android:text="Login"
+        android:textColor="@color/white"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="20dp"/>
@@ -74,6 +76,7 @@
         android:layout_height="wrap_content"
         android:text="Don't have account yet? Register here"
         android:textSize="12dp"
+        android:textColor="@color/black"
         android:layout_below="@id/loginbtn"
         android:gravity="center"/>
 

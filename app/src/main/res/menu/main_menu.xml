@@ -7,10 +7,10 @@
     <item
         android:id="@+id/action_checkout"
         android:orderInCategory="300"
-        android:title="User"
-        android:onClick="onCheckoutCartClicked"
-        android:icon="@drawable/ic_baseline_shopping_cart_24"
-        app:showAsAction="ifRoom"/>
+        app:actionLayout="@layout/custom_cart_actionlayout"
+        app:showAsAction="ifRoom"
+        android:title=""
+        />
 
 </menu>
 

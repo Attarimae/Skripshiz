@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.CashierMainActivity">
+    tools:context=".Activity.CashierMainActivity"
+    android:background="?attr/colorOnPrimary">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,13 +40,15 @@
                 app:layout_constraintTop_toTopOf="@id/MMA_gambarRestoran"
                 app:layout_constraintBottom_toBottomOf="@id/MMA_gambarRestoran"
                 app:layout_constraintEnd_toStartOf="@id/MMA_buttonLogout"
-                android:text="Welcome, Mr. PEPEGA\nManager" />
+                android:text="Welcome, Mr. PEPEGA\nManager"
+                android:textColor="@color/black"/>
 
             <Button
                 android:id="@+id/MMA_buttonLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Logout"
+                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/MMA_txtViewWelcome"
                 app:layout_constraintTop_toTopOf="@id/MMA_gambarRestoran"
@@ -71,6 +74,7 @@
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
                     android:text="Show Ongoing\nOrder"
+                    android:textColor="@color/white"
                     android:padding="10dp"/>
 
                 <Button
@@ -79,6 +83,7 @@
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
                     android:text="Report\nOrder"
+                    android:textColor="@color/white"
                     android:padding="10dp"/>
 
                 <Button
@@ -87,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
                     android:text="Manage\nRestaurant Menu"
+                    android:textColor="@color/white"
                     android:padding="10dp"/>
 
                 <Button
@@ -95,14 +101,16 @@
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
                     android:text="Manage\nEmployee"
+                    android:textColor="@color/white"
                     android:padding="10dp"/>
 
                 <Button
-                    android:id="@+id/MMA_ManageCustomer"
+                    android:id="@+id/MMA_ManagePromotion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
                     android:text="Manage\nCustomer"
+                    android:textColor="@color/white"
                     android:padding="10dp"/>
 
                 <Button
@@ -111,6 +119,7 @@
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
                     android:text="QR\nOrder Customer"
+                    android:textColor="@color/white"
                     android:padding="10dp"/>
 
                 <Button
@@ -119,6 +128,7 @@
                     android:layout_height="wrap_content"
                     android:textAllCaps="false"
                     android:text="Edit\nLandingPage"
+                    android:textColor="@color/white"
                     android:padding="10dp"/>
 
             </LinearLayout>

@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
-
+    android:padding="16dp"
+    android:background="?attr/colorOnPrimary">
     <TextView
         android:id="@+id/orderIdTextView"
         android:layout_width="wrap_content"
@@ -13,14 +13,16 @@
         android:layout_gravity="center"
         android:textSize="16sp"
         android:text="Order Id"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/tableNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:text="Table Number"/>
+        android:text="Table Number"
+        android:textColor="@color/black"/>
 
     <ListView
         android:id="@+id/orderView"

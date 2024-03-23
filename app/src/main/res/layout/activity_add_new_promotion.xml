@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.AddPromotionActivity"
+    android:background="?attr/colorOnPrimary">
+
+    <LinearLayout
+        android:id="@+id/container_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_activity_detail" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/container_toolbar">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/promotion_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Name :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/promotion_name_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="30% Off Up to 15K"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/promotion_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Description :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/promotion_desc_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Promo Diskon 30%\nMinimal Order Rp. 40.000\nMaksimal Diskon Rp. 15.000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/promotion_quota"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Quota :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/promotion_quota_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="100"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:inputType="number"/>
+            </TableRow>
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/promotion_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Expired Date :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/promotion_date_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="31/01/2024"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+            </TableRow>
+
+<!--
+
+CONDITION AREA
+
+-->
+
+            <TableRow android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/promotion_conditiontype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Condition :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/promotion_conditiontype_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <!--
+
+            WATCH ADS IMAGE AREA
+
+            -->
+
+            <TableRow
+                android:id="@+id/promotion_condition_watchadsimage"
+                android:layout_margin="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/promotion_conditiontype_watchadsimage_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Image Ads:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/promotion_conditiontype_watchadsimage"
+                    android:layout_width="240dp"
+                    android:layout_height="240dp"
+                    android:layout_margin="10dp"
+                    android:onClick="onImageClicked"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/salad" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/promotion_condition_watchadsduration"
+                android:layout_margin="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/promotion_conditiontype_watchadsduration_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Duration:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/promotion_conditiontype_watchadsduration_edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="5"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:inputType="number"/>
+
+            </TableRow>
+
+            <Button
+                android:id="@+id/addmore_watchads_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="onAddMoreWatchAdsButtonClicked"
+                android:text="Add Item"
+                android:textColor="@color/white"
+                android:visibility="gone"/>
+
+            <!--
+
+            FOLLOW SOCIAL MEDIA AREA
+
+            -->
+
+            <TableRow
+                android:id="@+id/promotion_condition_followsocialmedia"
+                android:layout_margin="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/promotion_conditiontype_followsocialmedia_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Social Media\nUsername:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/promotion_conditiontype_followsocialmedia_edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="\@binusuniversityofficial"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+            <!--
+
+            BUY ITEM AREA
+
+            -->
+
+<!--            <TableRow-->
+<!--                android:id="@+id/promotion_condition_buyitem"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:visibility="gone">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/promotion_conditiontype_buyitem_textview"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingTop="16dp"-->
+<!--                    android:paddingBottom="8dp"-->
+<!--                    android:text="Menu:"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--                <Spinner-->
+<!--                    android:id="@+id/promotion_conditiontype_buyitem_spinner"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:paddingTop="16dp"-->
+<!--                    android:paddingBottom="8dp"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--            </TableRow>-->
+
+<!--            <Button-->
+<!--                android:id="@+id/addmore_buyitem_button"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:onClick="onAddMoreBuyItemButtonClicked"-->
+<!--                android:text="Add Optional Menu"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:visibility="gone"/>-->
+
+            <!--
+
+            POST SOCIAL MEDIA AREA
+
+            -->
+
+            <TableRow
+                android:id="@+id/promotion_condition_postsocialmedia"
+                android:layout_margin="10dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/promotion_conditiontype_postsocialmedia_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Post\nDescription:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/promotion_conditiontype_postsocialmedia_edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Kunjungi BINUS University hari ini"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+<!--
+
+PROMO AREA
+
+-->
+
+<!--            <TableRow android:layout_margin="10dp">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/promotion_type"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingTop="16dp"-->
+<!--                    android:paddingBottom="8dp"-->
+<!--                    android:text="Promo Type :"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--                <Spinner-->
+<!--                    android:id="@+id/promotion_type_spinner"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:paddingTop="16dp"-->
+<!--                    android:paddingBottom="8dp"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:textStyle="bold" />-->
+<!--            </TableRow>-->
+
+            <!--
+
+            DISCOUNT AREA
+
+            -->
+
+            <TableRow
+                android:id="@+id/promotion_table_discount"
+                android:layout_margin="10dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/promotion_discounttype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Discount :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/promotion_discounttype_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+            <!--
+
+            DISCOUNT PERCENTAGE AREA
+
+            -->
+
+            <TableRow
+                android:id="@+id/promotion_table_discount_percentage"
+                android:layout_margin="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/promotion_discounttype_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Percentage:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/promotion_discounttype_percentage_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="5"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:inputType="number"/>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/promotion_table_discount_maxpercentage"
+                android:layout_margin="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/promotion_discounttype_maxpercentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Max Amount:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/promotion_discounttype_maxpercentage_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="5"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:inputType="number"/>
+
+            </TableRow>
+
+            <!--
+
+            FREE ITEM AREA
+
+            -->
+
+<!--            <TableRow-->
+<!--                android:id="@+id/promotion_table_freeitem"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:visibility="gone">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/promotion_freeitem"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingTop="16dp"-->
+<!--                    android:paddingBottom="8dp"-->
+<!--                    android:text="Item :"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--                <Spinner-->
+<!--                    android:id="@+id/promotion_freeitem_spinner"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:paddingTop="16dp"-->
+<!--                    android:paddingBottom="8dp"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/addmore_freeitem_button"-->
+<!--                    android:layout_width="70dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:onClick="onAddMoreFreeItemButtonClicked"-->
+<!--                    android:text="Add"-->
+<!--                    android:textColor="@color/white"/>-->
+
+<!--            </TableRow>-->
+
+            <!--
+
+            FIXED PRICE AREA
+
+            -->
+
+            <TableRow
+                android:id="@+id/promotion_table_discount_fixed"
+                android:layout_margin="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/promotion_discounttype_fixed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Amount :"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/promotion_discounttype_fixed_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="5"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:inputType="number"/>
+
+            </TableRow>
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="onSaveButtonClicked"
+                android:text="Create Promo"
+                android:textColor="@color/white"/>
+
+        </TableLayout>
+    </ScrollView>
+</RelativeLayout>

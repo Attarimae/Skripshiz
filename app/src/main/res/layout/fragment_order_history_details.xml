@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="?attr/colorOnPrimary"
     android:id="@+id/FR_orderDetailsLayout">
 
     <LinearLayout
@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Order Details"
+            android:textColor="@color/black"
             android:padding="10dp"
             android:textSize="32sp"
             android:layout_gravity="center_horizontal"/>
@@ -33,6 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Table Number"
+                android:textColor="@color/black"
                 android:layout_marginTop="5dp"
                 android:textSize="18sp"
                 android:layout_gravity="center_horizontal"/>
@@ -41,6 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="100"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:layout_gravity="center_horizontal"/>
         </LinearLayout>
@@ -55,6 +58,7 @@
         android:textSize="20sp"
         android:layout_marginTop="8dp"
         android:text="Order created at 28-06-2023 23:59"
+        android:textColor="@color/black"
         />
 
     <GridView
@@ -82,6 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total"
+            android:textColor="@color/black"
             android:layout_margin="10dp"
             android:textSize="30sp" />
 
@@ -95,6 +100,7 @@
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:text="Rp 69.000"
+            android:textColor="@color/black"
             android:layout_marginEnd="24dp"
             android:textSize="30sp" />
 
@@ -107,6 +113,7 @@
         android:layout_gravity="center"
         android:textAllCaps="false"
         android:text="Send Receipt"
+        android:textColor="@color/white"
         android:textSize="16sp"/>
 
 </LinearLayout>

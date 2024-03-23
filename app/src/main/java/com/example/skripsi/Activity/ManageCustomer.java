@@ -56,6 +56,7 @@ public class ManageCustomer extends AppCompatActivity {
 
         // Setup search view
         searchView = findViewById(R.id.FT_searchViewManageMenu);
+        searchView.setQueryHint("Search Customer By Name");
         setupSearchView();
     }
 

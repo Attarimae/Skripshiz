@@ -16,6 +16,12 @@
         android:theme="@style/Theme.MyPler"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.AddPromotionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.ManagePromotionActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.CashierEditProfile"
             android:exported="false" />
         <activity

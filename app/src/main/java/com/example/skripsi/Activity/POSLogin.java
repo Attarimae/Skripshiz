@@ -56,7 +56,8 @@ public class POSLogin extends AppCompatActivity {
         password = findViewById(R.id.password);
 
         registerPOS = findViewById(R.id.posopenregister);
-        String loginRestaurantText = "Don't have account yet? Register here ";
+        //String loginRestaurantText = "Don't have account yet? Register here ";
+        String loginRestaurantText = "Haven't register your restaurant? Register here! ";
         SpannableString ss = new SpannableString(loginRestaurantText);
 
         ClickableSpan clickableSpan = new ClickableSpan() {
@@ -66,7 +67,7 @@ public class POSLogin extends AppCompatActivity {
             }
         };
 
-        ss.setSpan(clickableSpan, 24, 37, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(clickableSpan, 34, 48, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         registerPOS.setText(ss);
         registerPOS.setMovementMethod(LinkMovementMethod.getInstance());
 
