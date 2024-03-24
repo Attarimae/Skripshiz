@@ -4,7 +4,8 @@
     <!-- permissions for INTERNET -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:node="replace"/>/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -107,6 +108,12 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".Activity.SalesReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.OrderListActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.ManageMenuActivity"
             android:exported="false"

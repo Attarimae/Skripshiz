@@ -19,6 +19,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.skripsi.API.APIConstant;
 import com.example.skripsi.API.SessionManager;
+import com.example.skripsi.Activity.Fragment.OrderListFragment;
+import com.example.skripsi.Activity.Fragment.SalesReportFragment;
 import com.example.skripsi.R;
 
 public class ManagerMainActivity extends AppCompatActivity {
@@ -31,7 +33,7 @@ public class ManagerMainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private TextView MMA_txtViewWelcome;
     private ImageView MMA_gambarRestoran;
-    private Button MMA_ManageRestoMenu,MMA_ManageEmployeeMenu,MMA_ManagePromotion,
+    private Button MMA_ManageRestoMenu,MMA_ManageEmployeeMenu,MMA_ManagePromotion,MMA_ManageCustomer,
             MMA_EditLandingPage,logoutButton,MMA_QRCustomer,MMA_ShowOngoingOrder,MMA_ReportOrder;
 
     SessionManager sm;
@@ -47,7 +49,16 @@ public class ManagerMainActivity extends AppCompatActivity {
         MMA_ShowOngoingOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ManagerMainActivity.this, QRActivity.class);
+                Intent intent = new Intent(ManagerMainActivity.this, OrderListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        MMA_ReportOrder = findViewById(R.id.MMA_ReportOrder);
+        MMA_ReportOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ManagerMainActivity.this, SalesReportActivity.class);
                 startActivity(intent);
             }
         });
@@ -65,6 +76,15 @@ public class ManagerMainActivity extends AppCompatActivity {
 
         ManageMenu();
         ManageEmployee();
+
+        MMA_ManageCustomer = findViewById(R.id.MMA_ManageCustomer);
+        MMA_ManageCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ManagerMainActivity.this, ManageCustomer.class);
+                startActivity(intent);
+            }
+        });
 
         MMA_ManagePromotion = findViewById(R.id.MMA_ManagePromotion);
         MMA_ManagePromotion.setOnClickListener(new View.OnClickListener() {

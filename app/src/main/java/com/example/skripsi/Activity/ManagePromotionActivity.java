@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -41,6 +42,7 @@ public class ManagePromotionActivity extends AppCompatActivity {
 
         GridView menuGrid = findViewById(R.id.FR_gridManagePromotion);
         ImageView imageView = findViewById(R.id.btn_add_menu);
+        textViewNotFound = findViewById(R.id.text_view_not_found); // Initialize textViewNotFound
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,23 +52,15 @@ public class ManagePromotionActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        fetchPromotionData();
         promotionList = new ArrayList<>();
         filteredPromotionList = new ArrayList<>();
-        storedPromotionList = new ArrayList<>(); // Initialize the stored menu data list
+        storedPromotionList = new ArrayList<>(); // Initialsize the stored menu data list
         adapter = new ManagePromotionAdapter(this, filteredPromotionList);
         menuGrid.setAdapter(adapter);
 
-        filteredPromotionList.add(new PromotionItemModel(0, 10, "10% Off", "Diskon 10%", "28-02-2024"));
-        filteredPromotionList.add(new PromotionItemModel(1, 5, "20% Off", "Diskon 20%", "31-01-2024"));
-        filteredPromotionList.add(new PromotionItemModel(2, 3, "30% Off", "Diskon 30%", "31-01-2024"));
-        filteredPromotionList.add(new PromotionItemModel(3, 1, "50% Off", "Diskon 50%", "31-01-2024"));
-
-        adapter.notifyDataSetChanged();
-
         toolbarManagePromotion = findViewById(R.id.manage_menu);
         toolbarManagePromotion.setText("Manage Promotion");
-        fetchPromotionData();
 
         // Setup search view
         searchView = findViewById(R.id.FT_searchViewManageMenu);
@@ -74,32 +68,34 @@ public class ManagePromotionActivity extends AppCompatActivity {
     }
 
     private void fetchPromotionData() {
-//        ServiceGenerator service = new ServiceGenerator();
-//        Call<ArrayList<EmployeeItemModel>> call = service.getApiService(this).getAllStaff();
-//        call.enqueue(new Callback<ArrayList<EmployeeItemModel>>() {
-//            @Override
-//            public void onResponse(Call<ArrayList<EmployeeItemModel>> call, Response<ArrayList<EmployeeItemModel>> response) {
-//                if (response.isSuccessful()) {
-//                    List<EmployeeItemModel> employeeItems = response.body();
-//                    if (employeeItems != null) {
-//                        employeeList.addAll(employeeItems);
-//                        storedEmployeeList.addAll(employeeItems); // Store the fetched menu data
-//                        filteredEmployeeList.addAll(employeeItems);
-//                        adapter.notifyDataSetChanged();
-//                        checkIfEmpty();
-//                    }
-//                } else {
-//                    textViewNotFound.setVisibility(View.VISIBLE);
-//                    textViewNotFound.setText("No Employee Found");
-//                    Log.e("ManageMenuActivity", "Failed to fetch menu data");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ArrayList<EmployeeItemModel>> call, Throwable t) {
-//                Log.e("ManageMenuActivity", t.getMessage());
-//            }
-//        });
+        ServiceGenerator service = new ServiceGenerator();
+        Call<ArrayList<PromotionItemModel>> call = service.getApiService(this).getPromotion();
+        Log.d("NetworkRequest", "URL: " + call.request().url().toString()); // Log the full URL
+        Log.d("NetworkRequest", "Headers: " + call.request().headers().toString());
+        call.enqueue(new Callback<ArrayList<PromotionItemModel>>() {
+            @Override
+            public void onResponse(Call<ArrayList<PromotionItemModel>> call, Response<ArrayList<PromotionItemModel>> response) {
+                if (response.isSuccessful()) {
+                    List<PromotionItemModel> promotionItems = response.body();
+                    if (promotionItems != null) {
+                        promotionList.addAll(promotionItems);
+                        storedPromotionList.addAll(promotionItems); // Store the fetched menu data
+                        filteredPromotionList.addAll(promotionItems);
+                        adapter.notifyDataSetChanged();
+                        checkIfEmpty();
+                    }
+                } else {
+                    textViewNotFound.setVisibility(View.VISIBLE);
+                    textViewNotFound.setText("No Promotion Found");
+                    Log.e("ManageMenuActivity", "Failed to fetch menu data");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<PromotionItemModel>> call, Throwable t) {
+                Log.e("ManageMenuActivity", t.getMessage());
+            }
+        });
     }
 
     private void setupSearchView() {
@@ -128,15 +124,15 @@ public class ManagePromotionActivity extends AppCompatActivity {
         } else {
             // Filter the menu items based on the search query
             filteredPromotionList.clear();
-//            for (PromotionItemModel promotionItem : storedPromotionList) { // Perform search on the stored menu data
-//                if (promotionItem.getStaffName().toLowerCase().contains(query.toLowerCase())) {
-//                    filteredPromotionList.add(promotionItem);
-//                }
-//            }
+            for (PromotionItemModel promotionItem : storedPromotionList) { // Perform search on the stored menu data
+                if (promotionItem.getPromotionName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredPromotionList.add(promotionItem);
+                }
+            }
         }
 
-        //adapter.notifyDataSetChanged();
         checkIfEmpty();
+        adapter.notifyDataSetChanged(); // Move adapter.notifyDataSetChanged() here
     }
 
     private void checkIfEmpty() {

@@ -52,7 +52,7 @@ public class ManagePromotionAdapter extends ArrayAdapter<PromotionItemModel> {
         PromotionItemModel promotionItemModel = getItem(position);
 
         holder.textView.setText(promotionItemModel.getPromotionName());
-        holder.priceView.setText("Quota: " + promotionItemModel.getPromotionQuota());
+        holder.priceView.setText("Quota: " + promotionItemModel.getQuota());
 
         // Generate a unique signature based on the current time
         long timestamp = System.currentTimeMillis(); // Subtract one minute
@@ -60,7 +60,7 @@ public class ManagePromotionAdapter extends ArrayAdapter<PromotionItemModel> {
 
         // Load the image using Glide with cache disabled and a custom signature
         Glide.with(context)
-                .load(APIConstant.BASE_URL_DOWNLOAD + promotionItemModel.getImgID())
+                .load(APIConstant.BASE_URL_DOWNLOAD + "promotion/"+promotionItemModel.getId())
                 .placeholder(R.drawable.discount_tag) // Optional: Add a placeholder image resource
                 .error(R.drawable.discount_tag) // Optional: Add an error image resource
                 .apply(requestOptions)

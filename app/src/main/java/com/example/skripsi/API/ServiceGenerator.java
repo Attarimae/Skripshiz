@@ -11,12 +11,17 @@ public class ServiceGenerator {
 
     private APIInterface apiInterface;
 
-    private final String BASE_URL = "https://d6c2-2001-448a-20b0-f7a4-f8db-f9eb-539e-f6c3.ngrok-free.app";
+    private final String BASE_URL = "https://api.cikpuan.com";
 
 
     public APIInterface getApiService(Context context) {
         // Initialize ApiService if not initialized yet
         if (apiInterface == null) {
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            httpClient.addInterceptor(loggingInterceptor);
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(APIConstant.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())

@@ -17,7 +17,16 @@
         <include
             android:id="@+id/toolbar"
             layout="@layout/toolbar_activity_detail" />
+        <ImageView
+            android:id="@+id/promtion_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_margin="10dp"
+            android:onClick="onImageClicked"
+            android:scaleType="fitXY"
+            android:src="@drawable/salad" />
     </LinearLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -99,33 +108,6 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:inputType="number"/>
-            </TableRow>
-
-            <TableRow android:layout_margin="10dp">
-
-                <TextView
-                    android:id="@+id/promotion_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="8dp"
-                    android:text="Expired Date :"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/promotion_date_textview"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingTop="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="31/01/2024"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
-
             </TableRow>
 
 <!--
@@ -542,7 +524,7 @@ PROMO AREA
             </TableRow>
 
             <Button
-                android:id="@+id/save_button"
+                android:id="@+id/create_button_promotion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

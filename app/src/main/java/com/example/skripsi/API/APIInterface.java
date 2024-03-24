@@ -10,12 +10,15 @@ import com.example.skripsi.Model.Menus.MenuItemModel;
 import com.example.skripsi.Model.Menus.MenuItemModelWithoutId;
 import com.example.skripsi.Model.Orders.OrderListItemDataModel;
 import com.example.skripsi.Model.Orders.UpdateOrderDataModel;
+import com.example.skripsi.Model.Promotion.PromotionItemModel;
 import com.example.skripsi.Model.SalesReport.POSTReportOrder;
 import com.example.skripsi.Model.RestaurantDataModel;
 import com.example.skripsi.Model.StaffDataModel;
+import com.example.skripsi.Model.SuccessResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -51,6 +54,12 @@ public interface APIInterface {
     //Get All Staff
     @GET("/staff/users/")
     Call<ArrayList<EmployeeItemModel>> getAllStaff();
+
+    @GET("/promo")
+    Call<ArrayList<PromotionItemModel>> getPromotion();
+
+    @POST("/add-promo")
+    Call<SuccessResponse> postPromotion(@Body PromotionItemModel model);
     @GET("/staff/users/{params}")
     Call<ArrayList<EmployeeItemModel>> getStaff(@Path("params") String params);
     @POST("/staff/users/")
